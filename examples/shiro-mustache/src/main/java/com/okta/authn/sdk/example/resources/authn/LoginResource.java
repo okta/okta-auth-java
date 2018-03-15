@@ -20,17 +20,12 @@ import com.okta.authn.sdk.AuthenticationFailureException;
 import com.okta.authn.sdk.Client;
 import com.okta.authn.sdk.example.OktaStateHandler;
 import com.okta.authn.sdk.example.models.authn.Factor;
-import com.okta.authn.sdk.example.shiro.OktaSuccessLoginToken;
 import com.okta.authn.sdk.example.views.authn.ChangePasswordView;
 import com.okta.authn.sdk.example.views.authn.LoginView;
 import com.okta.authn.sdk.example.views.authn.MfaRequiredView;
 import com.okta.authn.sdk.example.views.authn.MfaVerifyView;
 import com.okta.authn.sdk.resource.AuthNRequest;
 import com.okta.authn.sdk.resource.AuthNResult;
-import com.okta.authn.sdk.resource.AuthNStatus;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -110,20 +105,9 @@ public class LoginResource {
 
         char[] pass = password != null ? password.toCharArray() : null;
 
-        OktaStateHandler stateHandler = new OktaStateHandler();
         try {
-            client.authenticate(username, pass, stateHandler);
-
-            AuthNResult result = stateHandler.getResult();
-            if (result != null
-                    && result.getStatus() == AuthNStatus.SUCCESS
-                    && StringUtils.isNotEmpty(result.getSessionToken())) {
-
-                // perform the Shiro login
-                OktaSuccessLoginToken successLoginToken = new OktaSuccessLoginToken(result);
-                Subject subject = SecurityUtils.getSubject();
-                subject.login(successLoginToken);
-            }
+            client.authenticate(username, pass, new OktaStateHandler());
+            // the state handler will redirect
         } catch (AuthenticationFailureException e) {
             return Response.ok(new LoginView(Optional.of(e))).build();
         }

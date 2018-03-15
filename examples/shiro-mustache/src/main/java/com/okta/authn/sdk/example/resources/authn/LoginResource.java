@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.okta.authn.sdk.example.OktaStateHandler.getPreviousAuthResult;
+
 @Path("/login")
 @Produces(MediaType.TEXT_HTML)
 public class LoginResource {
@@ -74,12 +76,11 @@ public class LoginResource {
             .map(authFactor -> {
                     String shortType = MfaVerifyView.relativeLink(authFactor);
                     return new Factor(authFactor.getId(),
-                                               shortType,
-                                               authFactor.getProvider(),
-                                               authFactor.getVendorName(),
-                                               authFactor.getProfile(),
-                                               "/login/mfa/verify/" + shortType);
-            })
+                                      shortType,
+                                      authFactor.getProvider(),
+                                      authFactor.getVendorName(),
+                                      authFactor.getProfile(),
+                                      "/login/mfa/verify/" + shortType);})
             .collect(Collectors.toList());
 
         return new MfaRequiredView(factors);
@@ -144,7 +145,6 @@ public class LoginResource {
         client.verifyFactor(factor, request, new OktaStateHandler());
     }
 
-
     private com.okta.authn.sdk.resource.Factor getFactor(String type, AuthNResult authNResult) {
 
         String oktaType = MfaVerifyView.fromRelativeLink(type);
@@ -165,10 +165,6 @@ public class LoginResource {
         }
 
         return new MfaVerifyView(challengeResult.getFactors().get(0)); // TODO: validate we only have one?
-    }
-
-    private AuthNResult getPreviousAuthResult() {
-        return OktaStateHandler.getPreviousAuthResult();
     }
 
     private static class ChallengeStateHandler extends OktaStateHandler {

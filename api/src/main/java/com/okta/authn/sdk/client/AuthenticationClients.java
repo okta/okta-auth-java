@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk;
+package com.okta.authn.sdk.client;
 
 import com.okta.sdk.lang.Classes;
 

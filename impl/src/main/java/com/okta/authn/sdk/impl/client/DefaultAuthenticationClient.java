@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.impl;
+package com.okta.authn.sdk.impl.client;
 
-import com.okta.authn.sdk.AuthenticationClient;
+import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationFailureException;
 import com.okta.authn.sdk.CredentialsException;
@@ -24,7 +24,7 @@ import com.okta.authn.sdk.InvalidAuthenticationStateException;
 import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
-import com.okta.authn.sdk.StateHandler;
+import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
@@ -140,36 +140,36 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
 
 
     @Override
-    public void authenticate(String username, char[] password, StateHandler stateHandler) throws AuthenticationException {
+    public void authenticate(String username, char[] password, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
         authenticate(instantiate(AuthenticationRequest.class)
                 .setUsername(username)
                 .setPassword(password),
-            stateHandler);
+                authenticationStateHandler);
     }
 
     @Override
-    public void authenticate(AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException {
-        doPost("/api/v1/authn", request, stateHandler);
+    public void authenticate(AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+        doPost("/api/v1/authn", request, authenticationStateHandler);
      }
 
     @Override
-    public void changePassword(char[] oldPassword, char[] newPassword, String stateToken, StateHandler stateHandler) throws AuthenticationException {
+    public void changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
         // TODO: validate params? state is required, old and new will be validated on the server?
         changePassword(instantiate(ChangePasswordRequest.class)
                 .setOldPassword(oldPassword)
                 .setNewPassword(newPassword)
                 .setStateToken(stateToken),
-            stateHandler
+                authenticationStateHandler
         );
     }
 
     @Override
-    public void changePassword(ChangePasswordRequest changePasswordRequest, StateHandler stateHandler) throws AuthenticationException {
-        doPost("/api/v1/authn/credentials/change_password", changePasswordRequest, stateHandler);
+    public void changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+        doPost("/api/v1/authn/credentials/change_password", changePasswordRequest, authenticationStateHandler);
     }
 
     @Override
-    public void challengeFactor(Factor factor, String stateToken, StateHandler stateHandler) throws AuthenticationException {
+    public void challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
         AuthenticationRequest request = instantiate(AuthenticationRequest.class)
                 .setStateToken(stateToken);
 
@@ -177,70 +177,70 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
                 .get("verify")
                 .getHref();
 
-        doPost(href, request, stateHandler);
+        doPost(href, request, authenticationStateHandler);
     }
 
     @Override
-    public void verifyFactor(Factor factor, AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException {
+    public void verifyFactor(Factor factor, AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
 
         // TODO: i'm not sure this link lookup is valid for all factor types
         String href = factor.getLinks()
                 .get("verify")
                 .getHref();
 
-        doPost(href, request, stateHandler);
+        doPost(href, request, authenticationStateHandler);
     }
 
-    private void handleResult(AuthenticationResponse authenticationResponse, StateHandler stateHandler) {
+    private void handleResult(AuthenticationResponse authenticationResponse, AuthenticationStateHandler authenticationStateHandler) {
         AuthenticationStatus status = authenticationResponse.getStatus();
         // TODO: add tests for getting as string then enum, then string again
 
          switch (status) {
              case SUCCESS:
-                 stateHandler.handleSuccess(authenticationResponse);
+                 authenticationStateHandler.handleSuccess(authenticationResponse);
                  break;
              case LOCKED_OUT:
-                 stateHandler.handleLockedOut(authenticationResponse);
+                 authenticationStateHandler.handleLockedOut(authenticationResponse);
                  break;
              case MFA_CHALLENGE:
-                 stateHandler.handleMfaChallenge(authenticationResponse);
+                 authenticationStateHandler.handleMfaChallenge(authenticationResponse);
                  break;
              case MFA_ENROLL:
-                 stateHandler.handleMfaEnroll(authenticationResponse);
+                 authenticationStateHandler.handleMfaEnroll(authenticationResponse);
                  break;
              case MFA_ENROLL_ACTIVATE:
-                 stateHandler.handleMfaEnrollActivate(authenticationResponse);
+                 authenticationStateHandler.handleMfaEnrollActivate(authenticationResponse);
                  break;
              case MFA_REQUIRED:
-                 stateHandler.handleMfaRequired(authenticationResponse);
+                 authenticationStateHandler.handleMfaRequired(authenticationResponse);
                  break;
              case PASSWORD_EXPIRED:
-                 stateHandler.handlePasswordExpired(authenticationResponse);
+                 authenticationStateHandler.handlePasswordExpired(authenticationResponse);
                  break;
              case PASSWORD_RESET:
-                 stateHandler.handlePasswordReset(authenticationResponse);
+                 authenticationStateHandler.handlePasswordReset(authenticationResponse);
                  break;
              case PASSWORD_WARN:
-                 stateHandler.handlePasswordWarning(authenticationResponse);
+                 authenticationStateHandler.handlePasswordWarning(authenticationResponse);
                  break;
              case RECOVERY:
-                 stateHandler.handleRecovery(authenticationResponse);
+                 authenticationStateHandler.handleRecovery(authenticationResponse);
                  break;
              case RECOVERY_CHALLENGE:
-                 stateHandler.handleRecoveryChallenge(authenticationResponse);
+                 authenticationStateHandler.handleRecoveryChallenge(authenticationResponse);
                  break;
              case UNAUTHENTICATED:
-                 stateHandler.handleUnauthenticated(authenticationResponse);
+                 authenticationStateHandler.handleUnauthenticated(authenticationResponse);
                  break;
              default:
-                 stateHandler.handleUnknown(authenticationResponse);
+                 authenticationStateHandler.handleUnknown(authenticationResponse);
          }
     }
 
-    private void doPost(String href, Resource request, StateHandler stateHandler) throws AuthenticationException {
+    private void doPost(String href, Resource request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
         try {
             AuthenticationResponse authenticationResponse = dataStore.create(href, request, AuthenticationResponse.class);
-            handleResult(authenticationResponse, stateHandler);
+            handleResult(authenticationResponse, authenticationStateHandler);
         } catch (ResourceException e) {
             translateException(e);
             throw e; // above method should always throw

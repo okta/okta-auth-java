@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.impl;
+package com.okta.authn.sdk.impl.client;
 
-import com.okta.authn.sdk.AuthenticationClient;
-import com.okta.authn.sdk.AuthenticationClientBuilder;
+import com.okta.authn.sdk.AuthenticationStateHandler;
+import com.okta.authn.sdk.client.AuthenticationClient;
+import com.okta.authn.sdk.client.AuthenticationClientBuilder;
 import com.okta.sdk.client.AuthenticationScheme;
 import com.okta.sdk.client.Proxy;
 import com.okta.sdk.impl.cache.DisabledCacheManager;
@@ -64,6 +65,7 @@ import java.util.Map;
 public class DefaultAuthenticationClientBuilder implements AuthenticationClientBuilder {
 
     private Proxy proxy;
+    private AuthenticationStateHandler stateHandler;
 
     private static final  String ENVVARS_TOKEN  = "envvars";
     private static final  String SYSPROPS_TOKEN = "sysprops";
@@ -170,6 +172,11 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
         Assert.notNull(baseUrlResolver, "baseUrlResolver must not be null");
         this.clientConfig.setBaseUrlResolver(baseUrlResolver);
         return this;
+    }
+
+    @Override
+    public AuthenticationClientBuilder setStateHandler(AuthenticationStateHandler stateHandler) {
+        return null;
     }
 
     @Override

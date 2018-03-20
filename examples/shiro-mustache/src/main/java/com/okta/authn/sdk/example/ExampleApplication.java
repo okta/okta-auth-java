@@ -16,8 +16,8 @@
 package com.okta.authn.sdk.example;
 
 import com.codahale.metrics.health.HealthCheck;
-import com.okta.authn.sdk.AuthenticationClient;
-import com.okta.authn.sdk.AuthenticationClients;
+import com.okta.authn.sdk.client.AuthenticationClient;
+import com.okta.authn.sdk.client.AuthenticationClients;
 import com.okta.authn.sdk.example.dao.DefaultStormtrooperDao;
 import com.okta.authn.sdk.example.dao.DefaultTieCraftDao;
 import com.okta.authn.sdk.example.dao.StormtrooperDao;

@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk;
+package com.okta.authn.sdk.client;
 
+import com.okta.authn.sdk.AuthenticationException;
+import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.ChangePasswordRequest;
@@ -23,17 +25,17 @@ import com.okta.sdk.ds.DataStore;
 
 public interface AuthenticationClient extends DataStore {
 
-    void authenticate(String username, char[] password, StateHandler stateHandler) throws AuthenticationException;
+    void authenticate(String username, char[] password, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
 
-    void authenticate(AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException;
+    void authenticate(AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
 
-    void changePassword(char[] oldPassword, char[] newPassword, String stateToken, StateHandler stateHandler) throws AuthenticationException;
+    void changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
 
-    void changePassword(ChangePasswordRequest changePasswordRequest, StateHandler stateHandler) throws AuthenticationException;
+    void changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
 
-    void challengeFactor(Factor factor, String stateToken, StateHandler stateHandler) throws AuthenticationException;
+    void challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
 
-    void verifyFactor(Factor factor, AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException;
+    void verifyFactor(Factor factor, AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
 
     default AuthenticationRequest fromResult(AuthenticationResponse result) {
         return instantiate(AuthenticationRequest.class)

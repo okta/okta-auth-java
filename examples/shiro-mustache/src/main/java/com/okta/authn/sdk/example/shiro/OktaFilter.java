@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.example.shiro;
 
-import com.okta.authn.sdk.example.OktaStateHandler;
+import com.okta.authn.sdk.example.OktaAuthenticationStateHandler;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -32,7 +32,7 @@ public class OktaFilter extends AuthenticatingFilter {
 
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
-        return new OktaSuccessLoginToken(OktaStateHandler.getPreviousAuthResult());
+        return new OktaSuccessLoginToken(OktaAuthenticationStateHandler.getPreviousAuthResult());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class OktaFilter extends AuthenticatingFilter {
     @Override
     public boolean isLoginRequest(ServletRequest request, ServletResponse response) {
 
-        AuthenticationResponse result = OktaStateHandler.getPreviousAuthResult();
+        AuthenticationResponse result = OktaAuthenticationStateHandler.getPreviousAuthResult();
         return result != null && result.getStatus().equals(AuthenticationStatus.SUCCESS);
     }
 }

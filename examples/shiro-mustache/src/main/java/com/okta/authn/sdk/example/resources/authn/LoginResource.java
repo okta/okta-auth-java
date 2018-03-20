@@ -15,10 +15,10 @@
  */
 package com.okta.authn.sdk.example.resources.authn;
 
-import com.okta.authn.sdk.AuthenticationClient;
+import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationFailureException;
-import com.okta.authn.sdk.example.OktaStateHandler;
+import com.okta.authn.sdk.example.OktaAuthenticationStateHandler;
 import com.okta.authn.sdk.example.models.authn.Factor;
 import com.okta.authn.sdk.example.views.authn.ChangePasswordView;
 import com.okta.authn.sdk.example.views.authn.LoginView;
@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.okta.authn.sdk.example.OktaStateHandler.getPreviousAuthResult;
+import static com.okta.authn.sdk.example.OktaAuthenticationStateHandler.getPreviousAuthResult;
 
 @Path("/login")
 @Produces(MediaType.TEXT_HTML)
@@ -107,7 +107,7 @@ public class LoginResource {
         char[] pass = password != null ? password.toCharArray() : null;
 
         try {
-            authenticationClient.authenticate(username, pass, new OktaStateHandler());
+            authenticationClient.authenticate(username, pass, new OktaAuthenticationStateHandler());
             // the state handler will redirect
         } catch (AuthenticationFailureException e) {
             return Response.ok(new LoginView(Optional.of(e))).build();
@@ -124,7 +124,7 @@ public class LoginResource {
         authenticationClient.changePassword(oldPassword.toCharArray(),
                               newPassword.toCharArray(),
                               getPreviousAuthResult().getStateToken(),
-                  new OktaStateHandler());
+                  new OktaAuthenticationStateHandler());
     }
 
     @POST
@@ -142,7 +142,7 @@ public class LoginResource {
                 .setSignatureData(signatureData)
                 .setPassCode(passCode);
 
-        authenticationClient.verifyFactor(factor, request, new OktaStateHandler());
+        authenticationClient.verifyFactor(factor, request, new OktaAuthenticationStateHandler());
     }
 
     private com.okta.authn.sdk.resource.Factor getFactor(String type, AuthenticationResponse authenticationResponse) {
@@ -155,7 +155,7 @@ public class LoginResource {
 
     private MfaVerifyView challengeFactor(com.okta.authn.sdk.resource.Factor factor, AuthenticationResponse authenticationResponse) throws AuthenticationException {
 
-        ChallengeStateHandler handler = new ChallengeStateHandler();
+        ChallengeAuthenticationStateHandler handler = new ChallengeAuthenticationStateHandler();
         authenticationClient.challengeFactor(factor, authenticationResponse.getStateToken(), handler);
 
         AuthenticationResponse challengeResult = handler.getChallengeResult();
@@ -168,7 +168,7 @@ public class LoginResource {
     }
 
     //  TODO: look into adding a method that does this for me
-    private static class ChallengeStateHandler extends OktaStateHandler {
+    private static class ChallengeAuthenticationStateHandler extends OktaAuthenticationStateHandler {
 
         private AuthenticationResponse challengeResult;
 

@@ -17,7 +17,7 @@ package com.okta.authn.sdk;
 
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 
-public interface StateHandler {
+public interface AuthenticationStateHandler {
 
     void handleUnauthenticated(AuthenticationResponse typedUnauthenticatedResponse);
 

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk;
+package com.okta.authn.sdk.client;
 
+import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.sdk.client.Proxy;
 
 /**
@@ -118,6 +119,8 @@ public interface AuthenticationClientBuilder {
      * @return the AuthenticationClientBuilder instance for method chaining
      */
     AuthenticationClientBuilder setOrgUrl(String baseUrl);
+
+    AuthenticationClientBuilder setStateHandler(AuthenticationStateHandler stateHandler);
 
     /**
      * Constructs a new {@link AuthenticationClient} instance based on the AuthenticationClientBuilder's current configuration state.

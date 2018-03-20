@@ -17,7 +17,7 @@ package com.okta.authn.sdk;
 
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 
-public abstract class StateHandlerAdapter implements StateHandler {
+public abstract class AuthenticationStateHandlerAdapter implements AuthenticationStateHandler {
 
     private AuthenticationResponse result;
 

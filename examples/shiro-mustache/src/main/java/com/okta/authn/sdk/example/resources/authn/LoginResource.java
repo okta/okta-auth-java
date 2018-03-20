@@ -26,6 +26,7 @@ import com.okta.authn.sdk.example.views.authn.MfaRequiredView;
 import com.okta.authn.sdk.example.views.authn.MfaVerifyView;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.authn.sdk.resource.AuthenticationStatus;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -107,7 +108,7 @@ public class LoginResource {
         char[] pass = password != null ? password.toCharArray() : null;
 
         try {
-            authenticationClient.authenticate(username, pass, new OktaAuthenticationStateHandler());
+            authenticationClient.authenticate(username, pass);
             // the state handler will redirect
         } catch (AuthenticationFailureException e) {
             return Response.ok(new LoginView(Optional.of(e))).build();
@@ -122,9 +123,8 @@ public class LoginResource {
                                @Context HttpServletRequest request) throws AuthenticationException {
 
         authenticationClient.changePassword(oldPassword.toCharArray(),
-                              newPassword.toCharArray(),
-                              getPreviousAuthResult().getStateToken(),
-                  new OktaAuthenticationStateHandler());
+                                            newPassword.toCharArray(),
+                                            getPreviousAuthResult().getStateToken());
     }
 
     @POST
@@ -138,11 +138,11 @@ public class LoginResource {
         com.okta.authn.sdk.resource.Factor factor = getFactor(type, previousAuthResult);
 
         AuthenticationRequest request = authenticationClient.fromResult(previousAuthResult)
-                .setClientData(clientData)
-                .setSignatureData(signatureData)
-                .setPassCode(passCode);
+                                                                .setClientData(clientData)
+                                                                .setSignatureData(signatureData)
+                                                                .setPassCode(passCode);
 
-        authenticationClient.verifyFactor(factor, request, new OktaAuthenticationStateHandler());
+        authenticationClient.verifyFactor(factor, request);
     }
 
     private com.okta.authn.sdk.resource.Factor getFactor(String type, AuthenticationResponse authenticationResponse) {
@@ -155,30 +155,13 @@ public class LoginResource {
 
     private MfaVerifyView challengeFactor(com.okta.authn.sdk.resource.Factor factor, AuthenticationResponse authenticationResponse) throws AuthenticationException {
 
-        ChallengeAuthenticationStateHandler handler = new ChallengeAuthenticationStateHandler();
-        authenticationClient.challengeFactor(factor, authenticationResponse.getStateToken(), handler);
+        AuthenticationResponse challengeResult = authenticationClient.challengeFactor(factor, authenticationResponse.getStateToken());
 
-        AuthenticationResponse challengeResult = handler.getChallengeResult();
-
-        if (challengeResult == null) {
+        // check the response type
+        if (!challengeResult.getStatus().equals(AuthenticationStatus.MFA_CHALLENGE)) {
             throw new IllegalStateException("Challenge Result is empty, and other state was not triggered");
         }
 
         return new MfaVerifyView(challengeResult.getFactors().get(0)); // TODO: validate we only have one?
-    }
-
-    //  TODO: look into adding a method that does this for me
-    private static class ChallengeAuthenticationStateHandler extends OktaAuthenticationStateHandler {
-
-        private AuthenticationResponse challengeResult;
-
-        @Override
-        public void handleMfaChallenge(AuthenticationResponse recoveryChallenge) {
-            challengeResult = recoveryChallenge;
-        }
-
-        AuthenticationResponse getChallengeResult() {
-            return challengeResult;
-        }
     }
 }

@@ -48,6 +48,9 @@ public class OktaAuthenticationStateHandler extends AuthenticationStateHandlerAd
     }
 
     @Override
+    public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) { }
+
+    @Override
     public void handleUnknown(AuthenticationResponse unknownResponse) {
         redirect("/login?error="+ unknownResponse.getStatus().name(), unknownResponse);
     }

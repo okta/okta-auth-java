@@ -50,6 +50,7 @@ import java.lang.reflect.Constructor;
 public class DefaultAuthenticationClient implements AuthenticationClient {
 
     private final InternalDataStore dataStore;
+    private final AuthenticationStateHandler authenticationStateHandler;
 
     /**
      * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level
@@ -62,15 +63,19 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
      *                             Okta REST resources (can be null)
      * @param authenticationScheme the HTTP authentication scheme to be used when communicating with the Okta API
      *                             server (can be null)
-     * @param requestAuthenticatorFactory factory used to handle creating autentication requests
+     * @param requestAuthenticatorFactory factory used to handle creating authentication requests
      * @param connectionTimeout    connection timeout in seconds
+     * @param authenticationStateHandler handler to manage various authentication states
      */
-    public DefaultAuthenticationClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout) {
+    public DefaultAuthenticationClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout, AuthenticationStateHandler authenticationStateHandler) {
         Assert.notNull(baseUrlResolver, "baseUrlResolver argument cannot be null.");
         Assert.isTrue(connectionTimeout >= 0, "connectionTimeout cannot be a negative number.");
+        Assert.notNull(authenticationStateHandler, "authenticationStateHandler argument cannot be null.");
         ClientCredentialsResolver clientCredentialsResolver = new DisabledClientCredentialsResolver();
         RequestExecutor requestExecutor = createRequestExecutor(clientCredentialsResolver.getClientCredentials(), proxy, authenticationScheme, requestAuthenticatorFactory, connectionTimeout);
         this.dataStore = createDataStore(requestExecutor, baseUrlResolver, clientCredentialsResolver, cacheManager);
+
+        this.authenticationStateHandler = authenticationStateHandler;
     }
 
 
@@ -138,38 +143,35 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
         return this.dataStore.getResource(href, clazz);
     }
 
-
     @Override
-    public void authenticate(String username, char[] password, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
-        authenticate(instantiate(AuthenticationRequest.class)
-                .setUsername(username)
-                .setPassword(password),
-                authenticationStateHandler);
+    public AuthenticationResponse authenticate(String username, char[] password) throws AuthenticationException {
+        return authenticate(instantiate(AuthenticationRequest.class)
+                    .setUsername(username)
+                    .setPassword(password));
     }
 
     @Override
-    public void authenticate(AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
-        doPost("/api/v1/authn", request, authenticationStateHandler);
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws AuthenticationException {
+        return doPost("/api/v1/authn", request);
      }
 
     @Override
-    public void changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+    public AuthenticationResponse changePassword(char[] oldPassword, char[] newPassword, String stateToken) throws AuthenticationException {
         // TODO: validate params? state is required, old and new will be validated on the server?
-        changePassword(instantiate(ChangePasswordRequest.class)
-                .setOldPassword(oldPassword)
-                .setNewPassword(newPassword)
-                .setStateToken(stateToken),
-                authenticationStateHandler
+        return changePassword(instantiate(ChangePasswordRequest.class)
+                    .setOldPassword(oldPassword)
+                    .setNewPassword(newPassword)
+                    .setStateToken(stateToken)
         );
     }
 
     @Override
-    public void changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
-        doPost("/api/v1/authn/credentials/change_password", changePasswordRequest, authenticationStateHandler);
+    public AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest) throws AuthenticationException {
+        return doPost("/api/v1/authn/credentials/change_password", changePasswordRequest);
     }
 
     @Override
-    public void challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+    public AuthenticationResponse challengeFactor(Factor factor, String stateToken) throws AuthenticationException {
         AuthenticationRequest request = instantiate(AuthenticationRequest.class)
                 .setStateToken(stateToken);
 
@@ -177,21 +179,21 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
                 .get("verify")
                 .getHref();
 
-        doPost(href, request, authenticationStateHandler);
+        return doPost(href, request);
     }
 
     @Override
-    public void verifyFactor(Factor factor, AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+    public AuthenticationResponse verifyFactor(Factor factor, AuthenticationRequest request) throws AuthenticationException {
 
         // TODO: i'm not sure this link lookup is valid for all factor types
         String href = factor.getLinks()
                 .get("verify")
                 .getHref();
 
-        doPost(href, request, authenticationStateHandler);
+        return doPost(href, request);
     }
 
-    private void handleResult(AuthenticationResponse authenticationResponse, AuthenticationStateHandler authenticationStateHandler) {
+    private void handleResult(AuthenticationResponse authenticationResponse) {
         AuthenticationStatus status = authenticationResponse.getStatus();
         // TODO: add tests for getting as string then enum, then string again
 
@@ -237,10 +239,11 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
          }
     }
 
-    private void doPost(String href, Resource request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+    private AuthenticationResponse doPost(String href, Resource request) throws AuthenticationException {
         try {
             AuthenticationResponse authenticationResponse = dataStore.create(href, request, AuthenticationResponse.class);
-            handleResult(authenticationResponse, authenticationStateHandler);
+            handleResult(authenticationResponse);
+            return authenticationResponse;
         } catch (ResourceException e) {
             translateException(e);
             throw e; // above method should always throw

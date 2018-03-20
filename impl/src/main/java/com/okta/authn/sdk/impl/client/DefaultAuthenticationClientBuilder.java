@@ -176,7 +176,9 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
 
     @Override
     public AuthenticationClientBuilder setStateHandler(AuthenticationStateHandler stateHandler) {
-        return null;
+        Assert.notNull(stateHandler, "stateHandler must not be null");
+        this.stateHandler = stateHandler;
+        return this;
     }
 
     @Override
@@ -199,14 +201,12 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
         }
 
         return new DefaultAuthenticationClient(baseUrlResolver, this.proxy, new DisabledCacheManager(),
-                this.clientConfig.getAuthenticationScheme(), this.clientConfig.getRequestAuthenticatorFactory(), this.clientConfig.getConnectionTimeout());
+                this.clientConfig.getAuthenticationScheme(), this.clientConfig.getRequestAuthenticatorFactory(), this.clientConfig.getConnectionTimeout(), stateHandler);
     }
 
     @Override
     public AuthenticationClientBuilder setOrgUrl(String baseUrl) {
-        if (baseUrl == null) {
-            throw new IllegalArgumentException("baseUrl argument cannot be null.");
-        }
+        Assert.notNull(baseUrl, "baseUrl argument cannot be null.");
         this.clientConfig.setBaseUrl(baseUrl);
         return this;
     }

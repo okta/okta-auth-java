@@ -40,7 +40,7 @@ public final class AuthenticationClients {
      * @return a a new {@link AuthenticationClientBuilder} instance, used to construct {@link AuthenticationClient} instances.
      */
     public static AuthenticationClientBuilder builder() {
-        return (AuthenticationClientBuilder) Classes.newInstance("com.okta.authn.sdk.impl.DefaultClientBuilder");
+        return (AuthenticationClientBuilder) Classes.newInstance("com.okta.authn.sdk.impl.client.DefaultAuthenticationClientBuilder");
     }
 
 }

@@ -101,7 +101,10 @@ public class ExampleApplication extends Application<ExampleConfiguration> {
             protected void configure() {
                 bind(new DefaultStormtrooperDao()).to(StormtrooperDao.class);
                 bind(new DefaultTieCraftDao()).to(TieCraftDao.class);
-                bind(AuthenticationClients.builder().build()).to(AuthenticationClient.class);
+                bind(AuthenticationClients.builder()
+                        .setStateHandler(new OktaAuthenticationStateHandler())
+                        .build()
+                ).to(AuthenticationClient.class);
             }
         });
     }

@@ -25,17 +25,17 @@ import com.okta.sdk.ds.DataStore;
 
 public interface AuthenticationClient extends DataStore {
 
-    void authenticate(String username, char[] password, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
+    AuthenticationResponse authenticate(String username, char[] password) throws AuthenticationException;
 
-    void authenticate(AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
+    AuthenticationResponse authenticate(AuthenticationRequest request) throws AuthenticationException;
 
-    void changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
+    AuthenticationResponse changePassword(char[] oldPassword, char[] newPassword, String stateToken) throws AuthenticationException;
 
-    void changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
+    AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest) throws AuthenticationException;
 
-    void challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
+    AuthenticationResponse challengeFactor(Factor factor, String stateToken) throws AuthenticationException;
 
-    void verifyFactor(Factor factor, AuthenticationRequest request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException;
+    AuthenticationResponse verifyFactor(Factor factor, AuthenticationRequest request) throws AuthenticationException;
 
     default AuthenticationRequest fromResult(AuthenticationResponse result) {
         return instantiate(AuthenticationRequest.class)

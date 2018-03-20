@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.AuthNRequest;
+import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.Options;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
@@ -28,7 +28,7 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultAuthNRequest extends AbstractResource implements AuthNRequest {
+public class DefaultAuthenticationRequest extends AbstractResource implements AuthenticationRequest {
 
     private static final StringProperty STATE_TOKEN_PROPERTY = new StringProperty("stateToken");
 
@@ -68,12 +68,12 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
 
     private static final MapProperty CONTEXT_PROPERTY = new MapProperty("context");
 
-    public DefaultAuthNRequest(InternalDataStore dataStore) {
+    public DefaultAuthenticationRequest(InternalDataStore dataStore) {
         super(dataStore);
 //        setResourceHref("/api/v1/authn");
     }
 
-    public DefaultAuthNRequest(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultAuthenticationRequest(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
         // TODO: maybe just always return this url from the getter ?
 //        setResourceHref("/api/v1/authn");
@@ -110,7 +110,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setStateToken(String stateToken) {
+    public AuthenticationRequest setStateToken(String stateToken) {
         setProperty(STATE_TOKEN_PROPERTY, stateToken);
         return this;
     }
@@ -121,7 +121,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setRelayState(String relayState) {
+    public AuthenticationRequest setRelayState(String relayState) {
         setProperty(RELAY_STATE_PROPERTY, relayState);
         return this;
     }
@@ -132,13 +132,13 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setUsername(String username) {
+    public AuthenticationRequest setUsername(String username) {
         setProperty(USERNAME_PROPERTY, username);
         return this;
     }
 
     @Override
-    public AuthNRequest setPassword(char[] password) {
+    public AuthenticationRequest setPassword(char[] password) {
         setProperty(PASSWORD_PROPERTY, password);
         return this;
     }
@@ -149,7 +149,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setFactorId(String factorId) {
+    public AuthenticationRequest setFactorId(String factorId) {
         setProperty(FACTOR_ID_PROPERTY, factorId);
         return this;
     }
@@ -160,7 +160,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setPassCode(String passCode) {
+    public AuthenticationRequest setPassCode(String passCode) {
         setProperty(PASS_CODE_PROPERTY, passCode);
         return this;
     }
@@ -171,7 +171,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setNextPassCode(String nextPassCode) {
+    public AuthenticationRequest setNextPassCode(String nextPassCode) {
         return this;
     }
 
@@ -181,7 +181,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setAnswer(String answer) {
+    public AuthenticationRequest setAnswer(String answer) {
         setProperty(ANSWER_PROPERTY, answer);
         return this;
     }
@@ -192,7 +192,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setClientData(String clientData) {
+    public AuthenticationRequest setClientData(String clientData) {
         setProperty(CLIENT_DATA_PROPERTY, clientData);
         return this;
     }
@@ -203,7 +203,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setAuthenticatorData(String authenticatorData) {
+    public AuthenticationRequest setAuthenticatorData(String authenticatorData) {
         setProperty(AUTHENTICATIOR_DATA_PROPERTY, authenticatorData);
         return this;
     }
@@ -214,7 +214,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setSignatureData(String signatureData) {
+    public AuthenticationRequest setSignatureData(String signatureData) {
         setProperty(SIGNATURE_DATA_PROPERTY, signatureData);
         return this;
     }
@@ -225,7 +225,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setRecoveryToken(String recoveryToken) {
+    public AuthenticationRequest setRecoveryToken(String recoveryToken) {
         setProperty(RECOVERY_TOKEN_PROPERTY, recoveryToken);
         return this;
     }
@@ -236,7 +236,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setFactorType(String factorType) {
+    public AuthenticationRequest setFactorType(String factorType) {
         setProperty(FACTOR_TYPE_PROPERTY, factorType);
         return this;
     }
@@ -247,7 +247,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setToken(String token) {
+    public AuthenticationRequest setToken(String token) {
         setProperty(TOKEN_PROPERTY, token);
         return this;
     }
@@ -258,7 +258,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setRememberDevice(Boolean rememberDevice) {
+    public AuthenticationRequest setRememberDevice(Boolean rememberDevice) {
         setProperty(REMEMBER_DEVICE_PROPERTY, rememberDevice);
         return this;
     }
@@ -269,7 +269,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setAutoPush(Boolean autoPush) {
+    public AuthenticationRequest setAutoPush(Boolean autoPush) {
         setProperty(AUTO_PUSH_PROPERTY, autoPush);
         return this;
     }
@@ -280,7 +280,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setAudience(String audience) {
+    public AuthenticationRequest setAudience(String audience) {
         setProperty(AUDIENCE_PROPERTY, audience);
         return this;
     }
@@ -291,7 +291,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setContext(Map<String, Object> context) {
+    public AuthenticationRequest setContext(Map<String, Object> context) {
         setProperty(CONTEXT_PROPERTY, context);
         return this;
     }
@@ -302,7 +302,7 @@ public class DefaultAuthNRequest extends AbstractResource implements AuthNReques
     }
 
     @Override
-    public AuthNRequest setOptions(Options options) {
+    public AuthenticationRequest setOptions(Options options) {
         setProperty(OPTIONS_PROPERTY, options);
         return this;
     }

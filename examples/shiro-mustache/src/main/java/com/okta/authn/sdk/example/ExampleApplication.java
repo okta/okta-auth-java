@@ -16,8 +16,8 @@
 package com.okta.authn.sdk.example;
 
 import com.codahale.metrics.health.HealthCheck;
-import com.okta.authn.sdk.Client;
-import com.okta.authn.sdk.Clients;
+import com.okta.authn.sdk.AuthenticationClient;
+import com.okta.authn.sdk.AuthenticationClients;
 import com.okta.authn.sdk.example.dao.DefaultStormtrooperDao;
 import com.okta.authn.sdk.example.dao.DefaultTieCraftDao;
 import com.okta.authn.sdk.example.dao.StormtrooperDao;
@@ -101,7 +101,7 @@ public class ExampleApplication extends Application<ExampleConfiguration> {
             protected void configure() {
                 bind(new DefaultStormtrooperDao()).to(StormtrooperDao.class);
                 bind(new DefaultTieCraftDao()).to(TieCraftDao.class);
-                bind(Clients.builder().build()).to(Client.class);
+                bind(AuthenticationClients.builder().build()).to(AuthenticationClient.class);
             }
         });
     }

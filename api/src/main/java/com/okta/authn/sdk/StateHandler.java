@@ -15,33 +15,33 @@
  */
 package com.okta.authn.sdk;
 
-import com.okta.authn.sdk.resource.AuthNResult;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 
 public interface StateHandler {
 
-    void handleUnauthenticated(AuthNResult typedUnauthenticatedResponse);
+    void handleUnauthenticated(AuthenticationResponse typedUnauthenticatedResponse);
 
-    void handlePasswordWarning(AuthNResult passwordWarning);
+    void handlePasswordWarning(AuthenticationResponse passwordWarning);
 
-    void handlePasswordExpired(AuthNResult passwordExpired);
+    void handlePasswordExpired(AuthenticationResponse passwordExpired);
 
-    void handleRecovery(AuthNResult recovery);
+    void handleRecovery(AuthenticationResponse recovery);
 
-    void handleRecoveryChallenge(AuthNResult recoveryChallenge);
+    void handleRecoveryChallenge(AuthenticationResponse recoveryChallenge);
 
-    void handlePasswordReset(AuthNResult passwordReset);
+    void handlePasswordReset(AuthenticationResponse passwordReset);
 
-    void handleLockedOut(AuthNResult lockedOut);
+    void handleLockedOut(AuthenticationResponse lockedOut);
 
-    void handleMfaRequired(AuthNResult mfaRequiredResponse);
+    void handleMfaRequired(AuthenticationResponse mfaRequiredResponse);
 
-    void handleMfaEnroll(AuthNResult mfaEnroll);
+    void handleMfaEnroll(AuthenticationResponse mfaEnroll);
 
-    void handleMfaEnrollActivate(AuthNResult mfaEnrollActivate);
+    void handleMfaEnrollActivate(AuthenticationResponse mfaEnrollActivate);
 
-    void handleMfaChallenge(AuthNResult mfaChallengeResponse);
+    void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse);
 
-    void handleSuccess(AuthNResult successResponse);
+    void handleSuccess(AuthenticationResponse successResponse);
 
-    void handleUnknown(AuthNResult typedUnknownResponse);
+    void handleUnknown(AuthenticationResponse typedUnknownResponse);
 }

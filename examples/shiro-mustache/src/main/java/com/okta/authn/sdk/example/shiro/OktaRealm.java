@@ -15,8 +15,8 @@
  */
 package com.okta.authn.sdk.example.shiro;
 
-import com.okta.authn.sdk.resource.AuthNResult;
-import com.okta.authn.sdk.resource.AuthNStatus;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -39,13 +39,13 @@ public class OktaRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-        AuthNResult authNResult = ((OktaSuccessLoginToken) token).getAuthNResult();
+        AuthenticationResponse authenticationResponse = ((OktaSuccessLoginToken) token).getAuthenticationResponse();
 
         // auth already verified, just check the status
-        if (authNResult != null && authNResult.getStatus() == AuthNStatus.SUCCESS) {
+        if (authenticationResponse != null && authenticationResponse.getStatus() == AuthenticationStatus.SUCCESS) {
 
             // if we have a valid User (see below) return an AuthenticationInfo
-            User result = authNResult.getUser();
+            User result = authenticationResponse.getUser();
             if (result != null) {
                 SimplePrincipalCollection principalCollection = new SimplePrincipalCollection(result.getLogin(), getName());
                 principalCollection.add(result, getName());

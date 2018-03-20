@@ -16,8 +16,8 @@
 package com.okta.authn.sdk.example.shiro;
 
 import com.okta.authn.sdk.example.OktaStateHandler;
-import com.okta.authn.sdk.resource.AuthNResult;
-import com.okta.authn.sdk.resource.AuthNStatus;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.authn.sdk.resource.AuthenticationStatus;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 
@@ -53,7 +53,7 @@ public class OktaFilter extends AuthenticatingFilter {
     @Override
     public boolean isLoginRequest(ServletRequest request, ServletResponse response) {
 
-        AuthNResult result = OktaStateHandler.getPreviousAuthResult();
-        return result != null && result.getStatus().equals(AuthNStatus.SUCCESS);
+        AuthenticationResponse result = OktaStateHandler.getPreviousAuthResult();
+        return result != null && result.getStatus().equals(AuthenticationStatus.SUCCESS);
     }
 }

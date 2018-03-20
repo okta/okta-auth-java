@@ -15,79 +15,79 @@
  */
 package com.okta.authn.sdk;
 
-import com.okta.authn.sdk.resource.AuthNResult;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 
 public abstract class StateHandlerAdapter implements StateHandler {
 
-    private AuthNResult result;
+    private AuthenticationResponse result;
 
     @Override
-    public void handleUnauthenticated(AuthNResult unauthenticatedResponse) {
+    public void handleUnauthenticated(AuthenticationResponse unauthenticatedResponse) {
         this.handleUnknown(unauthenticatedResponse);
     }
 
     @Override
-    public void handleSuccess(AuthNResult successResponse) {
+    public void handleSuccess(AuthenticationResponse successResponse) {
         this.handleUnknown(successResponse);
     }
 
     @Override
-    public void handlePasswordWarning(AuthNResult passwordWarning) {
+    public void handlePasswordWarning(AuthenticationResponse passwordWarning) {
         this.handleUnknown(passwordWarning);
     }
 
     @Override
-    public void handlePasswordExpired(AuthNResult passwordExpired) {
+    public void handlePasswordExpired(AuthenticationResponse passwordExpired) {
         this.handleUnknown(passwordExpired);
     }
 
     @Override
-    public void handleRecovery(AuthNResult recovery) {
+    public void handleRecovery(AuthenticationResponse recovery) {
         this.handleUnknown(recovery);
     }
 
     @Override
-    public void handleRecoveryChallenge(AuthNResult recoveryChallenge) {
+    public void handleRecoveryChallenge(AuthenticationResponse recoveryChallenge) {
         this.handleUnknown(recoveryChallenge);
     }
 
     @Override
-    public void handlePasswordReset(AuthNResult passwordReset) {
+    public void handlePasswordReset(AuthenticationResponse passwordReset) {
         this.handleUnknown(passwordReset);
     }
 
     @Override
-    public void handleLockedOut(AuthNResult lockedOut) {
+    public void handleLockedOut(AuthenticationResponse lockedOut) {
         this.handleUnknown(lockedOut);
     }
 
     @Override
-    public void handleMfaRequired(AuthNResult mfaRequiredResponse) {
+    public void handleMfaRequired(AuthenticationResponse mfaRequiredResponse) {
         this.handleUnknown(mfaRequiredResponse);
     }
 
     @Override
-    public void handleMfaEnroll(AuthNResult mfaEnroll) {
+    public void handleMfaEnroll(AuthenticationResponse mfaEnroll) {
         this.handleUnknown(mfaEnroll);
     }
 
     @Override
-    public void handleMfaEnrollActivate(AuthNResult mfaEnrollActivate) {
+    public void handleMfaEnrollActivate(AuthenticationResponse mfaEnrollActivate) {
         this.handleUnknown(mfaEnrollActivate);
     }
 
     @Override
-    public void handleMfaChallenge(AuthNResult mfaChallengeResponse) {
+    public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) {
         this.handleUnknown(mfaChallengeResponse);
     }
 
     // force handling of unknown ?
 
-    public AuthNResult getResult() {
+    public AuthenticationResponse getResult() {
         return result;
     }
 
-    protected void setResult(AuthNResult result) {
+    protected void setResult(AuthenticationResponse result) {
         this.result = result;
     }
 }

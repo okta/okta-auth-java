@@ -19,79 +19,79 @@ import com.okta.sdk.resource.Resource;
 
 import java.util.Map;
 
-public interface AuthNRequest extends Resource {
+public interface AuthenticationRequest extends Resource {
 
     String getStateToken();
 
-    AuthNRequest setStateToken(String stateToken);
+    AuthenticationRequest setStateToken(String stateToken);
 
     String getRelayState();
 
-    AuthNRequest setRelayState(String relayState);
+    AuthenticationRequest setRelayState(String relayState);
 
     String getUsername();
 
-    AuthNRequest setUsername(String username);
+    AuthenticationRequest setUsername(String username);
 
-    AuthNRequest setPassword(char[] password);
+    AuthenticationRequest setPassword(char[] password);
 
     String getFactorId();
 
-    AuthNRequest setFactorId(String factorId);
+    AuthenticationRequest setFactorId(String factorId);
 
     String getPassCode();
 
-    AuthNRequest setPassCode(String passCode);
+    AuthenticationRequest setPassCode(String passCode);
 
     String getNextPassCode();
 
-    AuthNRequest setNextPassCode(String nextPassCode);
+    AuthenticationRequest setNextPassCode(String nextPassCode);
 
     String getAnswer();
 
-    AuthNRequest setAnswer(String answer);
+    AuthenticationRequest setAnswer(String answer);
 
     String getClientData();
 
-    AuthNRequest setClientData(String clientData);
+    AuthenticationRequest setClientData(String clientData);
 
     String getAuthenticatorData();
 
-    AuthNRequest setAuthenticatorData(String authenticatorData);
+    AuthenticationRequest setAuthenticatorData(String authenticatorData);
 
     String getSignatureData();
 
-    AuthNRequest setSignatureData(String signatureData);
+    AuthenticationRequest setSignatureData(String signatureData);
 
     String getRecoveryToken();
 
-    AuthNRequest setRecoveryToken(String recoveryToken);
+    AuthenticationRequest setRecoveryToken(String recoveryToken);
 
     String getFactorType();
 
-    AuthNRequest setFactorType(String factorType);
+    AuthenticationRequest setFactorType(String factorType);
 
     String getToken();
 
-    AuthNRequest setToken(String token);
+    AuthenticationRequest setToken(String token);
 
     Boolean isRememberDevice();
 
-    AuthNRequest setRememberDevice(Boolean rememberDevice);
+    AuthenticationRequest setRememberDevice(Boolean rememberDevice);
 
     Boolean isAutoPush();
 
-    AuthNRequest setAutoPush(Boolean autoPush);
+    AuthenticationRequest setAutoPush(Boolean autoPush);
 
     String getAudience();
 
-    AuthNRequest setAudience(String audience);
+    AuthenticationRequest setAudience(String audience);
 
     Map<String, Object> getContext();
 
-    AuthNRequest setContext(Map<String, Object> context);
+    AuthenticationRequest setContext(Map<String, Object> context);
 
     Options getOptions();
 
-    AuthNRequest setOptions(Options options);
+    AuthenticationRequest setOptions(Options options);
 }

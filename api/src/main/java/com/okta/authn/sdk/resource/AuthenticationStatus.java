@@ -18,7 +18,7 @@ package com.okta.authn.sdk.resource;
 /**
  * From: https://developer.okta.com/docs/api/resources/authn#transaction-state
  */
-public enum AuthNStatus {
+public enum AuthenticationStatus {
 
     /**
      * User tried to access protected resource (ex: an app) but user is not authenticated

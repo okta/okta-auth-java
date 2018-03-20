@@ -19,28 +19,28 @@ package com.okta.authn.sdk;
 import com.okta.sdk.lang.Classes;
 
 /**
- * Static utility/helper class for working with {@link Client} resources. For example:
+ * Static utility/helper class for working with {@link AuthenticationClient} resources. For example:
  * <pre>
- * <b>Clients.builder()</b>
+ * <b>AuthenticationClients.builder()</b>
  *     // ... etc ...
  *     .setProxy(new Proxy("192.168.2.120", 9001))
  *     .build();
  * </pre>
  *
- * <p>See the {@link ClientBuilder ClientBuilder} JavaDoc for extensive documentation on client configuration.</p>
+ * <p>See the {@link AuthenticationClientBuilder AuthenticationClientBuilder} JavaDoc for extensive documentation on client configuration.</p>
  *
- * @see ClientBuilder
+ * @see AuthenticationClientBuilder
  * @since 0.1.0
  */
-public final class Clients {
+public final class AuthenticationClients {
 
     /**
-     * Returns a new {@link ClientBuilder} instance, used to construct {@link Client} instances.
+     * Returns a new {@link AuthenticationClientBuilder} instance, used to construct {@link AuthenticationClient} instances.
      *
-     * @return a a new {@link ClientBuilder} instance, used to construct {@link Client} instances.
+     * @return a a new {@link AuthenticationClientBuilder} instance, used to construct {@link AuthenticationClient} instances.
      */
-    public static ClientBuilder builder() {
-        return (ClientBuilder) Classes.newInstance("com.okta.authn.sdk.impl.DefaultClientBuilder");
+    public static AuthenticationClientBuilder builder() {
+        return (AuthenticationClientBuilder) Classes.newInstance("com.okta.authn.sdk.impl.DefaultClientBuilder");
     }
 
 }

@@ -15,24 +15,24 @@
  */
 package com.okta.authn.sdk.example.shiro;
 
-import com.okta.authn.sdk.resource.AuthNResult;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 import org.apache.shiro.authc.AuthenticationToken;
 
 public class OktaSuccessLoginToken implements AuthenticationToken {
 
-    private final AuthNResult authNResult;
+    private final AuthenticationResponse authenticationResponse;
 
-    public OktaSuccessLoginToken(AuthNResult authNResult) {
-        this.authNResult = authNResult;
+    public OktaSuccessLoginToken(AuthenticationResponse authenticationResponse) {
+        this.authenticationResponse = authenticationResponse;
     }
 
-    public AuthNResult getAuthNResult() {
-        return authNResult;
+    public AuthenticationResponse getAuthenticationResponse() {
+        return authenticationResponse;
     }
 
     @Override
     public Object getPrincipal() {
-        return getAuthNResult();
+        return getAuthenticationResponse();
     }
 
     @Override

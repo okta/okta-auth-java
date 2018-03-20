@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public interface AuthNResult extends Resource {
+public interface AuthenticationResponse extends Resource {
 
     String getStateToken();
 
@@ -29,7 +29,7 @@ public interface AuthNResult extends Resource {
 
     Date getExpiresAt();
 
-    AuthNStatus getStatus();
+    AuthenticationStatus getStatus();
 
     String getStatusString();
 

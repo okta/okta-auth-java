@@ -16,8 +16,8 @@
  */
 package com.okta.authn.sdk.impl;
 
-import com.okta.authn.sdk.Client;
-import com.okta.authn.sdk.ClientBuilder;
+import com.okta.authn.sdk.AuthenticationClient;
+import com.okta.authn.sdk.AuthenticationClientBuilder;
 import com.okta.sdk.client.AuthenticationScheme;
 import com.okta.sdk.client.Proxy;
 import com.okta.sdk.impl.cache.DisabledCacheManager;
@@ -44,7 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <p>The default {@link ClientBuilder} implementation. This looks for configuration files
+ * <p>The default {@link AuthenticationClientBuilder} implementation. This looks for configuration files
  * in the following locations and order of precedence (last one wins).</p>
  * <ul>
  * <li>classpath:com/okta/sdk/config/okta.properties</li>
@@ -61,7 +61,7 @@ import java.util.Map;
  *
  * @since 0.1.0
  */
-public class DefaultClientBuilder implements ClientBuilder {
+public class DefaultAuthenticationClientBuilder implements AuthenticationClientBuilder {
 
     private Proxy proxy;
 
@@ -80,11 +80,11 @@ public class DefaultClientBuilder implements ClientBuilder {
 
     private ClientConfiguration clientConfig = new ClientConfiguration();
 
-    public DefaultClientBuilder() {
+    public DefaultAuthenticationClientBuilder() {
         this(new DefaultResourceFactory());
     }
 
-    DefaultClientBuilder(ResourceFactory resourceFactory) {
+    DefaultAuthenticationClientBuilder(ResourceFactory resourceFactory) {
         Collection<PropertiesSource> sources = new ArrayList<>();
 
         for (String location : DEFAULT_OKTA_PROPERTIES_FILE_LOCATIONS) {
@@ -151,7 +151,7 @@ public class DefaultClientBuilder implements ClientBuilder {
     }
 
     @Override
-    public ClientBuilder setProxy(Proxy proxy) {
+    public AuthenticationClientBuilder setProxy(Proxy proxy) {
         if (proxy == null) {
             throw new IllegalArgumentException("proxy argument cannot be null.");
         }
@@ -160,20 +160,20 @@ public class DefaultClientBuilder implements ClientBuilder {
     }
 
     @Override
-    public ClientBuilder setConnectionTimeout(int timeout) {
+    public AuthenticationClientBuilder setConnectionTimeout(int timeout) {
         Assert.isTrue(timeout >= 0, "Timeout cannot be a negative number.");
         this.clientConfig.setConnectionTimeout(timeout);
         return this;
     }
 
-    public ClientBuilder setBaseUrlResolver(BaseUrlResolver baseUrlResolver) {
+    public AuthenticationClientBuilder setBaseUrlResolver(BaseUrlResolver baseUrlResolver) {
         Assert.notNull(baseUrlResolver, "baseUrlResolver must not be null");
         this.clientConfig.setBaseUrlResolver(baseUrlResolver);
         return this;
     }
 
     @Override
-    public Client build() {
+    public AuthenticationClient build() {
 
         // use proxy overrides if they're set
         if (this.clientConfig.getProxyPort() > 0 || this.clientConfig.getProxyHost() != null &&
@@ -191,12 +191,12 @@ public class DefaultClientBuilder implements ClientBuilder {
             baseUrlResolver = new DefaultBaseUrlResolver(this.clientConfig.getBaseUrl());
         }
 
-        return new DefaultClient(baseUrlResolver, this.proxy, new DisabledCacheManager(),
+        return new DefaultAuthenticationClient(baseUrlResolver, this.proxy, new DisabledCacheManager(),
                 this.clientConfig.getAuthenticationScheme(), this.clientConfig.getRequestAuthenticatorFactory(), this.clientConfig.getConnectionTimeout());
     }
 
     @Override
-    public ClientBuilder setOrgUrl(String baseUrl) {
+    public AuthenticationClientBuilder setOrgUrl(String baseUrl) {
         if (baseUrl == null) {
             throw new IllegalArgumentException("baseUrl argument cannot be null.");
         }

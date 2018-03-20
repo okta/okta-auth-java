@@ -15,8 +15,8 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.AuthNResult;
-import com.okta.authn.sdk.resource.AuthNStatus;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.Factor;
 import com.okta.authn.sdk.resource.User;
 import com.okta.sdk.impl.ds.InternalDataStore;
@@ -32,13 +32,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultAuthNResult extends AbstractResource implements AuthNResult {
+public class DefaultAuthenticationResponse extends AbstractResource implements AuthenticationResponse {
 
     private static final StringProperty TYPE_PROPERTY = new StringProperty("type");
 
     private static final DateProperty EXPIRES_AT_PROPERTY = new DateProperty("expiresAt");
 
-    private static final EnumProperty<AuthNStatus> STATUS_PROPERTY = new EnumProperty<>("status", AuthNStatus.class);
+    private static final EnumProperty<AuthenticationStatus> STATUS_PROPERTY = new EnumProperty<>("status", AuthenticationStatus.class);
 
     private static final StringProperty FACTOR_RESULT_PROPERTY = new StringProperty("factorResult");
 
@@ -67,7 +67,7 @@ public class DefaultAuthNResult extends AbstractResource implements AuthNResult 
     private static final StringProperty EMBEDDED_FACTORS_PROPERTY = new StringProperty("factors");
     private static final StringProperty EMBEDDED_FACTOR_PROPERTY = new StringProperty("factor");
 
-    public DefaultAuthNResult(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultAuthenticationResponse(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -107,7 +107,7 @@ public class DefaultAuthNResult extends AbstractResource implements AuthNResult 
     }
 
     @Override
-    public AuthNStatus getStatus() {
+    public AuthenticationStatus getStatus() {
         return getEnumProperty(STATUS_PROPERTY);
     }
 

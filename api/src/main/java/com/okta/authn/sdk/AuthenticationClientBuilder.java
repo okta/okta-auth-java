@@ -20,10 +20,10 @@ import com.okta.sdk.client.Proxy;
 
 /**
  * A <a href="http://en.wikipedia.org/wiki/Builder_pattern">Builder design pattern</a> used to
- * construct {@link Client} instances.
+ * construct {@link AuthenticationClient} instances.
  *
- * <p>The {@code ClientBuilder} is used to construct Client instances with Okta credentials,
- * Proxy and Cache configuration.  Understanding caching is extremely important when creating a Client instance, so
+ * <p>The {@code AuthenticationClientBuilder} is used to construct AuthenticationClient instances with Okta credentials,
+ * Proxy and Cache configuration.  Understanding caching is extremely important when creating a AuthenticationClient instance, so
  * please ensure you read the <em>Caching</em> section below.</p>
  *
  * <h1>Usage</h1>
@@ -31,7 +31,7 @@ import com.okta.sdk.client.Proxy;
  * <p>The simplest usage is to just call the {@link #build() build()} method, for example:</p>
  *
  * <pre>
- * Client client = {@link Clients Clients}.builder().{@link #build() build()};
+ * AuthenticationClient client = {@link AuthenticationClients AuthenticationClients}.builder().{@link #build() build()};
  * </pre>
  *
  * <p>This will:</p>
@@ -70,12 +70,12 @@ import com.okta.sdk.client.Proxy;
  * <pre>
  * ClientCredentials clientCredentials = new TokenClientCredentials("apiToken");
  *
- * Client client = {@link Clients Clients}.builder().setOrgUrl("https://example.okta.com").build();
+ * AuthenticationClient client = {@link AuthenticationClients AuthenticationClients}.builder().setOrgUrl("https://example.okta.com").build();
  * </pre>
  *
  * @since 0.1.0
  */
-public interface ClientBuilder {
+public interface AuthenticationClientBuilder {
 
     String DEFAULT_CLIENT_ORG_URL_PROPERTY_NAME = "okta.client.orgUrl";
     String DEFAULT_CLIENT_CONNECTION_TIMEOUT_PROPERTY_NAME = "okta.client.connectionTimeout";
@@ -90,22 +90,22 @@ public interface ClientBuilder {
      *
      * <pre>
      * Proxy proxy = new Proxy("whatever.domain.com", 443);
-     * Client client = {@link Clients Clients}.builder().setProxy(proxy).build();
+     * AuthenticationClient client = {@link AuthenticationClients AuthenticationClients}.builder().setProxy(proxy).build();
      * </pre>
      *
      * @param proxy the {@code Proxy} you need to use.
-     * @return the ClientBuilder instance for method chaining.
+     * @return the AuthenticationClientBuilder instance for method chaining.
      */
-    ClientBuilder setProxy(Proxy proxy);
+    AuthenticationClientBuilder setProxy(Proxy proxy);
 
     /**
      * Sets both the timeout until a connection is established and the socket timeout (i.e. a maximum period of inactivity
      * between two consecutive data packets).  A timeout value of zero is interpreted as an infinite timeout.
      *
      * @param timeout connection and socket timeout in milliseconds
-     * @return the ClientBuilder instance for method chaining
+     * @return the AuthenticationClientBuilder instance for method chaining
      */
-    ClientBuilder setConnectionTimeout(int timeout);
+    AuthenticationClientBuilder setConnectionTimeout(int timeout);
 
     /**
      * Sets the base URL of the Okta REST API to use.  If unspecified, this value defaults to
@@ -115,14 +115,14 @@ public interface ClientBuilder {
      * {@code https://enterprise.okta.io/v1} for example.</p>
      *
      * @param baseUrl the base URL of the Okta REST API to use.
-     * @return the ClientBuilder instance for method chaining
+     * @return the AuthenticationClientBuilder instance for method chaining
      */
-    ClientBuilder setOrgUrl(String baseUrl);
+    AuthenticationClientBuilder setOrgUrl(String baseUrl);
 
     /**
-     * Constructs a new {@link Client} instance based on the ClientBuilder's current configuration state.
+     * Constructs a new {@link AuthenticationClient} instance based on the AuthenticationClientBuilder's current configuration state.
      *
-     * @return a new {@link Client} instance based on the ClientBuilder's current configuration state.
+     * @return a new {@link AuthenticationClient} instance based on the AuthenticationClientBuilder's current configuration state.
      */
-    Client build();
+    AuthenticationClient build();
 }

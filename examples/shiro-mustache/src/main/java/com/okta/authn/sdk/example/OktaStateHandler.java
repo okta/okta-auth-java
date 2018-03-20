@@ -16,7 +16,7 @@
 package com.okta.authn.sdk.example;
 
 import com.okta.authn.sdk.StateHandlerAdapter;
-import com.okta.authn.sdk.resource.AuthNResult;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
@@ -29,7 +29,7 @@ public class OktaStateHandler extends StateHandlerAdapter {
     private static final String PREVIOUS_AUTHN_RESULT = "previousAuthNResult";
 
     @Override
-    public void handleSuccess(AuthNResult successResponse) {
+    public void handleSuccess(AuthenticationResponse successResponse) {
         // the last request was a success, but if we do not have a session token
         // we need to force the flow to start over
         String relayState = successResponse.getRelayState();
@@ -38,45 +38,45 @@ public class OktaStateHandler extends StateHandlerAdapter {
     }
 
     @Override
-    public void handlePasswordExpired(AuthNResult passwordExpired) {
+    public void handlePasswordExpired(AuthenticationResponse passwordExpired) {
         redirect("/login/change-password", passwordExpired);
     }
 
     @Override
-    public void handleMfaRequired(AuthNResult mfaRequiredResponse) {
+    public void handleMfaRequired(AuthenticationResponse mfaRequiredResponse) {
         redirect("/login/mfa", mfaRequiredResponse);
     }
 
     @Override
-    public void handleUnknown(AuthNResult unknownResponse) {
+    public void handleUnknown(AuthenticationResponse unknownResponse) {
         redirect("/login?error="+ unknownResponse.getStatus().name(), unknownResponse);
     }
 
-    private void redirect(String location, AuthNResult authNResult) {
+    private void redirect(String location, AuthenticationResponse authenticationResponse) {
 
-        setResult(authNResult);
+        setResult(authenticationResponse);
         try {
             Subject subject = SecurityUtils.getSubject();
             HttpServletResponse response = WebUtils.getHttpResponse(subject);
-            setAuthNResult(authNResult);
+            setAuthNResult(authenticationResponse);
             response.sendRedirect(location);
         } catch (IOException e) {
             throw new IllegalStateException("failed to redirect.", e);
         }
     }
 
-    private static void setAuthNResult(AuthNResult authNResult) {
+    private static void setAuthNResult(AuthenticationResponse authenticationResponse) {
         Subject subject = SecurityUtils.getSubject();
-        subject.getSession().setAttribute(PREVIOUS_AUTHN_RESULT, authNResult);
+        subject.getSession().setAttribute(PREVIOUS_AUTHN_RESULT, authenticationResponse);
     }
 
-    public static AuthNResult getPreviousAuthResult() {
+    public static AuthenticationResponse getPreviousAuthResult() {
         Subject subject = SecurityUtils.getSubject();
 
         // TODO: use static key, or inject
-        AuthNResult authNResult = (AuthNResult) subject.getSession().getAttribute(PREVIOUS_AUTHN_RESULT);
-        System.out.println("authNResult: " + authNResult);
+        AuthenticationResponse authenticationResponse = (AuthenticationResponse) subject.getSession().getAttribute(PREVIOUS_AUTHN_RESULT);
+        System.out.println("authenticationResponse: " + authenticationResponse);
 
-        return authNResult;
+        return authenticationResponse;
     }
 }

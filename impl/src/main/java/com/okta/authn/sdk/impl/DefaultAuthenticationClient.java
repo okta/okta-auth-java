@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.impl;
 
+import com.okta.authn.sdk.AuthenticationClient;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationFailureException;
-import com.okta.authn.sdk.Client;
 import com.okta.authn.sdk.CredentialsException;
 import com.okta.authn.sdk.FactorValidationException;
 import com.okta.authn.sdk.InvalidAuthenticationStateException;
@@ -25,9 +25,9 @@ import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
 import com.okta.authn.sdk.StateHandler;
-import com.okta.authn.sdk.resource.AuthNRequest;
-import com.okta.authn.sdk.resource.AuthNResult;
-import com.okta.authn.sdk.resource.AuthNStatus;
+import com.okta.authn.sdk.resource.AuthenticationRequest;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.ChangePasswordRequest;
 import com.okta.authn.sdk.resource.Factor;
 import com.okta.sdk.authc.credentials.ClientCredentials;
@@ -47,12 +47,12 @@ import com.okta.sdk.resource.ResourceException;
 
 import java.lang.reflect.Constructor;
 
-public class DefaultClient implements Client {
+public class DefaultAuthenticationClient implements AuthenticationClient {
 
     private final InternalDataStore dataStore;
 
     /**
-     * Instantiates a new Client instance that will communicate with the Okta REST API.  See the class-level
+     * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level
      * JavaDoc for a usage example.
      *
      * @param baseUrlResolver      Okta base URL resolver
@@ -65,7 +65,7 @@ public class DefaultClient implements Client {
      * @param requestAuthenticatorFactory factory used to handle creating autentication requests
      * @param connectionTimeout    connection timeout in seconds
      */
-    public DefaultClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout) {
+    public DefaultAuthenticationClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout) {
         Assert.notNull(baseUrlResolver, "baseUrlResolver argument cannot be null.");
         Assert.isTrue(connectionTimeout >= 0, "connectionTimeout cannot be a negative number.");
         ClientCredentialsResolver clientCredentialsResolver = new DisabledClientCredentialsResolver();
@@ -141,14 +141,14 @@ public class DefaultClient implements Client {
 
     @Override
     public void authenticate(String username, char[] password, StateHandler stateHandler) throws AuthenticationException {
-        authenticate(instantiate(AuthNRequest.class)
+        authenticate(instantiate(AuthenticationRequest.class)
                 .setUsername(username)
                 .setPassword(password),
             stateHandler);
     }
 
     @Override
-    public void authenticate(AuthNRequest request, StateHandler stateHandler) throws AuthenticationException {
+    public void authenticate(AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException {
         doPost("/api/v1/authn", request, stateHandler);
      }
 
@@ -170,7 +170,7 @@ public class DefaultClient implements Client {
 
     @Override
     public void challengeFactor(Factor factor, String stateToken, StateHandler stateHandler) throws AuthenticationException {
-        AuthNRequest request = instantiate(AuthNRequest.class)
+        AuthenticationRequest request = instantiate(AuthenticationRequest.class)
                 .setStateToken(stateToken);
 
         String href = factor.getLinks()
@@ -181,7 +181,7 @@ public class DefaultClient implements Client {
     }
 
     @Override
-    public void verifyFactor(Factor factor, AuthNRequest request, StateHandler stateHandler) throws AuthenticationException {
+    public void verifyFactor(Factor factor, AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException {
 
         // TODO: i'm not sure this link lookup is valid for all factor types
         String href = factor.getLinks()
@@ -191,56 +191,56 @@ public class DefaultClient implements Client {
         doPost(href, request, stateHandler);
     }
 
-    private void handleResult(AuthNResult authNResult, StateHandler stateHandler) {
-        AuthNStatus status = authNResult.getStatus();
+    private void handleResult(AuthenticationResponse authenticationResponse, StateHandler stateHandler) {
+        AuthenticationStatus status = authenticationResponse.getStatus();
         // TODO: add tests for getting as string then enum, then string again
 
          switch (status) {
              case SUCCESS:
-                 stateHandler.handleSuccess(authNResult);
+                 stateHandler.handleSuccess(authenticationResponse);
                  break;
              case LOCKED_OUT:
-                 stateHandler.handleLockedOut(authNResult);
+                 stateHandler.handleLockedOut(authenticationResponse);
                  break;
              case MFA_CHALLENGE:
-                 stateHandler.handleMfaChallenge(authNResult);
+                 stateHandler.handleMfaChallenge(authenticationResponse);
                  break;
              case MFA_ENROLL:
-                 stateHandler.handleMfaEnroll(authNResult);
+                 stateHandler.handleMfaEnroll(authenticationResponse);
                  break;
              case MFA_ENROLL_ACTIVATE:
-                 stateHandler.handleMfaEnrollActivate(authNResult);
+                 stateHandler.handleMfaEnrollActivate(authenticationResponse);
                  break;
              case MFA_REQUIRED:
-                 stateHandler.handleMfaRequired(authNResult);
+                 stateHandler.handleMfaRequired(authenticationResponse);
                  break;
              case PASSWORD_EXPIRED:
-                 stateHandler.handlePasswordExpired(authNResult);
+                 stateHandler.handlePasswordExpired(authenticationResponse);
                  break;
              case PASSWORD_RESET:
-                 stateHandler.handlePasswordReset(authNResult);
+                 stateHandler.handlePasswordReset(authenticationResponse);
                  break;
              case PASSWORD_WARN:
-                 stateHandler.handlePasswordWarning(authNResult);
+                 stateHandler.handlePasswordWarning(authenticationResponse);
                  break;
              case RECOVERY:
-                 stateHandler.handleRecovery(authNResult);
+                 stateHandler.handleRecovery(authenticationResponse);
                  break;
              case RECOVERY_CHALLENGE:
-                 stateHandler.handleRecoveryChallenge(authNResult);
+                 stateHandler.handleRecoveryChallenge(authenticationResponse);
                  break;
              case UNAUTHENTICATED:
-                 stateHandler.handleUnauthenticated(authNResult);
+                 stateHandler.handleUnauthenticated(authenticationResponse);
                  break;
              default:
-                 stateHandler.handleUnknown(authNResult);
+                 stateHandler.handleUnknown(authenticationResponse);
          }
     }
 
     private void doPost(String href, Resource request, StateHandler stateHandler) throws AuthenticationException {
         try {
-            AuthNResult authNResult = dataStore.create(href, request, AuthNResult.class);
-            handleResult(authNResult, stateHandler);
+            AuthenticationResponse authenticationResponse = dataStore.create(href, request, AuthenticationResponse.class);
+            handleResult(authenticationResponse, stateHandler);
         } catch (ResourceException e) {
             translateException(e);
             throw e; // above method should always throw

@@ -15,17 +15,17 @@
  */
 package com.okta.authn.sdk;
 
-import com.okta.authn.sdk.resource.AuthNRequest;
-import com.okta.authn.sdk.resource.AuthNResult;
+import com.okta.authn.sdk.resource.AuthenticationRequest;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.ChangePasswordRequest;
 import com.okta.authn.sdk.resource.Factor;
 import com.okta.sdk.ds.DataStore;
 
-public interface Client extends DataStore {
+public interface AuthenticationClient extends DataStore {
 
     void authenticate(String username, char[] password, StateHandler stateHandler) throws AuthenticationException;
 
-    void authenticate(AuthNRequest request, StateHandler stateHandler) throws AuthenticationException;
+    void authenticate(AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException;
 
     void changePassword(char[] oldPassword, char[] newPassword, String stateToken, StateHandler stateHandler) throws AuthenticationException;
 
@@ -33,10 +33,10 @@ public interface Client extends DataStore {
 
     void challengeFactor(Factor factor, String stateToken, StateHandler stateHandler) throws AuthenticationException;
 
-    void verifyFactor(Factor factor, AuthNRequest request, StateHandler stateHandler) throws AuthenticationException;
+    void verifyFactor(Factor factor, AuthenticationRequest request, StateHandler stateHandler) throws AuthenticationException;
 
-    default AuthNRequest fromResult(AuthNResult result) {
-        return instantiate(AuthNRequest.class)
+    default AuthenticationRequest fromResult(AuthenticationResponse result) {
+        return instantiate(AuthenticationRequest.class)
             .setStateToken(result.getStateToken())
             .setRelayState(result.getRelayState());
     }

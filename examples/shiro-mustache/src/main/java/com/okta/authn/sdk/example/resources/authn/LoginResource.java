@@ -72,8 +72,7 @@ public class LoginResource {
     public MfaRequiredView getRequireMfaView() {
 
         // grab previous AuthenticationStatus
-        AuthenticationResponse authenticationResponse = getPreviousAuthResult();
-        List<Factor> factors = authenticationResponse.getFactors().stream()
+        List<Factor> factors = getPreviousAuthResult().getFactors().stream()
             .map(authFactor -> {
                     String shortType = MfaVerifyView.relativeLink(authFactor);
                     return new Factor(authFactor.getId(),

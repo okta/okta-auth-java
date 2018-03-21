@@ -22,6 +22,9 @@ import com.okta.authn.sdk.example.dao.DefaultStormtrooperDao;
 import com.okta.authn.sdk.example.dao.DefaultTieCraftDao;
 import com.okta.authn.sdk.example.dao.StormtrooperDao;
 import com.okta.authn.sdk.example.dao.TieCraftDao;
+import com.okta.authn.sdk.example.events.AuthenticationState;
+import com.okta.authn.sdk.example.events.impl.AnnotatedAuthenticationHandlerEventBus;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
@@ -29,14 +32,21 @@ import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.jaxrs.ShiroFeature;
 import org.apache.shiro.web.servlet.ShiroFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Map;
+
+import static com.okta.authn.sdk.resource.AuthenticationStatus.*;
 
 public class ExampleApplication extends Application<ExampleConfiguration> {
 
@@ -95,17 +105,59 @@ public class ExampleApplication extends Application<ExampleConfiguration> {
         String baseResourcePackage = getClass().getPackage().getName() + ".resources";
         jersey.packages(baseResourcePackage);
 
+        AnnotatedAuthenticationHandlerEventBus handler = new AnnotatedAuthenticationHandlerEventBus();
+        handler.register(this);
+        AuthenticationClient client = AuthenticationClients.builder()
+                                                           .setStateHandler(handler)
+                                                           .build();
+
         // use @Inject to bind the DAOs
         jersey.register(new AbstractBinder() {
             @Override
             protected void configure() {
                 bind(new DefaultStormtrooperDao()).to(StormtrooperDao.class);
                 bind(new DefaultTieCraftDao()).to(TieCraftDao.class);
-                bind(AuthenticationClients.builder()
-                        .setStateHandler(new OktaAuthenticationStateHandler())
-                        .build()
-                ).to(AuthenticationClient.class);
+                bind(client).to(AuthenticationClient.class);
             }
         });
+    }
+
+    @AuthenticationState(SUCCESS)
+    public void handleSuccess(AuthenticationResponse successResponse) {
+        // the last request was a success, but if we do not have a session token
+        // we need to force the flow to start over
+        String relayState = successResponse.getRelayState();
+        String dest = relayState != null ? relayState : "/troopers";
+        redirect(dest, successResponse);
+    }
+
+    @AuthenticationState(PASSWORD_EXPIRED)
+    public void handlePasswordExpired(AuthenticationResponse passwordExpired) {
+        redirect("/login/change-password", passwordExpired);
+    }
+
+    @AuthenticationState(MFA_REQUIRED)
+    public void handleMfaRequired(AuthenticationResponse mfaRequiredResponse) {
+        redirect("/login/mfa", mfaRequiredResponse);
+    }
+
+    @AuthenticationState(MFA_CHALLENGE)
+    public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) { }
+
+    @AuthenticationState(UNKNOWN)
+    public void handleUnknown(AuthenticationResponse unknownResponse) {
+        redirect("/login?error="+ unknownResponse.getStatus().name(), unknownResponse);
+    }
+
+    private void redirect(String location, AuthenticationResponse authenticationResponse) {
+
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            HttpServletResponse response = WebUtils.getHttpResponse(subject);
+            OktaAuthenticationStateHandler.setAuthNResult(authenticationResponse);
+            response.sendRedirect(location);
+        } catch (IOException e) {
+            throw new IllegalStateException("failed to redirect.", e);
+        }
     }
 }

@@ -56,8 +56,6 @@ public class OktaAuthenticationStateHandler extends AuthenticationStateHandlerAd
     }
 
     private void redirect(String location, AuthenticationResponse authenticationResponse) {
-
-        setResult(authenticationResponse);
         try {
             Subject subject = SecurityUtils.getSubject();
             HttpServletResponse response = WebUtils.getHttpResponse(subject);
@@ -68,7 +66,7 @@ public class OktaAuthenticationStateHandler extends AuthenticationStateHandlerAd
         }
     }
 
-    private static void setAuthNResult(AuthenticationResponse authenticationResponse) {
+    static void setAuthNResult(AuthenticationResponse authenticationResponse) {
         Subject subject = SecurityUtils.getSubject();
         subject.getSession().setAttribute(PREVIOUS_AUTHN_RESULT, authenticationResponse);
     }

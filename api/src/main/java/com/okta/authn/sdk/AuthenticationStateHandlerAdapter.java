@@ -19,8 +19,6 @@ import com.okta.authn.sdk.resource.AuthenticationResponse;
 
 public abstract class AuthenticationStateHandlerAdapter implements AuthenticationStateHandler {
 
-    private AuthenticationResponse result;
-
     @Override
     public void handleUnauthenticated(AuthenticationResponse unauthenticatedResponse) {
         this.handleUnknown(unauthenticatedResponse);
@@ -82,12 +80,4 @@ public abstract class AuthenticationStateHandlerAdapter implements Authenticatio
     }
 
     // force handling of unknown ?
-
-    public AuthenticationResponse getResult() {
-        return result;
-    }
-
-    protected void setResult(AuthenticationResponse result) {
-        this.result = result;
-    }
 }

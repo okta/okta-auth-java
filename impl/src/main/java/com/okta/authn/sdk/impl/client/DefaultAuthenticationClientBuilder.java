@@ -175,13 +175,6 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
     }
 
     @Override
-    public AuthenticationClientBuilder setStateHandler(AuthenticationStateHandler stateHandler) {
-        Assert.notNull(stateHandler, "stateHandler must not be null");
-        this.stateHandler = stateHandler;
-        return this;
-    }
-
-    @Override
     public AuthenticationClient build() {
 
         // use proxy overrides if they're set
@@ -201,7 +194,7 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
         }
 
         return new DefaultAuthenticationClient(baseUrlResolver, this.proxy, new DisabledCacheManager(),
-                this.clientConfig.getAuthenticationScheme(), this.clientConfig.getRequestAuthenticatorFactory(), this.clientConfig.getConnectionTimeout(), stateHandler);
+                this.clientConfig.getAuthenticationScheme(), this.clientConfig.getRequestAuthenticatorFactory(), this.clientConfig.getConnectionTimeout());
     }
 
     @Override

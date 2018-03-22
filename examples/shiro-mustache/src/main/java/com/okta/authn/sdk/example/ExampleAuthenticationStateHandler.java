@@ -24,7 +24,7 @@ import org.apache.shiro.web.util.WebUtils;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class OktaAuthenticationStateHandler extends AuthenticationStateHandlerAdapter {
+public class ExampleAuthenticationStateHandler extends AuthenticationStateHandlerAdapter {
 
     private static final String PREVIOUS_AUTHN_RESULT = "previousAuthNResult";
 
@@ -48,7 +48,9 @@ public class OktaAuthenticationStateHandler extends AuthenticationStateHandlerAd
     }
 
     @Override
-    public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) { }
+    public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) {
+        // do nothing this will be handled by the caller
+    }
 
     @Override
     public void handleUnknown(AuthenticationResponse unknownResponse) {

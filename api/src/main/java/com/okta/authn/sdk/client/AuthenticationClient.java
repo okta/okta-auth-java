@@ -25,17 +25,19 @@ import com.okta.sdk.ds.DataStore;
 
 public interface AuthenticationClient extends DataStore {
 
-    AuthenticationResponse authenticate(String username, char[] password) throws AuthenticationException;
+    AuthenticationResponse authenticate(String username, char[] password, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    AuthenticationResponse authenticate(AuthenticationRequest request) throws AuthenticationException;
+    AuthenticationResponse authenticate(AuthenticationRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    AuthenticationResponse changePassword(char[] oldPassword, char[] newPassword, String stateToken) throws AuthenticationException;
+    AuthenticationResponse changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest) throws AuthenticationException;
+    AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    AuthenticationResponse challengeFactor(Factor factor, String stateToken) throws AuthenticationException;
+    AuthenticationResponse challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    AuthenticationResponse verifyFactor(Factor factor, AuthenticationRequest request) throws AuthenticationException;
+    AuthenticationResponse verifyFactor(Factor factor, AuthenticationRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    AuthenticationResponse recoverPassword(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     default AuthenticationRequest fromResult(AuthenticationResponse result) {
         return instantiate(AuthenticationRequest.class)

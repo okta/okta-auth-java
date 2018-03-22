@@ -120,8 +120,6 @@ public interface AuthenticationClientBuilder {
      */
     AuthenticationClientBuilder setOrgUrl(String baseUrl);
 
-    AuthenticationClientBuilder setStateHandler(AuthenticationStateHandler stateHandler);
-
     /**
      * Constructs a new {@link AuthenticationClient} instance based on the AuthenticationClientBuilder's current configuration state.
      *

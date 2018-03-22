@@ -18,12 +18,14 @@ package com.okta.authn.sdk.example.resources.authn;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationFailureException;
-import com.okta.authn.sdk.example.OktaAuthenticationStateHandler;
+import com.okta.authn.sdk.example.ExampleAuthenticationStateHandler;
 import com.okta.authn.sdk.example.models.authn.Factor;
 import com.okta.authn.sdk.example.views.authn.ChangePasswordView;
 import com.okta.authn.sdk.example.views.authn.LoginView;
 import com.okta.authn.sdk.example.views.authn.MfaRequiredView;
 import com.okta.authn.sdk.example.views.authn.MfaVerifyView;
+import com.okta.authn.sdk.example.views.authn.PasswordRecoveryView;
+import com.okta.authn.sdk.example.views.authn.RecoveryChallengeView;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
@@ -43,7 +45,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.okta.authn.sdk.example.OktaAuthenticationStateHandler.getPreviousAuthResult;
+import static com.okta.authn.sdk.example.ExampleAuthenticationStateHandler.getPreviousAuthResult;
 
 @Path("/login")
 @Produces(MediaType.TEXT_HTML)
@@ -65,6 +67,12 @@ public class LoginResource {
     @Path("/change-password")
     public ChangePasswordView getChangePasswordView() {
         return new ChangePasswordView();
+    }
+
+    @GET
+    @Path("/recover")
+    public PasswordRecoveryView getPasswordRecoveryView() {
+        return new PasswordRecoveryView();
     }
 
     @GET
@@ -107,7 +115,7 @@ public class LoginResource {
         char[] pass = password != null ? password.toCharArray() : null;
 
         try {
-            authenticationClient.authenticate(username, pass);
+            authenticationClient.authenticate(username, pass, null, new ExampleAuthenticationStateHandler());
             // the state handler will redirect
         } catch (AuthenticationFailureException e) {
             return Response.ok(new LoginView(Optional.of(e))).build();
@@ -118,12 +126,29 @@ public class LoginResource {
     @POST
     @Path("/change-password")
     public void changePassword(@FormParam("oldPassword") String oldPassword,
-                               @FormParam("newPassword") String newPassword,
-                               @Context HttpServletRequest request) throws AuthenticationException {
+                               @FormParam("newPassword") String newPassword) throws AuthenticationException {
 
         authenticationClient.changePassword(oldPassword.toCharArray(),
                                             newPassword.toCharArray(),
-                                            getPreviousAuthResult().getStateToken());
+                                            getPreviousAuthResult().getStateToken(),
+                                            new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
+    @Path("/recover")
+    public RecoveryChallengeView recoverPassword(@FormParam("username") String username,
+                                                 @FormParam("factor") String factorType) throws AuthenticationException {
+        authenticationClient.recoverPassword(username, factorType, null, new ExampleAuthenticationStateHandler());
+        return new RecoveryChallengeView();
+    }
+
+    @POST
+    @Path("/recover/verify")
+    public void recoverChallenge(@FormParam("passCode") String passCode) throws AuthenticationException {
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        AuthenticationRequest request = authenticationClient.fromResult(previousAuthResult)
+                                                                .setPassCode(passCode);
+        authenticationClient.verifyFactor(previousAuthResult.getFactors().get(0), request, new ExampleAuthenticationStateHandler());
     }
 
     @POST
@@ -141,7 +166,7 @@ public class LoginResource {
                                                                 .setSignatureData(signatureData)
                                                                 .setPassCode(passCode);
 
-        authenticationClient.verifyFactor(factor, request);
+        authenticationClient.verifyFactor(factor, request, new ExampleAuthenticationStateHandler());
     }
 
     private com.okta.authn.sdk.resource.Factor getFactor(String type, AuthenticationResponse authenticationResponse) {
@@ -154,7 +179,7 @@ public class LoginResource {
 
     private MfaVerifyView challengeFactor(com.okta.authn.sdk.resource.Factor factor, AuthenticationResponse authenticationResponse) throws AuthenticationException {
 
-        AuthenticationResponse challengeResult = authenticationClient.challengeFactor(factor, authenticationResponse.getStateToken());
+        AuthenticationResponse challengeResult = authenticationClient.challengeFactor(factor, authenticationResponse.getStateToken(), new ExampleAuthenticationStateHandler());
 
         // check the response type
         if (!challengeResult.getStatus().equals(AuthenticationStatus.MFA_CHALLENGE)) {

@@ -25,11 +25,19 @@ import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
 import com.okta.authn.sdk.AuthenticationStateHandler;
+import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
+import com.okta.authn.sdk.resource.ChallengeFactorRequest;
 import com.okta.authn.sdk.resource.ChangePasswordRequest;
 import com.okta.authn.sdk.resource.Factor;
+import com.okta.authn.sdk.resource.FactorEnrollRequest;
+import com.okta.authn.sdk.resource.RecoverPasswordRequest;
+import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
+import com.okta.authn.sdk.resource.UnlockAccountRequest;
+import com.okta.authn.sdk.resource.VerifyFactorRequest;
+import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.authc.credentials.ClientCredentials;
 import com.okta.sdk.cache.CacheManager;
 import com.okta.sdk.client.AuthenticationScheme;
@@ -44,6 +52,9 @@ import com.okta.sdk.lang.Assert;
 import com.okta.sdk.lang.Classes;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.ResourceException;
+import com.okta.sdk.resource.user.factor.FactorProfile;
+import com.okta.sdk.resource.user.factor.FactorProvider;
+import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.lang.reflect.Constructor;
 
@@ -169,17 +180,30 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
+    public AuthenticationResponse resetPassword(char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        ChangePasswordRequest request = instantiate(ChangePasswordRequest.class)
+                .setStateToken(stateToken)
+                .setNewPassword(newPassword);
+        return doPost("/api/v1/authn/credentials/reset_password", request, stateHandler);
+    }
+
+    @Override
     public AuthenticationResponse recoverPassword(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        AuthenticationRequest request = instantiate(AuthenticationRequest.class)
-                    .setUsername(username)
-                    .setFactorType(factorType)
-                    .setRelayState(relayState);
+        return recoverPassword(instantiate(RecoverPasswordRequest.class)
+                                    .setUsername(username)
+                                    .setFactorType(factorType)
+                                    .setRelayState(relayState),
+                                stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse recoverPassword(RecoverPasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/recovery/password", request, stateHandler);
     }
 
     @Override
     public AuthenticationResponse challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        AuthenticationRequest request = instantiate(AuthenticationRequest.class)
+        ChallengeFactorRequest request = instantiate(ChallengeFactorRequest.class)
                 .setStateToken(stateToken);
 
         String href = factor.getLinks()
@@ -190,14 +214,61 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse verifyFactor(Factor factor, AuthenticationRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/verify", request, stateHandler);
+    }
 
+    @Override
+    public AuthenticationResponse activateFactor(String factorId, ActivateFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate", request, stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse verifyUnlockAccount(String href, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         // TODO: i'm not sure this link lookup is valid for all factor types
-        String href = factor.getLinks()
-                .get("verify")
-                .getHref();
-
         return doPost(href, request, stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse unlockAccount(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return unlockAccount(instantiate(UnlockAccountRequest.class)
+                        .setUsername(username)
+                        .setFactorType(factorType)
+                        .setRelayState(relayState),
+                    stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse unlockAccount(UnlockAccountRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/unlock", request, stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse answerRecoveryQuestion(String answer, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return answerRecoveryQuestion(instantiate(RecoveryQuestionAnswerRequest.class)
+                    .setAnswer(answer)
+                    .setStateToken(stateToken),
+                stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse answerRecoveryQuestion(RecoveryQuestionAnswerRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/answer", request, stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, FactorProfile profile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                                    .setFactorType(type)
+                                    .setProvider(provider)
+                                    .setFactorProfile(profile)
+                                    .setStateToken(stateToken),
+                                stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorEnrollRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors", request, stateHandler);
     }
 
     private void handleResult(AuthenticationResponse authenticationResponse, AuthenticationStateHandler authenticationStateHandler) {

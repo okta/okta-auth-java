@@ -54,6 +54,8 @@ public class OktaFilter extends AuthenticatingFilter {
     public boolean isLoginRequest(ServletRequest request, ServletResponse response) {
 
         AuthenticationResponse result = ExampleAuthenticationStateHandler.getPreviousAuthResult();
-        return result != null && result.getStatus().equals(AuthenticationStatus.SUCCESS);
+        return result != null
+                && result.getStatus().equals(AuthenticationStatus.SUCCESS)
+                && result.getSessionToken() != null;
     }
 }

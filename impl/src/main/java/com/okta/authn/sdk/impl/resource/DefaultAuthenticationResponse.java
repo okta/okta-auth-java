@@ -18,6 +18,7 @@ package com.okta.authn.sdk.impl.resource;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.Factor;
+import com.okta.authn.sdk.resource.Link;
 import com.okta.authn.sdk.resource.User;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
@@ -29,6 +30,7 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -162,8 +164,12 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
     }
 
     @Override
-    public Map<String, Object> getLinks() {
-        return getNonEmptyMap(LINKS_PROPERTY);
+    public Map<String, Link> getLinks() {
+
+        Map<String, Link> result = new LinkedHashMap<>();
+        getMap(LINKS_PROPERTY)
+                .forEach((k,v) -> result.put((String) k, getDataStore().instantiate(Link.class, (Map<String, Object>) v)));
+        return result;
     }
 
     @Override

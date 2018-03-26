@@ -51,7 +51,7 @@ public interface AuthenticationResponse extends Resource {
 
     Map<String, Object> getEmbedded();
 
-    Map<String, Object> getLinks();
+    Map<String, Link> getLinks();
 
     User getUser();
 

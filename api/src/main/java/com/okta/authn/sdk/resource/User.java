@@ -30,6 +30,8 @@ public interface User extends Resource {
 
     Map<String, String> getProfile();
 
+    Map<String, String> getRecoveryQuestion();
+
     String getLogin();
 
     String getFirstName();

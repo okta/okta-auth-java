@@ -44,7 +44,7 @@ public class DefaultFactor extends AbstractResource implements Factor {
 
     private static final MapProperty EMBEDDED_PROPERTY = new MapProperty("_embedded");
 
-    protected DefaultFactor(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultFactor(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 

@@ -53,6 +53,36 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
     }
 
     @Override
+    public void handleLockedOut(AuthenticationResponse lockedOutResponse) {
+        redirect("/login/unlock", lockedOutResponse);
+    }
+
+    @Override
+    public void handleRecoveryChallenge(AuthenticationResponse recoveryChallenge) {
+        redirect("/login/unlock/recovery", recoveryChallenge);
+    }
+
+    @Override
+    public void handleRecovery(AuthenticationResponse recoveryResponse) {
+        redirect("/login/recovery", recoveryResponse);
+    }
+
+    @Override
+    public void handleMfaEnroll(AuthenticationResponse mfaEnroll) {
+        redirect("/login/mfa/enroll", mfaEnroll);
+    }
+
+    @Override
+    public void handleMfaEnrollActivate(AuthenticationResponse mfaEnrollActivate) {
+        redirect("/login/mfa/activate", mfaEnrollActivate);
+    }
+
+    @Override
+    public void handlePasswordReset(AuthenticationResponse passwordReset) {
+        redirect("/login/reset", passwordReset);
+    }
+
+    @Override
     public void handleUnknown(AuthenticationResponse unknownResponse) {
         redirect("/login?error="+ unknownResponse.getStatus().name(), unknownResponse);
     }

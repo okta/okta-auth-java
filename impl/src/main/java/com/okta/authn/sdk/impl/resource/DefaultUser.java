@@ -35,6 +35,7 @@ public class DefaultUser extends AbstractResource implements User {
     private static final DateProperty PASSWORD_CHANGED_PROPERTY = new DateProperty("passwordChanged");
 
     private static final MapProperty PROFILE_PROPERTY = new MapProperty("profile");
+    private static final MapProperty RECOVERY_QUESTION_PROPERTY = new MapProperty("recovery_question");
 
     // nested properties exposed directly on this object for ease of use
 
@@ -70,6 +71,11 @@ public class DefaultUser extends AbstractResource implements User {
     @Override
     public Map<String, String> getProfile() {
         return getNonEmptyMap(PROFILE_PROPERTY);
+    }
+
+    @Override
+    public Map<String, String> getRecoveryQuestion() {
+        return getNonEmptyMap(RECOVERY_QUESTION_PROPERTY);
     }
 
     @Override

@@ -22,13 +22,28 @@ import com.okta.authn.sdk.example.ExampleAuthenticationStateHandler;
 import com.okta.authn.sdk.example.models.authn.Factor;
 import com.okta.authn.sdk.example.views.authn.ChangePasswordView;
 import com.okta.authn.sdk.example.views.authn.LoginView;
+import com.okta.authn.sdk.example.views.authn.MfaEnrollSelectionView;
+import com.okta.authn.sdk.example.views.authn.MfaEnrollView;
 import com.okta.authn.sdk.example.views.authn.MfaRequiredView;
 import com.okta.authn.sdk.example.views.authn.MfaVerifyView;
 import com.okta.authn.sdk.example.views.authn.PasswordRecoveryView;
+import com.okta.authn.sdk.example.views.authn.PasswordResetView;
 import com.okta.authn.sdk.example.views.authn.RecoveryChallengeView;
+import com.okta.authn.sdk.example.views.authn.RecoveryView;
+import com.okta.authn.sdk.example.views.authn.UnlockAccountRecoveryView;
+import com.okta.authn.sdk.example.views.authn.UnlockAccountView;
+import com.okta.authn.sdk.resource.ActivateFactorRequest;
+import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
+import com.okta.authn.sdk.resource.FactorEnrollRequest;
+import com.okta.authn.sdk.resource.VerifyFactorRequest;
+import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
+import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
+import com.okta.sdk.resource.user.factor.FactorProvider;
+import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.sdk.resource.user.factor.SmsFactorProfile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +54,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -73,6 +89,53 @@ public class LoginResource {
     @Path("/recover")
     public PasswordRecoveryView getPasswordRecoveryView() {
         return new PasswordRecoveryView();
+    }
+
+    @GET
+    @Path("/reset")
+    public PasswordResetView getPasswordResetView() {
+        return new PasswordResetView();
+    }
+
+    @GET
+    @Path("/unlock")
+    public UnlockAccountView getUnlockAccountView() {
+        return new UnlockAccountView();
+    }
+
+    @GET
+    @Path("/unlock/recovery")
+    public UnlockAccountRecoveryView getUnlockAccountRecoveryView() {
+        return new UnlockAccountRecoveryView();
+    }
+
+    @GET
+    @Path("/mfa/enroll")
+    public MfaEnrollSelectionView getMfaEnrollSelectionView() {
+
+        List<Factor> factors = getPreviousAuthResult().getFactors().stream()
+            .map(authFactor -> {
+                    String shortType = MfaVerifyView.relativeLink(authFactor);
+                    return new Factor(authFactor.getId(),
+                                      shortType,
+                                      authFactor.getProvider(),
+                                      authFactor.getVendorName(),
+                                      authFactor.getProfile(),
+                                      "/login/mfa/enroll/" + shortType);})
+            .collect(Collectors.toList());
+        return new MfaEnrollSelectionView(factors);
+    }
+
+    @GET
+    @Path("/mfa/enroll/{factorType}")
+    public MfaEnrollView getMfaEnrollView(@PathParam("factorType") String factorType) {
+        return new MfaEnrollView(getFactor(factorType, getPreviousAuthResult()));
+    }
+
+    @GET
+    @Path("/mfa/activate")
+    public MfaVerifyView getMfaActivateView() {
+        return new MfaVerifyView(getPreviousAuthResult().getFactors().get(0));
     }
 
     @GET
@@ -124,6 +187,14 @@ public class LoginResource {
     }
 
     @POST
+    @Path("/reset")
+    public void resetPassword(@FormParam("newPassword") String newPassword) throws AuthenticationException {
+        authenticationClient.resetPassword(newPassword.toCharArray(),
+                                            getPreviousAuthResult().getStateToken(),
+                                            new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
     @Path("/change-password")
     public void changePassword(@FormParam("oldPassword") String oldPassword,
                                @FormParam("newPassword") String newPassword) throws AuthenticationException {
@@ -143,30 +214,91 @@ public class LoginResource {
     }
 
     @POST
+    @Path("/unlock")
+    public void unlockAccount(@FormParam("username") String username,
+                                               @FormParam("factor") String factorType) throws AuthenticationException {
+        authenticationClient.unlockAccount(username, factorType, null, new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
+    @Path("/unlock/recovery")
+    public void unlockAccountChallenge(@FormParam("passCode") String passCode) throws AuthenticationException {
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        VerifyRecoveryRequest request = authenticationClient.instantiate(VerifyRecoveryRequest.class)
+                .setStateToken(previousAuthResult.getStateToken())
+                .setPassCode(passCode);
+        authenticationClient.verifyUnlockAccount(previousAuthResult.getLinks().get("next").getHref(), request, new ExampleAuthenticationStateHandler());
+    }
+
+    @GET
+    @Path("/recovery")
+    public RecoveryView getRecoveryView() {
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        String question = previousAuthResult.getUser().getRecoveryQuestion().get("question");
+        return new RecoveryView(question);
+    }
+
+    @POST
+    @Path("/recovery")
+    public void recoveryWithAnswer(@FormParam("answer") String answer) throws AuthenticationException {
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        authenticationClient.answerRecoveryQuestion(answer,
+                                                    previousAuthResult.getStateToken(),
+                                                    new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
     @Path("/recover/verify")
     public void recoverChallenge(@FormParam("passCode") String passCode) throws AuthenticationException {
         AuthenticationResponse previousAuthResult = getPreviousAuthResult();
-        AuthenticationRequest request = authenticationClient.fromResult(previousAuthResult)
-                                                                .setPassCode(passCode);
-        authenticationClient.verifyFactor(previousAuthResult.getFactors().get(0), request, new ExampleAuthenticationStateHandler());
+        VerifyFactorRequest request = authenticationClient.instantiate(VerifyPassCodeFactorRequest.class)
+                                                            .setPassCode(passCode)
+                                                            .setStateToken(previousAuthResult.getStateToken());
+        authenticationClient.verifyFactor(previousAuthResult.getFactors().get(0).getId(), request, new ExampleAuthenticationStateHandler());
     }
 
     @POST
     @Path("/mfa/verify/{type}")
-    public void verifyMfaView(@PathParam("type") String type,
-                              @FormParam("clientData") String clientData,
-                              @FormParam("signatureData") String signatureData,
-                              @FormParam("passCode") String passCode) throws AuthenticationException {
+    public void verifyMfa(@PathParam("type") String type,
+                          @FormParam("clientData") String clientData,
+                          @FormParam("signatureData") String signatureData,
+                          @FormParam("passCode") String passCode) throws AuthenticationException {
 
         AuthenticationResponse previousAuthResult = getPreviousAuthResult();
         com.okta.authn.sdk.resource.Factor factor = getFactor(type, previousAuthResult);
 
-        AuthenticationRequest request = authenticationClient.fromResult(previousAuthResult)
-                                                                .setClientData(clientData)
-                                                                .setSignatureData(signatureData)
-                                                                .setPassCode(passCode);
+        VerifyFactorRequest request = authenticationClient.instantiate(VerifyPassCodeFactorRequest.class)
+                                                            .setPassCode(passCode)
+                                                            .setStateToken(previousAuthResult.getStateToken());
 
-        authenticationClient.verifyFactor(factor, request, new ExampleAuthenticationStateHandler());
+        //TODO  this or the above method is likely wrong
+        authenticationClient.verifyFactor(factor.getId(), request, new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
+    @Path("/mfa/activate")
+    public void activateMfa(@FormParam("passCode") String passCode) throws AuthenticationException {
+
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        String factorId = previousAuthResult.getFactors().get(0).getId();
+
+        ActivateFactorRequest request = authenticationClient.instantiate(ActivatePassCodeFactorRequest.class)
+                        .setPassCode(passCode)
+                        .setStateToken(previousAuthResult.getStateToken());
+
+        authenticationClient.activateFactor(factorId, request, new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
+    @Path("/mfa/enroll/{factorType}")
+    public void enrollMfa(@PathParam("factorType") String factorType, Form form) throws AuthenticationException {
+        FactorEnrollRequest request = authenticationClient.instantiate(FactorEnrollRequest.class)
+                .setProvider(FactorProvider.OKTA)
+                .setStateToken(getPreviousAuthResult().getStateToken())
+                .setFactorType(FactorType.valueOf(factorType))
+                .setFactorProfile(authenticationClient.instantiate(SmsFactorProfile.class)
+                    .setPhoneNumber(form.asMap().getFirst("phoneNumber")));
+        authenticationClient.enrollFactor(request, new ExampleAuthenticationStateHandler());
     }
 
     private com.okta.authn.sdk.resource.Factor getFactor(String type, AuthenticationResponse authenticationResponse) {

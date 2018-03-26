@@ -42,7 +42,9 @@ public class OktaRealm extends AuthorizingRealm {
         AuthenticationResponse authenticationResponse = ((OktaSuccessLoginToken) token).getAuthenticationResponse();
 
         // auth already verified, just check the status
-        if (authenticationResponse != null && authenticationResponse.getStatus() == AuthenticationStatus.SUCCESS) {
+        if (authenticationResponse != null
+                && authenticationResponse.getStatus() == AuthenticationStatus.SUCCESS
+                && authenticationResponse.getSessionToken() != null) {
 
             // if we have a valid User (see below) return an AuthenticationInfo
             User result = authenticationResponse.getUser();

@@ -21,77 +21,20 @@ import java.util.Map;
 
 public interface AuthenticationRequest extends Resource {
 
-    String getStateToken();
-
-    AuthenticationRequest setStateToken(String stateToken);
-
     String getRelayState();
-
     AuthenticationRequest setRelayState(String relayState);
 
     String getUsername();
-
     AuthenticationRequest setUsername(String username);
 
     AuthenticationRequest setPassword(char[] password);
 
-    String getFactorId();
-
-    AuthenticationRequest setFactorId(String factorId);
-
-    String getPassCode();
-
-    AuthenticationRequest setPassCode(String passCode);
-
-    String getNextPassCode();
-
-    AuthenticationRequest setNextPassCode(String nextPassCode);
-
-    String getAnswer();
-
-    AuthenticationRequest setAnswer(String answer);
-
-    String getClientData();
-
-    AuthenticationRequest setClientData(String clientData);
-
-    String getAuthenticatorData();
-
-    AuthenticationRequest setAuthenticatorData(String authenticatorData);
-
-    String getSignatureData();
-
-    AuthenticationRequest setSignatureData(String signatureData);
-
-    String getRecoveryToken();
-
-    AuthenticationRequest setRecoveryToken(String recoveryToken);
-
-    String getFactorType();
-
-    AuthenticationRequest setFactorType(String factorType);
-
-    String getToken();
-
-    AuthenticationRequest setToken(String token);
-
-    Boolean isRememberDevice();
-
-    AuthenticationRequest setRememberDevice(Boolean rememberDevice);
-
-    Boolean isAutoPush();
-
-    AuthenticationRequest setAutoPush(Boolean autoPush);
-
     String getAudience();
-
     AuthenticationRequest setAudience(String audience);
 
     Map<String, Object> getContext();
-
     AuthenticationRequest setContext(Map<String, Object> context);
 
     Options getOptions();
-
     AuthenticationRequest setOptions(Options options);
 }

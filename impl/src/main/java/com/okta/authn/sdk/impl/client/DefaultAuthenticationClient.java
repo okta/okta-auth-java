@@ -35,6 +35,7 @@ import com.okta.authn.sdk.resource.Factor;
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
 import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
+import com.okta.authn.sdk.resource.StateTokenRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
@@ -202,16 +203,10 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse challengeFactor(Factor factor, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse challengeFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         ChallengeFactorRequest request = instantiate(ChallengeFactorRequest.class)
                 .setStateToken(stateToken);
-
-        String href = factor.getLinks()
-                .get("verify")
-                .getHref();
-
-        System.out.println("challenge href: "+ href);
-
+        String href = "/api/v1/authn/factors/" + factorId + "/verify";
         return doPost(href, request, stateHandler);
     }
 
@@ -271,6 +266,36 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     @Override
     public AuthenticationResponse enrollFactor(FactorEnrollRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors", request, stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse previous(String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/previous", toRequest(stateToken), stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse skip(String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/skip", toRequest(stateToken), stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse cancel(String stateToken) {
+        return dataStore.create("/api/v1/authn/cancel", toRequest(stateToken), AuthenticationResponse.class);
+    }
+
+    @Override
+    public AuthenticationResponse resendFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/resend", toRequest(stateToken), stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse pollFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler);
+    }
+
+    private StateTokenRequest toRequest(String stateToken) {
+        return instantiate(StateTokenRequest.class)
+                .setStateToken(stateToken);
     }
 
     private void handleResult(AuthenticationResponse authenticationResponse, AuthenticationStateHandler authenticationStateHandler) {

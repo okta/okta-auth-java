@@ -34,13 +34,14 @@
 
     <properties>
         <okta.sdk.version>1.0.1-SNAPSHOT</okta.sdk.version>
-        <okta.authn.sdk.version>0.1.0-SNAPSHOT</okta.authn.sdk.version>
     </properties>
 
     <modules>
         <module>api</module>
         <module>impl</module>
         <module>examples/shiro-mustache</module>
+        <module>integration-tests</module>
+        <module>coverage</module>
     </modules>
 
     <dependencyManagement>
@@ -48,12 +49,17 @@
             <dependency>
                 <groupId>com.okta.authn.sdk</groupId>
                 <artifactId>okta-authn-sdk-api</artifactId>
-                <version>${okta.authn.sdk.version}</version>
+                <version>0.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.okta.authn.sdk</groupId>
                 <artifactId>okta-authn-sdk-impl</artifactId>
-                <version>${okta.authn.sdk.version}</version>
+                <version>0.1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.okta.authn.sdk</groupId>
+                <artifactId>okta-authn-sdk-integration-tests</artifactId>
+                <version>0.1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>

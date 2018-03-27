@@ -167,7 +167,7 @@ public class LoginResource {
         if (factor.getType().equals("totp")) {
             return new MfaVerifyView(factor);
         } else {
-            return challengeFactor(factor, authenticationResponse);
+            return new MfaVerifyView(challengeFactor(factor, authenticationResponse));
         }
     }
 
@@ -309,15 +309,15 @@ public class LoginResource {
                 .findFirst().get();
     }
 
-    private MfaVerifyView challengeFactor(com.okta.authn.sdk.resource.Factor factor, AuthenticationResponse authenticationResponse) throws AuthenticationException {
+    private com.okta.authn.sdk.resource.Factor challengeFactor(com.okta.authn.sdk.resource.Factor factor, AuthenticationResponse authenticationResponse) throws AuthenticationException {
 
-        AuthenticationResponse challengeResult = authenticationClient.challengeFactor(factor, authenticationResponse.getStateToken(), new ExampleAuthenticationStateHandler());
+        AuthenticationResponse challengeResult = authenticationClient.challengeFactor(factor.getId(), authenticationResponse.getStateToken(), new ExampleAuthenticationStateHandler());
 
         // check the response type
         if (!challengeResult.getStatus().equals(AuthenticationStatus.MFA_CHALLENGE)) {
             throw new IllegalStateException("Challenge Result is empty, and other state was not triggered");
         }
 
-        return new MfaVerifyView(challengeResult.getFactors().get(0)); // TODO: validate we only have one?
+        return challengeResult.getFactors().get(0);
     }
 }

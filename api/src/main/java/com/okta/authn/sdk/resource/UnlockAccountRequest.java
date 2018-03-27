@@ -16,6 +16,7 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.user.factor.FactorType;
 
 public interface UnlockAccountRequest extends Resource {
 
@@ -27,7 +28,7 @@ public interface UnlockAccountRequest extends Resource {
 
     UnlockAccountRequest setUsername(String username);
 
-    String getFactorType();
+    FactorType getFactorType();
 
-    UnlockAccountRequest setFactorType(String factorType);
+    UnlockAccountRequest setFactorType(FactorType factorType);
 }

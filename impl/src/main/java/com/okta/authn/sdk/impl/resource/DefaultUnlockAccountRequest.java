@@ -18,8 +18,10 @@ package com.okta.authn.sdk.impl.resource;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
+import com.okta.sdk.impl.resource.EnumProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
+import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.util.Map;
 
@@ -29,7 +31,7 @@ public class DefaultUnlockAccountRequest extends AbstractResource implements Unl
 
     private static final StringProperty USERNAME_PROPERTY = new StringProperty("username");
 
-    private static final StringProperty FACTOR_TYPE_PROPERTY = new StringProperty("factorType");
+    private static final EnumProperty<FactorType> FACTOR_TYPE_PROPERTY = new EnumProperty<>("factorType", FactorType.class);
 
     public DefaultUnlockAccountRequest(InternalDataStore dataStore) {
         super(dataStore);
@@ -71,12 +73,12 @@ public class DefaultUnlockAccountRequest extends AbstractResource implements Unl
     }
 
     @Override
-    public String getFactorType() {
-        return getString(FACTOR_TYPE_PROPERTY);
+    public FactorType getFactorType() {
+        return getEnumProperty(FACTOR_TYPE_PROPERTY);
     }
 
     @Override
-    public UnlockAccountRequest setFactorType(String factorType) {
+    public UnlockAccountRequest setFactorType(FactorType factorType) {
         setProperty(FACTOR_TYPE_PROPERTY, factorType);
         return this;
     }

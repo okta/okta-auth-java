@@ -209,15 +209,15 @@ public class LoginResource {
     @Path("/recover")
     public RecoveryChallengeView recoverPassword(@FormParam("username") String username,
                                                  @FormParam("factor") String factorType) throws AuthenticationException {
-        authenticationClient.recoverPassword(username, factorType, null, new ExampleAuthenticationStateHandler());
+        authenticationClient.recoverPassword(username, FactorType.valueOf(factorType), null, new ExampleAuthenticationStateHandler());
         return new RecoveryChallengeView();
     }
 
     @POST
     @Path("/unlock")
     public void unlockAccount(@FormParam("username") String username,
-                                               @FormParam("factor") String factorType) throws AuthenticationException {
-        authenticationClient.unlockAccount(username, factorType, null, new ExampleAuthenticationStateHandler());
+                              @FormParam("factor") String factorType) throws AuthenticationException {
+        authenticationClient.unlockAccount(username, FactorType.valueOf(factorType), null, new ExampleAuthenticationStateHandler());
     }
 
     @POST

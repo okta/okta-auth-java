@@ -16,6 +16,7 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.util.Map;
 
@@ -27,6 +28,6 @@ public interface RecoverPasswordRequest extends Resource {
     String getUsername();
     RecoverPasswordRequest setUsername(String username);
 
-    String getFactorType();
-    RecoverPasswordRequest setFactorType(String factorType);
+    FactorType getFactorType();
+    RecoverPasswordRequest setFactorType(FactorType factorType);
 }

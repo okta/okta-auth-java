@@ -1,0 +1,36 @@
+{
+  "stateToken": "00xdqXOE5qDXX8-PBR1bYv8AESqIEinDy3yul01tyh",
+  "expiresAt": "2015-11-03T10:15:57.000Z",
+  "status": "RECOVERY_CHALLENGE",
+  "relayState": "/myapp/some/deep/link/i/want/to/return/to",
+  "factorType": "SMS",
+  "recoveryType": "UNLOCK",
+  "_links": {
+    "next": {
+      "name": "verify",
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/recovery/factors/SMS/verify",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    },
+    "cancel": {
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/cancel",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    },
+    "resend": {
+      "name": "sms",
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/recovery/factors/SMS/resend",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    }
+  }
+}

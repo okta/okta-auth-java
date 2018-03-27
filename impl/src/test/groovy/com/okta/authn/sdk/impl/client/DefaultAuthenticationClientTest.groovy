@@ -33,7 +33,6 @@ import org.hamcrest.TypeSafeMatcher
 import org.mockito.Mockito
 import org.testng.annotations.Test
 
-import static org.hamcrest.Matchers.any
 import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
 import static org.mockito.Mockito.verify
@@ -173,6 +172,71 @@ class DefaultAuthenticationClientTest {
     }
 
     @Test
+    void recoverPasswordTest() {
+        def client = createClient("recoverPasswordTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("username", is(jsonText("joe.coder@example.com")))
+                .where("relayState", is(jsonText("relayState1")))
+                .where("factorType", is(jsonText("call")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/recovery/password")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.recoverPassword("joe.coder@example.com", FactorType.CALL, "relayState1", stateHandler)
+        verify(stateHandler).handleRecoveryChallenge(response)
+    }
+
+    @Test
+    void unlockAccountTest() {
+        def client = createClient("unlockAccountTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("username", is(jsonText("joe.coder@example.com")))
+                .where("relayState", is(jsonText("relayState1")))
+                .where("factorType", is(jsonText("sms")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/recovery/unlock")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.unlockAccount("joe.coder@example.com", FactorType.SMS, "relayState1", stateHandler)
+        verify(stateHandler).handleRecoveryChallenge(response)
+    }
+
+    @Test
+    void answerRecoveryQuestionTest() {
+        def client = createClient("answerRecoveryQuestionTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+                .where("answer", is(jsonText("answer goes here")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/recovery/answer")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.answerRecoveryQuestion("answer goes here", "stateToken1", stateHandler)
+        verify(stateHandler).handlePasswordReset(response)
+    }
+
+    @Test
     void eachStatusTest() {
 
         def client = createClient("eachStatusTest")
@@ -288,14 +352,24 @@ class DefaultAuthenticationClientTest {
 
             @Override
             protected boolean matchesSafely(Request item) {
-                JsonNode json = new ObjectMapper().readTree(item.body.text)
-                return matcher.matches(json)
+                return matcher.matches(toJson(item))
             }
 
             @Override
             void describeTo(Description description) {
                 description.appendText("body failed to match ")
                 matcher.describeTo(description)
+            }
+
+            @Override
+            protected void describeMismatchSafely(Request item, Description mismatchDescription) {
+                matcher.describeMismatch(toJson(item), mismatchDescription)
+            }
+
+            private JsonNode toJson(Request item) {
+                String jsonText = item.body.text
+                item.body.reset()
+                return new ObjectMapper().readTree(jsonText)
             }
         }
     }

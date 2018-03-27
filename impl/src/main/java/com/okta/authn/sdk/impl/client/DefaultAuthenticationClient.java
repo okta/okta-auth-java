@@ -188,7 +188,7 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse recoverPassword(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse recoverPassword(String username, FactorType factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return recoverPassword(instantiate(RecoverPasswordRequest.class)
                                     .setUsername(username)
                                     .setFactorType(factorType)
@@ -210,6 +210,8 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
                 .get("verify")
                 .getHref();
 
+        System.out.println("challenge href: "+ href);
+
         return doPost(href, request, stateHandler);
     }
 
@@ -230,7 +232,7 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse unlockAccount(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse unlockAccount(String username, FactorType factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return unlockAccount(instantiate(UnlockAccountRequest.class)
                         .setUsername(username)
                         .setFactorType(factorType)

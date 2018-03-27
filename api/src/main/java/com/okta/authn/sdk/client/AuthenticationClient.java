@@ -88,12 +88,24 @@ public interface AuthenticationClient extends DataStore {
 
     AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    AuthenticationResponse recoverPassword(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    //  /api/v1/authn/recovery/password
+    AuthenticationResponse recoverPassword(String username, FactorType factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     AuthenticationResponse recoverPassword(RecoverPasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
 
-    AuthenticationResponse unlockAccount(String username, String factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    // /api/v1/authn/recovery/unlock
+
+    /**
+     *
+     * @param username User’s non-qualified short-name (dade.murphy) or unique fully-qualified login (dade.murphy@example.com)
+     * @param factorType Recovery factor to use for primary authentication
+     * @param relayState Optional state value that is persisted for the lifetime of the recovery transaction
+     * @param stateHandler
+     * @return
+     * @throws AuthenticationException
+     */
+    AuthenticationResponse unlockAccount(String username, FactorType factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     AuthenticationResponse unlockAccount(UnlockAccountRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 

@@ -22,7 +22,6 @@ import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.ChangePasswordRequest;
-import com.okta.authn.sdk.resource.Factor;
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
 import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
@@ -33,8 +32,6 @@ import com.okta.sdk.ds.DataStore;
 import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
-
-import javax.annotation.Generated;
 
 /**
  * The Okta Authentication API provides operations to authenticate users, perform multi-factor enrollment and verification,
@@ -304,5 +301,16 @@ public interface AuthenticationClient extends DataStore {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/poll", href = "https://developer.okta.com/docs/api/resources/authn.html#poll-for-push-factor-activation")
     AuthenticationResponse pollFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    /**
+     * Validates a recovery token that was distributed to the end user to continue the recovery transaction.
+     *
+     * @param recoveryToken Recovery token that was distributed to the end user via out-of-band mechanism such as email
+     * @param stateHandler
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/recovery/token", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-recovery-token")
+    AuthenticationResponse verifyRecoveryToken(String recoveryToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
 }

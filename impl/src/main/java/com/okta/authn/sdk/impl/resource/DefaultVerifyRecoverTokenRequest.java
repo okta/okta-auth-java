@@ -15,32 +15,35 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest;
+import com.okta.authn.sdk.resource.VerifyRecoverTokenRequest;
 import com.okta.sdk.impl.ds.InternalDataStore;
+import com.okta.sdk.impl.resource.AbstractResource;
+import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultActivatePassCodeFactorRequest extends DefaultActivateFactorRequest implements ActivatePassCodeFactorRequest {
+public class DefaultVerifyRecoverTokenRequest extends AbstractResource implements VerifyRecoverTokenRequest {
 
-    private static final StringProperty PASS_CODE_PROPERTY = new StringProperty("passCode");
+    private static final StringProperty RECOVERY_TOKEN_PROPERTY = new StringProperty("recoveryToken");
 
-    public DefaultActivatePassCodeFactorRequest(InternalDataStore dataStore) {
+    public DefaultVerifyRecoverTokenRequest(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultActivatePassCodeFactorRequest(InternalDataStore dataStore, Map<String, Object> properties) {
-        super(dataStore, properties);
+    @Override
+    public Map<String, Property> getPropertyDescriptors() {
+        return createPropertyDescriptorMap(RECOVERY_TOKEN_PROPERTY);
     }
 
     @Override
-    public String getPassCode() {
-        return getString(PASS_CODE_PROPERTY);
+    public String getRecoveryToken() {
+        return getString(RECOVERY_TOKEN_PROPERTY);
     }
 
     @Override
-    public ActivatePassCodeFactorRequest setPassCode(String passCode) {
-        setProperty(PASS_CODE_PROPERTY, passCode);
+    public VerifyRecoverTokenRequest setRecoveryToken(String recoveryToken) {
+        setProperty(RECOVERY_TOKEN_PROPERTY, recoveryToken);
         return this;
     }
 }

@@ -15,13 +15,14 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+public interface TotpFactorActivation extends FactorActivation {
 
-public interface RecoveryQuestionAnswerRequest extends Resource {
+    // TOTP
+    Integer getTimeStep();
 
-    String getStateToken();
-    RecoveryQuestionAnswerRequest setStateToken(String stateToken);
+    String getSharedSecret();
 
-    String getAnswer();
-    RecoveryQuestionAnswerRequest setAnswer(String answer);
+    String getEncoding();
+
+    Integer getKeyLength();
 }

@@ -16,7 +16,6 @@
  */
 package com.okta.authn.sdk.impl.client;
 
-import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClientBuilder;
 import com.okta.sdk.client.AuthenticationScheme;
@@ -65,7 +64,6 @@ import java.util.Map;
 public class DefaultAuthenticationClientBuilder implements AuthenticationClientBuilder {
 
     private Proxy proxy;
-    private AuthenticationStateHandler stateHandler;
 
     private static final  String ENVVARS_TOKEN  = "envvars";
     private static final  String SYSPROPS_TOKEN = "sysprops";

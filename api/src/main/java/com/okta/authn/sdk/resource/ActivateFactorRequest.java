@@ -22,8 +22,4 @@ public interface ActivateFactorRequest extends Resource {
     String getStateToken();
 
     ActivateFactorRequest setStateToken(String stateToken);
-
-    String getFactorId();
-
-    ActivateFactorRequest setFactorId(String factorId);
 }

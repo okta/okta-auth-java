@@ -16,6 +16,7 @@
 package com.okta.authn.sdk.impl.resource;
 
 import com.okta.authn.sdk.resource.Factor;
+import com.okta.authn.sdk.resource.FactorActivation;
 import com.okta.authn.sdk.resource.Link;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
@@ -23,7 +24,6 @@ import com.okta.sdk.impl.resource.MapProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DefaultFactor extends AbstractResource implements Factor {
@@ -43,6 +43,8 @@ public class DefaultFactor extends AbstractResource implements Factor {
     private static final MapProperty LINKS_PROPERTY = new MapProperty("_links");
 
     private static final MapProperty EMBEDDED_PROPERTY = new MapProperty("_embedded");
+
+    private static final MapProperty EMBEDDED_ACTIVATION_PROPERTY = new MapProperty("activation");
 
     public DefaultFactor(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
@@ -94,14 +96,25 @@ public class DefaultFactor extends AbstractResource implements Factor {
 
     @Override
     public Map<String, Link> getLinks() {
-
-        Map<String, Link> result = new LinkedHashMap<>();
-        getMap(LINKS_PROPERTY).forEach((k,v) -> result.put((String) k, getDataStore().instantiate(Link.class, (Map<String, Object>) v)));
-        return result;
+        return DefaultLink.getLinks(getMap(LINKS_PROPERTY), this.getDataStore());
     }
 
     @Override
     public Map<String, Object> getEmbedded() {
         return getMap(EMBEDDED_PROPERTY);
+    }
+
+    @Override
+    public FactorActivation getActivation() {
+        Map<String, Object> activationDetails = (Map) getEmbedded().get(EMBEDDED_ACTIVATION_PROPERTY.getName());
+        if (activationDetails != null) {
+            return getDataStore().instantiate(FactorActivation.class, activationDetails);
+        }
+        return null;
+    }
+
+    @Override
+    public <T extends FactorActivation> T getActivation(Class<T> activationClass) {
+        return activationClass.cast(getActivation());
     }
 }

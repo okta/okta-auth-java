@@ -15,29 +15,29 @@
  */
 package com.okta.authn.sdk.impl.client;
 
-import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationFailureException;
+import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.CredentialsException;
 import com.okta.authn.sdk.FactorValidationException;
 import com.okta.authn.sdk.InvalidAuthenticationStateException;
 import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
-import com.okta.authn.sdk.AuthenticationStateHandler;
+import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.ChallengeFactorRequest;
 import com.okta.authn.sdk.resource.ChangePasswordRequest;
-import com.okta.authn.sdk.resource.Factor;
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
 import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
 import com.okta.authn.sdk.resource.StateTokenRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
+import com.okta.authn.sdk.resource.VerifyRecoverTokenRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.authc.credentials.ClientCredentials;
 import com.okta.sdk.cache.CacheManager;
@@ -147,6 +147,7 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
      */
     @Override
     public <T extends Resource> T getResource(String href, Class<T> clazz) {
+        // TODO: remove this method
         return this.dataStore.getResource(href, clazz);
     }
 
@@ -293,9 +294,16 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
         return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler);
     }
 
+    @Override
+    public AuthenticationResponse verifyRecoveryToken(String recoveryToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        VerifyRecoverTokenRequest request = instantiate(VerifyRecoverTokenRequest.class)
+                                                            .setRecoveryToken(recoveryToken);
+        return doPost("/api/v1/authn/recovery/token", request, stateHandler);
+    }
+
     private StateTokenRequest toRequest(String stateToken) {
         return instantiate(StateTokenRequest.class)
-                .setStateToken(stateToken);
+                            .setStateToken(stateToken);
     }
 
     private void handleResult(AuthenticationResponse authenticationResponse, AuthenticationStateHandler authenticationStateHandler) {

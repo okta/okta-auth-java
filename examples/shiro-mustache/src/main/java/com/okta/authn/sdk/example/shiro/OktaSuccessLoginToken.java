@@ -20,6 +20,8 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 public class OktaSuccessLoginToken implements AuthenticationToken {
 
+    private static final long serialVersionUID = 42L;
+
     private final AuthenticationResponse authenticationResponse;
 
     public OktaSuccessLoginToken(AuthenticationResponse authenticationResponse) {

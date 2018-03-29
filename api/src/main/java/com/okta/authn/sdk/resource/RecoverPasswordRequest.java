@@ -18,8 +18,6 @@ package com.okta.authn.sdk.resource;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.user.factor.FactorType;
 
-import java.util.Map;
-
 public interface RecoverPasswordRequest extends Resource {
 
     String getRelayState();

@@ -16,15 +16,9 @@
 package com.okta.authn.sdk.impl.resource;
 
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
-import com.okta.authn.sdk.resource.AuthenticationRequest;
-import com.okta.authn.sdk.resource.Options;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
-import com.okta.sdk.impl.resource.BooleanProperty;
-import com.okta.sdk.impl.resource.CharacterArrayProperty;
-import com.okta.sdk.impl.resource.MapProperty;
 import com.okta.sdk.impl.resource.Property;
-import com.okta.sdk.impl.resource.ResourceReference;
 import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
@@ -32,8 +26,6 @@ import java.util.Map;
 public class DefaultActivateFactorRequest extends AbstractResource implements ActivateFactorRequest {
 
     private static final StringProperty STATE_TOKEN_PROPERTY = new StringProperty("stateToken");
-
-    private static final StringProperty FACTOR_ID_PROPERTY = new StringProperty("factorId");
 
     public DefaultActivateFactorRequest(InternalDataStore dataStore) {
         super(dataStore);
@@ -46,8 +38,7 @@ public class DefaultActivateFactorRequest extends AbstractResource implements Ac
     @Override
     public Map<String, Property> getPropertyDescriptors() {
         return createPropertyDescriptorMap(
-            STATE_TOKEN_PROPERTY,
-            FACTOR_ID_PROPERTY
+            STATE_TOKEN_PROPERTY
         );
     }
 
@@ -59,17 +50,6 @@ public class DefaultActivateFactorRequest extends AbstractResource implements Ac
     @Override
     public ActivateFactorRequest setStateToken(String stateToken) {
         setProperty(STATE_TOKEN_PROPERTY, stateToken);
-        return this;
-    }
-
-    @Override
-    public String getFactorId() {
-        return getString(FACTOR_ID_PROPERTY);
-    }
-
-    @Override
-    public ActivateFactorRequest setFactorId(String factorId) {
-        setProperty(FACTOR_ID_PROPERTY, factorId);
         return this;
     }
 }

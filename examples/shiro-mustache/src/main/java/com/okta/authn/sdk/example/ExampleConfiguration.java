@@ -15,12 +15,11 @@
  */
 package com.okta.authn.sdk.example;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
 import io.dropwizard.Configuration;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
-import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Map;
 

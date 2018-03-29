@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.example.resources.authn;
 
-import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationFailureException;
+import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.example.ExampleAuthenticationStateHandler;
 import com.okta.authn.sdk.example.models.authn.Factor;
 import com.okta.authn.sdk.example.views.authn.ChangePasswordView;
@@ -34,7 +34,6 @@ import com.okta.authn.sdk.example.views.authn.UnlockAccountRecoveryView;
 import com.okta.authn.sdk.example.views.authn.UnlockAccountView;
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest;
-import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.FactorEnrollRequest;

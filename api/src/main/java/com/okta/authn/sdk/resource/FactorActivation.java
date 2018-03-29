@@ -17,11 +17,40 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.Resource;
 
-public interface RecoveryQuestionAnswerRequest extends Resource {
+import java.util.Date;
+import java.util.Map;
 
-    String getStateToken();
-    RecoveryQuestionAnswerRequest setStateToken(String stateToken);
+public interface FactorActivation extends Resource {
 
-    String getAnswer();
-    RecoveryQuestionAnswerRequest setAnswer(String answer);
+    Map<String, Link> getLinks();
+
+
+    // TOTP
+    Integer getTimeStep();
+
+    String getSharedSecret();
+
+    String getEncoding();
+
+    Integer getKeyLength();
+
+
+    // Duo
+    String getHost();
+
+    String getSignature();
+
+    String getFactorResult(); // Push
+
+    Date getExpiresAt(); // push
+
+    // UTF
+    String getVersion();
+
+    String getAppId();
+
+    String getNonce();
+
+    Integer getTimeoutSeconds();
+
 }

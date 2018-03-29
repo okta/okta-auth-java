@@ -17,9 +17,6 @@ package com.okta.authn.sdk.example.views.authn;
 
 import io.dropwizard.views.View;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class PasswordResetView extends View {
 
     public PasswordResetView() {

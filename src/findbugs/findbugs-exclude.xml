@@ -15,4 +15,33 @@
   -->
 <FindBugsFilter>
 
+    <Match>
+        <!-- keep it in one class to make the example easier to follow -->
+        <Package name="com.okta.authn.sdk.example"></Package>
+        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+    </Match>
+
+     <Match>
+         <!-- yes, these are JAX-RS endpoints -->
+        <Package name="com.okta.authn.sdk.example.resources"></Package>
+        <Bug pattern="JAXRS_ENDPOINT" />
+    </Match>
+    <Match>
+        <Package name="com.okta.authn.sdk.example.resources.authn"></Package>
+        <Bug pattern="JAXRS_ENDPOINT" />
+    </Match>
+    <Match>
+        <!-- set by application -->
+        <Class name="com.okta.authn.sdk.example.ExampleAuthenticationStateHandler"></Class>
+        <Bug pattern="UNVALIDATED_REDIRECT" />
+    </Match>
+    <Match>
+        <!-- TODO: fix serialization in example -->
+        <Class name="com.okta.authn.sdk.example.shiro.OktaSuccessLoginToken"></Class>
+        <Bug pattern="SE_BAD_FIELD" />
+    </Match>
+
+
+
+
 </FindBugsFilter>

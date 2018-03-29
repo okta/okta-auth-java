@@ -30,7 +30,6 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -165,11 +164,7 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
 
     @Override
     public Map<String, Link> getLinks() {
-
-        Map<String, Link> result = new LinkedHashMap<>();
-        getMap(LINKS_PROPERTY)
-                .forEach((k,v) -> result.put((String) k, getDataStore().instantiate(Link.class, (Map<String, Object>) v)));
-        return result;
+        return DefaultLink.getLinks(getMap(LINKS_PROPERTY), this.getDataStore());
     }
 
     @Override

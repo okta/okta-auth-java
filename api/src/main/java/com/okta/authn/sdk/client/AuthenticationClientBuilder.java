@@ -16,7 +16,6 @@
  */
 package com.okta.authn.sdk.client;
 
-import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.sdk.client.Proxy;
 
 /**

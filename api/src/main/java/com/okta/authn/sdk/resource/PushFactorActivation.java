@@ -15,13 +15,11 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import java.util.Date;
 
-public interface RecoveryQuestionAnswerRequest extends Resource {
+public interface PushFactorActivation extends FactorActivation {
 
-    String getStateToken();
-    RecoveryQuestionAnswerRequest setStateToken(String stateToken);
+    String getFactorResult();
 
-    String getAnswer();
-    RecoveryQuestionAnswerRequest setAnswer(String answer);
+    Date getExpiresAt();
 }

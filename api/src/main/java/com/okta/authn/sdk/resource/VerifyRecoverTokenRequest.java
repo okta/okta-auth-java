@@ -17,11 +17,9 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.Resource;
 
-public interface RecoveryQuestionAnswerRequest extends Resource {
+public interface VerifyRecoverTokenRequest extends Resource {
 
-    String getStateToken();
-    RecoveryQuestionAnswerRequest setStateToken(String stateToken);
+    String getRecoveryToken();
 
-    String getAnswer();
-    RecoveryQuestionAnswerRequest setAnswer(String answer);
+    VerifyRecoverTokenRequest setRecoveryToken(String recoveryToken);
 }

@@ -15,13 +15,13 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+public interface U2fFactorActivation extends FactorActivation {
 
-public interface RecoveryQuestionAnswerRequest extends Resource {
+    String getVersion();
 
-    String getStateToken();
-    RecoveryQuestionAnswerRequest setStateToken(String stateToken);
+    String getAppId();
 
-    String getAnswer();
-    RecoveryQuestionAnswerRequest setAnswer(String answer);
+    String getNonce();
+
+    Integer getTimeoutSeconds();
 }

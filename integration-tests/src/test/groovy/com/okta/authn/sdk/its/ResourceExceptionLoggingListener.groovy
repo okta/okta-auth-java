@@ -13,20 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.impl.client
+package com.okta.authn.sdk.its
 
-import org.testng.Assert
+import com.okta.sdk.resource.ResourceException
+import org.testng.ITestResult
+import org.testng.TestListenerAdapter
 
-class TestUtil {
+class ResourceExceptionLoggingListener extends TestListenerAdapter {
 
-    static def expectException = { Class<? extends Throwable> catchMe, Closure callMe ->
-        try {
-            callMe.call()
-            Assert.fail("Expected ${catchMe.getName()} to be thrown.")
-        } catch(e) {
-            if (!e.class.isAssignableFrom(catchMe)) {
-                throw e
+    @Override
+    void onTestFailure(ITestResult tr) {
+        super.onTestFailure(tr)
+
+        def throwable = tr.getThrowable()
+        if (throwable instanceof ResourceException) {
+            PrintStream err = System.err
+            err.println("Test failure due to ResourceException: ${throwable.message}")
+            throwable.causes.each {
+                err.println("    ${it.summary}")
             }
+
         }
     }
 }

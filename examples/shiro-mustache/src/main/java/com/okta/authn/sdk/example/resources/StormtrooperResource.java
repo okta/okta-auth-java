@@ -15,8 +15,8 @@
  */
 package com.okta.authn.sdk.example.resources;
 
-import com.okta.authn.sdk.example.models.Stormtrooper;
 import com.okta.authn.sdk.example.dao.StormtrooperDao;
+import com.okta.authn.sdk.example.models.Stormtrooper;
 import com.okta.authn.sdk.example.views.StormtrooperView;
 import com.okta.authn.sdk.example.views.StormtroopersView;
 

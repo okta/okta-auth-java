@@ -15,13 +15,11 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+public interface DuoFactorActivation extends FactorActivation {
 
-public interface RecoveryQuestionAnswerRequest extends Resource {
+    String getHost();
 
-    String getStateToken();
-    RecoveryQuestionAnswerRequest setStateToken(String stateToken);
+    String getSignature();
 
-    String getAnswer();
-    RecoveryQuestionAnswerRequest setAnswer(String answer);
+    String getFactorResult();
 }

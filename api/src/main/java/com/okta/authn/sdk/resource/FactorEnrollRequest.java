@@ -20,8 +20,6 @@ import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
 
-import java.util.Map;
-
 public interface FactorEnrollRequest extends Resource {
 
     String getStateToken();

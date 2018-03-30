@@ -33,6 +33,7 @@
     <inceptionYear>2018</inceptionYear>
 
     <properties>
+        <jackson.version>2.9.5</jackson.version>
         <okta.sdk.version>1.0.1-SNAPSHOT</okta.sdk.version>
     </properties>
 
@@ -46,6 +47,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <dependency>
                 <groupId>com.okta.authn.sdk</groupId>
                 <artifactId>okta-authn-sdk-api</artifactId>

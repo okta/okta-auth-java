@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
-import io.dropwizard.views.View;
+import com.okta.authn.sdk.example.views.BaseView;
 
-public class PasswordResetView extends View {
+public class PasswordResetView extends BaseView {
 
     public PasswordResetView() {
         super("reset-password.mustache");

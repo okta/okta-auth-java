@@ -15,25 +15,19 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
+import com.okta.authn.sdk.example.views.BaseView;
 import com.okta.sdk.error.Error;
-import io.dropwizard.views.View;
 
 import java.util.Optional;
 
-public class LoginView extends View {
+public class LoginView extends BaseView {
 
-//    private final Login login;
     private final Optional<Error> error;
 
     public LoginView(Optional<Error> error) {
         super("login.mustache");
         this.error = error;
-//        this.login = login;
     }
-
-//    public Login getLogin() {
-//        return login;
-//    }
 
     public Optional<Error> getError() {
         return error;

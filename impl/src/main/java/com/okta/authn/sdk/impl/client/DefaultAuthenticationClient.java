@@ -199,11 +199,6 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse recoverPassword(RecoverPasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/recovery/password", request, stateHandler);
-    }
-
-    @Override
     public AuthenticationResponse challengeFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         ChallengeFactorRequest request = instantiate(ChallengeFactorRequest.class)
                 .setStateToken(stateToken);
@@ -222,9 +217,13 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse verifyUnlockAccount(String href, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        // TODO: i'm not sure this link lookup is valid for all factor types
-        return doPost(href, request, stateHandler);
+    public AuthenticationResponse recoverPassword(RecoverPasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/password", request, stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/factors/" + factorType.name() + "/verify", request, stateHandler);
     }
 
     @Override
@@ -285,8 +284,13 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
     }
 
     @Override
-    public AuthenticationResponse resendFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse resendActivateFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/resend", toRequest(stateToken), stateHandler);
+    }
+
+        @Override
+    public AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/verify/resend", toRequest(stateToken), stateHandler);
     }
 
     @Override

@@ -15,12 +15,12 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
-import io.dropwizard.views.View;
+import com.okta.authn.sdk.example.views.BaseView;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class UnlockAccountView extends View {
+public class UnlockAccountView extends BaseView {
 
     private final List<String> factors = Arrays.asList("EMAIL", "SMS", "CALL");
 

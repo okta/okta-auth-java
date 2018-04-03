@@ -20,9 +20,12 @@ import com.okta.authn.sdk.resource.FactorActivation;
 import com.okta.authn.sdk.resource.Link;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
+import com.okta.sdk.impl.resource.EnumProperty;
 import com.okta.sdk.impl.resource.MapProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
+import com.okta.sdk.resource.user.factor.FactorProvider;
+import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.util.Map;
 
@@ -30,9 +33,9 @@ public class DefaultFactor extends AbstractResource implements Factor {
 
     private static final StringProperty ID_PROPERTY = new StringProperty("id");
 
-    private static final StringProperty TYPE_PROPERTY = new StringProperty("factorType");
+    private static final EnumProperty<FactorType> TYPE_PROPERTY = new EnumProperty<>("factorType", FactorType.class);
 
-    private static final StringProperty PROVIDER_PROPERTY = new StringProperty("provider");
+    private static final EnumProperty<FactorProvider> PROVIDER_PROPERTY = new EnumProperty<>("provider", FactorProvider.class);
 
     private static final StringProperty VENDOR_NAME_PROPERTY = new StringProperty("vendorName");
 
@@ -75,13 +78,13 @@ public class DefaultFactor extends AbstractResource implements Factor {
     }
 
     @Override
-    public String getType() {
-        return getString(TYPE_PROPERTY);
+    public FactorType getType() {
+        return getEnumProperty(TYPE_PROPERTY);
     }
 
     @Override
-    public String getProvider() {
-        return getString(PROVIDER_PROPERTY);
+    public FactorProvider getProvider() {
+        return getEnumProperty(PROVIDER_PROPERTY);
     }
 
     @Override

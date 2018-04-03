@@ -1,0 +1,41 @@
+{
+  "stateToken": "00xdqXOE5qDXX8-PBR1bYv8AESqIEinDy3yul01tyh",
+  "expiresAt": "2015-11-03T10:15:57.000Z",
+  "status": "RECOVERY",
+  "recoveryType": "PASSWORD",
+  "_embedded": {
+    "user": {
+      "id": "00ub0oNGTSWTBKOLGLNR",
+      "passwordChanged": "2015-09-08T20:14:45.000Z",
+      "profile": {
+        "login": "dade.murphy@example.com",
+        "firstName": "Dade",
+        "lastName": "Murphy",
+        "locale": "en_US",
+        "timeZone": "America/Los_Angeles"
+      },
+      "recovery_question": {
+        "question": "Who's a major player in the cowboy scene?"
+      }
+    }
+  },
+  "_links": {
+    "next": {
+      "name": "answer",
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/recovery/answer",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    },
+    "cancel": {
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/cancel",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    }
+  }
+}

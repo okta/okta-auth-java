@@ -17,7 +17,7 @@
 logging:
   level: INFO
   loggers:
-    org.apache.shiro.example: DEBUG
+    org.eclipse: INFO
 views:
   .mustache:
     cache: false

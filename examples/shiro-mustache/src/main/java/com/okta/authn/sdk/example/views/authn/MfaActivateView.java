@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.impl.client
+package com.okta.authn.sdk.example.views.authn;
 
-import org.testng.Assert
+import com.okta.authn.sdk.example.views.BaseView;
+import com.okta.authn.sdk.resource.Factor;
+import com.okta.sdk.resource.user.factor.FactorType;
 
-class TestUtil {
+public class MfaActivateView extends BaseView {
 
-    static def expectException = { Class<? extends Throwable> catchMe, Closure callMe ->
-        try {
-            callMe.call()
-            Assert.fail("Expected ${catchMe.getName()} to be thrown.")
-        } catch(e) {
-            if (!e.class.isAssignableFrom(catchMe)) {
-                throw e
-            }
-        }
+    private final Factor factor;
+
+    public MfaActivateView(Factor factor) {
+        super("activate-" + MfaVerifyView.relativeLink(factor) + ".mustache");
+        this.factor = factor;
     }
+
+    public Factor getFactor() {
+        return factor;
+    }
+
 }

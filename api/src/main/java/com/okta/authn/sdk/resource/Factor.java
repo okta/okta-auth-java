@@ -16,6 +16,8 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.user.factor.FactorProvider;
+import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.util.Map;
 
@@ -25,9 +27,9 @@ public interface Factor extends Resource {
 
     String getStatus();
 
-    String getType();
+    FactorType getType();
 
-    String getProvider();
+    FactorProvider getProvider();
 
     String getVendorName();
 

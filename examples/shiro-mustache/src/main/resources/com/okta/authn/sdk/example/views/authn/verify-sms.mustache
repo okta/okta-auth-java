@@ -24,13 +24,18 @@
                         <h3 class="panel-title">MFA SMS Verify: <small>{{factor.profile.phoneNumber}}</small></h3>
                     </div>
                     <div class="panel-body">
-                        <form method="POST" accept-charset="UTF-8" role="form">
+                        <form method="POST" accept-charset="UTF-8" role="form" action="/login/mfa/verify/sms">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Pass code" name="passCode" type="text">
                             </div>
+                            {{>../csrf}}
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Submit">
                         </fieldset>
+                        </form>
+                        <form method="POST" accept-charset="UTF-8" role="form" action="/login/mfa/resend/sms">
+                            {{>../csrf}}
+                            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Resend">
                         </form>
                     </div>
                 </div>

@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
-import io.dropwizard.views.View;
+import com.okta.authn.sdk.example.views.BaseView;
 
-public class RecoveryView extends View {
+public class RecoveryView extends BaseView {
 
     private final String question;
 

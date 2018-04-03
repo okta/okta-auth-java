@@ -35,7 +35,7 @@ import java.util.regex.Pattern
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.*
 
-class AuthenticationClientIT extends AuthentiationTestSupport {
+class AuthenticationClientIT extends AuthenticationTestSupport {
 
     private Logger log = LoggerFactory.getLogger(AuthenticationClientIT)
 

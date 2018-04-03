@@ -16,11 +16,11 @@
 package com.okta.authn.sdk.example.views.authn;
 
 import com.okta.authn.sdk.example.models.authn.Factor;
-import io.dropwizard.views.View;
+import com.okta.authn.sdk.example.views.BaseView;
 
 import java.util.List;
 
-public class MfaRequiredView extends View {
+public class MfaRequiredView extends BaseView {
 
     private final List<Factor> factors;
 

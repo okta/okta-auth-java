@@ -15,10 +15,15 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
+import com.okta.authn.sdk.example.views.BaseView;
 import com.okta.authn.sdk.resource.Factor;
-import io.dropwizard.views.View;
+import com.okta.sdk.resource.user.factor.FactorType;
 
-public class MfaVerifyView extends View {
+import static com.okta.sdk.resource.user.factor.FactorType.*;
+import static com.okta.sdk.resource.user.factor.FactorType.SMS;
+import static com.okta.sdk.resource.user.factor.FactorType.TOKEN_SOFTWARE_TOTP;
+
+public class MfaVerifyView extends BaseView {
 
     private final Factor factor;
 
@@ -32,16 +37,16 @@ public class MfaVerifyView extends View {
     }
 
     public static String relativeLink(Factor factor) {
-        String type = factor.getType();
+        FactorType type = factor.getType();
         String templateName;
         switch (type) {
-            case "u2f":
+            case U2F:
                 templateName = "u2f";
                 break;
-            case "token:software:totp":
+            case TOKEN_SOFTWARE_TOTP:
                 templateName = "totp";
                 break;
-            case "sms":
+            case SMS:
                 templateName = "sms";
                 break;
             default:
@@ -51,20 +56,20 @@ public class MfaVerifyView extends View {
         return templateName;
     }
 
-    public static String fromRelativeLink(String type) {
-        String oktaType;
+    public static FactorType fromRelativeLink(String type) {
+        FactorType oktaType;
         switch (type) {
             case "u2f":
-                oktaType = "u2f";
+                oktaType = FactorType.U2F;
                 break;
             case "totp":
-                oktaType = "token:software:totp";
+                oktaType = FactorType.TOKEN_SOFTWARE_TOTP;
                 break;
             case "sms":
-                oktaType = "sms";
+                oktaType = FactorType.SMS;
                 break;
             default:
-                oktaType = "unknown";
+                oktaType = null;
         }
         return oktaType;
     }

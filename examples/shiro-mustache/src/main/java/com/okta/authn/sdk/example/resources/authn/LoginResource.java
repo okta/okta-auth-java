@@ -22,6 +22,7 @@ import com.okta.authn.sdk.example.ExampleAuthenticationStateHandler;
 import com.okta.authn.sdk.example.models.authn.Factor;
 import com.okta.authn.sdk.example.views.authn.ChangePasswordView;
 import com.okta.authn.sdk.example.views.authn.LoginView;
+import com.okta.authn.sdk.example.views.authn.MfaActivateView;
 import com.okta.authn.sdk.example.views.authn.MfaEnrollSelectionView;
 import com.okta.authn.sdk.example.views.authn.MfaEnrollView;
 import com.okta.authn.sdk.example.views.authn.MfaRequiredView;
@@ -117,7 +118,7 @@ public class LoginResource {
                     String shortType = MfaVerifyView.relativeLink(authFactor);
                     return new Factor(authFactor.getId(),
                                       shortType,
-                                      authFactor.getProvider(),
+                                      authFactor.getProvider().name(),
                                       authFactor.getVendorName(),
                                       authFactor.getProfile(),
                                       "/login/mfa/enroll/" + shortType);})
@@ -132,9 +133,9 @@ public class LoginResource {
     }
 
     @GET
-    @Path("/mfa/activate")
-    public MfaVerifyView getMfaActivateView() {
-        return new MfaVerifyView(getPreviousAuthResult().getFactors().get(0));
+    @Path("/mfa/activate/{factorType}")
+    public MfaActivateView getMfaActivateView() {
+        return new MfaActivateView(getPreviousAuthResult().getFactors().get(0));
     }
 
     @GET
@@ -147,7 +148,7 @@ public class LoginResource {
                     String shortType = MfaVerifyView.relativeLink(authFactor);
                     return new Factor(authFactor.getId(),
                                       shortType,
-                                      authFactor.getProvider(),
+                                      authFactor.getProvider().name(),
                                       authFactor.getVendorName(),
                                       authFactor.getProfile(),
                                       "/login/mfa/verify/" + shortType);})
@@ -163,11 +164,20 @@ public class LoginResource {
         AuthenticationResponse authenticationResponse = getPreviousAuthResult();
         com.okta.authn.sdk.resource.Factor factor = getFactor(type, authenticationResponse);
 
-        if (factor.getType().equals("totp")) {
+        if (factor.getType().equals(FactorType.TOKEN_SOFTWARE_TOTP)) {
             return new MfaVerifyView(factor);
         } else {
             return new MfaVerifyView(challengeFactor(factor, authenticationResponse));
         }
+    }
+
+    @GET
+    @Path("/mfa/resend/{type}")
+    public MfaVerifyView getResendVerifyMfaView(@PathParam("type") String type) {
+
+        AuthenticationResponse authenticationResponse = getPreviousAuthResult();
+        com.okta.authn.sdk.resource.Factor factor = getFactor(type, authenticationResponse);
+        return new MfaVerifyView(factor);
     }
 
     @POST
@@ -226,7 +236,7 @@ public class LoginResource {
         VerifyRecoveryRequest request = authenticationClient.instantiate(VerifyRecoveryRequest.class)
                 .setStateToken(previousAuthResult.getStateToken())
                 .setPassCode(passCode);
-        authenticationClient.verifyUnlockAccount(previousAuthResult.getLinks().get("next").getHref(), request, new ExampleAuthenticationStateHandler());
+        authenticationClient.verifyUnlockAccount(previousAuthResult.getFactors().get(0).getType(), request, new ExampleAuthenticationStateHandler());
     }
 
     @GET
@@ -275,7 +285,17 @@ public class LoginResource {
     }
 
     @POST
-    @Path("/mfa/activate")
+    @Path("/mfa/resend/{type}")
+    public MfaVerifyView verifyMfa(@PathParam("type") String type) throws AuthenticationException {
+
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        com.okta.authn.sdk.resource.Factor factor = getFactor(type, previousAuthResult);
+        AuthenticationResponse response = authenticationClient.resendVerifyFactor(factor.getId(), previousAuthResult.getStateToken(), new ExampleAuthenticationStateHandler());
+        return new MfaVerifyView(factor);
+    }
+
+    @POST
+    @Path("/mfa/activate/{factorType}")
     public void activateMfa(@FormParam("passCode") String passCode) throws AuthenticationException {
 
         AuthenticationResponse previousAuthResult = getPreviousAuthResult();
@@ -289,12 +309,21 @@ public class LoginResource {
     }
 
     @POST
+    @Path("/mfa/activate/{factorType}/resend")
+    public void resendActivateMfa(@PathParam("factorType") String type) throws AuthenticationException {
+
+        AuthenticationResponse previousAuthResult = getPreviousAuthResult();
+        com.okta.authn.sdk.resource.Factor factor = getFactor(type, previousAuthResult);
+        authenticationClient.resendActivateFactor(factor.getId(), previousAuthResult.getStateToken(), new ExampleAuthenticationStateHandler());
+    }
+
+    @POST
     @Path("/mfa/enroll/{factorType}")
     public void enrollMfa(@PathParam("factorType") String factorType, Form form) throws AuthenticationException {
         FactorEnrollRequest request = authenticationClient.instantiate(FactorEnrollRequest.class)
                 .setProvider(FactorProvider.OKTA)
                 .setStateToken(getPreviousAuthResult().getStateToken())
-                .setFactorType(FactorType.valueOf(factorType))
+                .setFactorType(MfaVerifyView.fromRelativeLink(factorType))
                 .setFactorProfile(authenticationClient.instantiate(SmsFactorProfile.class)
                     .setPhoneNumber(form.asMap().getFirst("phoneNumber")));
         authenticationClient.enrollFactor(request, new ExampleAuthenticationStateHandler());
@@ -302,7 +331,7 @@ public class LoginResource {
 
     private com.okta.authn.sdk.resource.Factor getFactor(String type, AuthenticationResponse authenticationResponse) {
 
-        String oktaType = MfaVerifyView.fromRelativeLink(type);
+        FactorType oktaType = MfaVerifyView.fromRelativeLink(type);
         return authenticationResponse.getFactors().stream()
                 .filter(it -> it.getType().equals(oktaType))
                 .findFirst().get();

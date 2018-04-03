@@ -17,12 +17,22 @@ package com.okta.authn.sdk.example;
 
 import com.okta.authn.sdk.AuthenticationStateHandlerAdapter;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.sdk.impl.ds.DefaultResourceConverter;
+import com.okta.sdk.impl.ds.JacksonMapMarshaller;
+import com.okta.sdk.impl.resource.AbstractResource;
+import com.okta.sdk.impl.resource.ReferenceFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.util.Locale;
+import java.util.Map;
 
 public class ExampleAuthenticationStateHandler extends AuthenticationStateHandlerAdapter {
 
@@ -50,6 +60,9 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
     @Override
     public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) {
         // do nothing this will be handled by the caller
+        String factorType = mfaChallengeResponse.getFactors().get(0).getType().name().toLowerCase(Locale.ENGLISH);
+        redirect("/login/mfa/verify/"+ factorType, mfaChallengeResponse);
+//        log(mfaChallengeResponse);
     }
 
     @Override
@@ -74,7 +87,8 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
 
     @Override
     public void handleMfaEnrollActivate(AuthenticationResponse mfaEnrollActivate) {
-        redirect("/login/mfa/activate", mfaEnrollActivate);
+        String factorType = mfaEnrollActivate.getFactors().get(0).getType().name().toLowerCase(Locale.ENGLISH);
+        redirect("/login/mfa/activate/"+ factorType, mfaEnrollActivate);
     }
 
     @Override
@@ -87,7 +101,27 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
         redirect("/login?error="+ unknownResponse.getStatus().name(), unknownResponse);
     }
 
+    private void log(AuthenticationResponse authenticationResponse) {
+         String pid = ManagementFactory.getRuntimeMXBean().getName();
+        File targetDir = new File("target/"+pid);
+        targetDir.mkdirs();
+        File outFile = new File(targetDir, "response-"+System.currentTimeMillis()+".json");
+
+        ReferenceFactory referenceFactory = new ReferenceFactory();
+        DefaultResourceConverter resourceConverter = new DefaultResourceConverter(referenceFactory);
+        Map<String, Object> data = resourceConverter.convert((AbstractResource) authenticationResponse, false);
+
+        JacksonMapMarshaller mapMarshaller = new JacksonMapMarshaller();
+        try(FileOutputStream fos = new FileOutputStream(outFile)) {
+            mapMarshaller.marshal(fos, data);
+        } catch (IOException e) {
+            throw new IllegalStateException("failed to serialize response.", e);
+        }
+    }
+
     private void redirect(String location, AuthenticationResponse authenticationResponse) {
+
+        log(authenticationResponse);
         try {
             Subject subject = SecurityUtils.getSubject();
             HttpServletResponse response = WebUtils.getHttpResponse(subject);

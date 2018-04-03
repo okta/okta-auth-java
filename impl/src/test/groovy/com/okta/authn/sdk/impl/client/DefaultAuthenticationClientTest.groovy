@@ -18,10 +18,14 @@ package com.okta.authn.sdk.impl.client
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.okta.authn.sdk.*
+import com.okta.authn.sdk.impl.client.util.StubRequestExecutor
+import com.okta.authn.sdk.impl.client.util.TestUtil
+import com.okta.authn.sdk.impl.client.util.WrappedAuthenticationClient
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
+import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.cache.DisabledCacheManager
 import com.okta.sdk.impl.http.MediaType
@@ -45,6 +49,7 @@ import static com.spotify.hamcrest.jackson.JsonMatchers.jsonObject
 import static com.spotify.hamcrest.jackson.JsonMatchers.jsonText
 import static org.hamcrest.Matchers.endsWith
 import static org.hamcrest.Matchers.is
+import static org.hamcrest.MatcherAssert.assertThat
 import static org.mockito.Mockito.*
 
 class DefaultAuthenticationClientTest {
@@ -175,6 +180,48 @@ class DefaultAuthenticationClientTest {
     }
 
     @Test
+    void activationPollTest() {
+        def client = createClient("activationPollTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+        String factorId = "factor321"
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/factors/${factorId}/lifecycle/activate/poll")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.pollFactor(factorId, "stateToken1", stateHandler)
+        verify(stateHandler).handleMfaEnrollActivate(response)
+        assertThat response.factorResult, is("WAITING")
+    }
+
+    @Test
+    void skipStateTest() {
+        def client = createClient("skipStateTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/skip")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.skip("stateToken1", stateHandler)
+        verify(stateHandler).handleSuccess(response)
+    }
+
+    @Test
     void recoverPasswordTest() {
         def client = createClient("recoverPasswordTest")
         StubRequestExecutor requestExecutor = client.getRequestExecutor()
@@ -238,6 +285,94 @@ class DefaultAuthenticationClientTest {
         AuthenticationResponse response = client.answerRecoveryQuestion("answer goes here", "stateToken1", stateHandler)
         verify(stateHandler).handlePasswordReset(response)
     }
+
+    @Test
+    void challengeFactorTest() {
+        def client = createClient("challengeFactorTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        def factorId = "factor321"
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/factors/${factorId}/verify")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.challengeFactor(factorId, "stateToken1", stateHandler)
+        verify(stateHandler).handleMfaChallenge(response)
+    }
+
+    @Test
+    void resendVerifyTest() {
+        def client = createClient("resendVerifyTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        def factorId = "factor321"
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/factors/${factorId}/verify/resend")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.resendVerifyFactor(factorId, "stateToken1", stateHandler)
+        verify(stateHandler).handleMfaChallenge(response)
+    }
+
+    @Test
+    void resendActivateTest() {
+        def client = createClient("resendActivateTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        def factorId = "factor321"
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/factors/${factorId}/lifecycle/resend")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.resendActivateFactor(factorId, "stateToken1", stateHandler)
+        verify(stateHandler).handleMfaEnrollActivate(response)
+    }
+
+    @Test
+    void verifyUnlockAccountTest() {
+        def client = createClient("verifyUnlockAccountTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+                .where("passCode", is(jsonText("123654")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/recovery/factors/SMS/verify")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        def request = client.instantiate(VerifyRecoveryRequest)
+                                .setPassCode("123654")
+                                .setStateToken("stateToken1")
+        AuthenticationResponse response = client.verifyUnlockAccount(FactorType.SMS, request, stateHandler)
+        verify(stateHandler).handleRecovery(response)
+    }
+
 
     @Test
     void eachStatusTest() {

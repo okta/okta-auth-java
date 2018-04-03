@@ -30,7 +30,7 @@ import org.testng.annotations.AfterMethod
 import org.testng.annotations.Listeners
 
 @Listeners(ResourceExceptionLoggingListener)
-class AuthentiationTestSupport {
+class AuthenticationTestSupport {
 
     private Logger log = LoggerFactory.getLogger(AuthenticationClientIT)
 
@@ -111,7 +111,6 @@ class AuthentiationTestSupport {
             }
         }
     }
-
 }
 
 class IgnoringStateHandler extends AuthenticationStateHandlerAdapter {

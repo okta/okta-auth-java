@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
-import io.dropwizard.views.View;
+import com.okta.authn.sdk.example.views.BaseView;
 
-public class RecoveryChallengeView extends View {
+public class RecoveryChallengeView extends BaseView {
 
     public RecoveryChallengeView() {
         super("recover-challenge.mustache");

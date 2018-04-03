@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
-import io.dropwizard.views.View;
+import com.okta.authn.sdk.example.views.BaseView;
 
-public class ChangePasswordView extends View {
+public class ChangePasswordView extends BaseView {
 
     public ChangePasswordView() {
         super("changePassword.mustache");

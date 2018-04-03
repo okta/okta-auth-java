@@ -272,12 +272,12 @@ public interface AuthenticationClient extends DataStore {
 
     AuthenticationResponse challengeFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-    // TODO: do not pass href here
-    AuthenticationResponse verifyUnlockAccount(String href, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
 
     /**
-     * Resend a factor challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
+     * Resend an activation factor challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
      * to be resent to ensure delivery.
      *
      * @param factorId id of factor returned from enrollment
@@ -287,7 +287,23 @@ public interface AuthenticationClient extends DataStore {
      * @throws AuthenticationException any other authentication related error
      */
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/resend", href = "https://developer.okta.com/docs/api/resources/authn.html")
-    AuthenticationResponse resendFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    AuthenticationResponse resendActivateFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+
+    /**
+     * Resend a factor verification challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
+     * to be resent to ensure delivery.
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param stateToken state token for current transaction
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify/resend", href = "https://developer.okta.com/docs/api/resources/authn.html")
+    AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+
 
     /**
      * Polls for state of factor. Some factors (Push, Duo, etc) depend on a user action, this method can be used to poll the state of

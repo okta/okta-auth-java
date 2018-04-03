@@ -15,10 +15,10 @@
  */
 package com.okta.authn.sdk.example.views.authn;
 
+import com.okta.authn.sdk.example.views.BaseView;
 import com.okta.authn.sdk.resource.Factor;
-import io.dropwizard.views.View;
 
-public class MfaEnrollView extends View {
+public class MfaEnrollView extends BaseView {
 
     private final Factor factor;
 

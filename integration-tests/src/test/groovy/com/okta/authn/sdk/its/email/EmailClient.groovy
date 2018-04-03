@@ -18,6 +18,7 @@ package com.okta.authn.sdk.its.email
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.okta.authn.sdk.its.util.StopWatch
 import org.testng.Assert
 
 import static io.restassured.RestAssured.get
@@ -40,34 +41,37 @@ class EmailClient {
         String emailId = null
         int count = 0
 
-        while (emailId == null && count++ < 200) {
-            Thread.sleep(300l)
-            def jsonResponse =
-                    get(GUERILLA_MAIL_BASE + "?f=get_email_list&offset=0&sid_token=${sidToken}").asString()
+        def waitTime = StopWatch.timeEventInSeconds {
 
-            JsonNode emailList = null
+            while (emailId == null && count++ < 1000) {
+                Thread.sleep(500l)
+                def jsonResponse =
+                        get(GUERILLA_MAIL_BASE + "?f=get_email_list&offset=0&sid_token=${sidToken}").asString()
 
-            try {
-                JsonNode rootNode = mapper.readTree(jsonResponse)
-                emailList = rootNode.path("list")
-            } catch (JsonMappingException e) {
-                // gonna try to hit the api again, so ok to swallow exception
-            }
+                JsonNode emailList = null
 
-            if (emailList != null) {
-                for (JsonNode emailNode : emailList) {
-                    String mailFrom = emailNode.get("mail_from").asText()
-                    String localEmailId = emailNode.get("mail_id").asText()
-                    if (mailFrom.contains(fromAddressDomain)) {
-                        emailId = localEmailId
-                        break
+                try {
+                    JsonNode rootNode = mapper.readTree(jsonResponse)
+                    emailList = rootNode.path("list")
+                } catch (JsonMappingException e) {
+                    // gonna try to hit the api again, so ok to swallow exception
+                }
+
+                if (emailList != null) {
+                    for (JsonNode emailNode : emailList) {
+                        String mailFrom = emailNode.get("mail_from").asText()
+                        String localEmailId = emailNode.get("mail_id").asText()
+                        if (mailFrom.contains(fromAddressDomain)) {
+                            emailId = localEmailId
+                            break
+                        }
                     }
                 }
             }
         }
 
         if (emailId == null) {
-            Assert.fail("Couldn't retrieve email")
+            Assert.fail("Couldn't retrieve email, timeout after ${waitTime} seconds")
             return null
         }
 

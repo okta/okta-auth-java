@@ -21,8 +21,16 @@ import java.util.List;
 
 public interface Link extends Resource {
 
+    String getName();
+
+    String getType();
+
     List<String> getHintsAllow();
 
     String getHref();
+
+    boolean hasNestedLinks();
+
+    List<Link> getNestedLinks();
 
 }

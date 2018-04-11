@@ -32,8 +32,13 @@ public class DefaultLink extends AbstractResource implements Link {
 
     private static final StringProperty HREF_PROPERTY = new StringProperty("href");
 
+    private static final StringProperty NAME_PROPERTY = new StringProperty("name");
+
+    private static final StringProperty TYPE_PROPERTY = new StringProperty("type");
+
     private static final MapProperty HINTS_PROPERTY = new MapProperty("hints");
-    private static final ListProperty ALLOW_PROPERTY = new ListProperty("allow");
+
+    private static final ListProperty NESTED__ALLOW_PROPERTY = new ListProperty("allow");
 
     public DefaultLink(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
@@ -43,14 +48,26 @@ public class DefaultLink extends AbstractResource implements Link {
     public Map<String, Property> getPropertyDescriptors() {
         return createPropertyDescriptorMap(
             HREF_PROPERTY,
-            HINTS_PROPERTY
+            HINTS_PROPERTY,
+            NAME_PROPERTY,
+            TYPE_PROPERTY
         );
+    }
+
+    @Override
+    public String getName() {
+        return getString(NAME_PROPERTY);
+    }
+
+    @Override
+    public String getType() {
+        return getString(TYPE_PROPERTY);
     }
 
     @Override
     public List<String> getHintsAllow() {
         Map hints = getNonEmptyMap(HINTS_PROPERTY);
-        return (List<String>) hints.getOrDefault(ALLOW_PROPERTY.getName(), Collections.emptyList());
+        return (List<String>) hints.getOrDefault(NESTED__ALLOW_PROPERTY.getName(), Collections.emptyList());
     }
 
     @Override
@@ -58,15 +75,32 @@ public class DefaultLink extends AbstractResource implements Link {
         return getString(HREF_PROPERTY);
     }
 
+    @Override
+    public boolean hasNestedLinks() {
+        return false;
+    }
+
+    @Override
+    public List<Link> getNestedLinks() {
+        return Collections.emptyList();
+    }
 
     static Map<String, Link> getLinks(Map rawLinkMap, InternalDataStore dataStore) {
 
         Map<String, Link> result = new LinkedHashMap<>();
         if (!com.okta.sdk.lang.Collections.isEmpty(rawLinkMap)) {
             rawLinkMap.forEach((k,v) -> {
-                    // TODO: link map could be items or lists
-                    Link link = dataStore.instantiate(Link.class, (Map<String, Object>) v);
+
+                    Link link;
+                    if(v instanceof Map) {
+                        link = dataStore.instantiate(Link.class, (Map<String, Object>) v);
+
+                    } else {
+                        Map<String, Object> data = Collections.singletonMap("items", v);
+                        link = dataStore.instantiate(NestedLink.class, data);
+                    }
                     result.put((String) k, link);
+
             });
         }
         return Collections.unmodifiableMap(result);

@@ -18,6 +18,7 @@ package com.okta.authn.sdk.impl.resource;
 import com.okta.authn.sdk.resource.VerifyPushFactorRequest;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.BooleanProperty;
+import com.okta.sdk.impl.resource.Property;
 
 import java.util.Map;
 
@@ -33,6 +34,11 @@ public class DefaultVerifyPushFactorRequest extends DefaultVerifyFactorRequest i
 
     public DefaultVerifyPushFactorRequest(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
+    }
+
+    @Override
+    public Map<String, Property> getPropertyDescriptors() {
+        return createPropertyDescriptorMap(super.getPropertyDescriptors(), AUTO_PUSH_PROPERTY, REMEMBER_DEVICE_PROPERTY);
     }
 
     @Override

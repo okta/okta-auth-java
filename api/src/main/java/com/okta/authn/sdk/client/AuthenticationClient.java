@@ -29,6 +29,7 @@ import com.okta.authn.sdk.resource.UnlockAccountRequest;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.ds.DataStore;
+import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
@@ -56,7 +57,25 @@ import com.okta.sdk.resource.user.factor.FactorType;
  * @see <a href="https://developer.okta.com/docs/api/resources/authn.html">Okta Authentication API documentation</a>
  * @since 0.1.0
  */
-public interface AuthenticationClient extends DataStore {
+public interface AuthenticationClient {
+
+    /**
+    * Returns the internal {@link DataStore} of the client.  It is typically not necessary to invoke this method as
+    * the Client implements the {@link DataStore} API and will delegate to this instance automatically.
+    *
+    * @return the client's internal {@link DataStore}.
+    */
+    DataStore getDataStore();
+
+    /**
+     * Delegates to the internal {@code dataStore} instance. This is a convenience mechanism to eliminate the constant
+     * need to call {@code client.getDataStore()} every time one needs to instantiate Resource.
+     *
+     * @param clazz the Resource class to instantiate.
+     * @param <T>   the Resource sub-type
+     * @return a new instance of the specified Resource.
+     */
+    <T extends Resource> T instantiate(Class<T> clazz);
 
     /**
      * Initiates a username and password login against Okta's Authentication API. A user should not be considered logged in
@@ -260,21 +279,54 @@ public interface AuthenticationClient extends DataStore {
     @ApiReference(path = "/api/v1/authn/cancel", href = "https://developer.okta.com/docs/api/resources/authn.html#cancel-transaction")
     AuthenticationResponse cancel(String stateToken);
 
-
-
-    // /api/v1/authn/factors/{factorId}/lifecycle/activate
+    /**
+     * The sms,call and token:software:totp factor types require activation to complete the enrollment process.
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param request the request object containing the required attributes to fulfill the activation
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate", href = "https://developer.okta.com/docs/api/resources/authn.html#activate-factor")
     AuthenticationResponse activateFactor(String factorId, ActivateFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    /**
+     * Verifies an enrolled factor for an authentication transaction with the MFA_REQUIRED or MFA_CHALLENGE state
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param request the request object containing the required attributes to fulfill the verification
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-factor")
     AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
 
-    // /api/v1/authn/factors/{factorId}/verify
-
+    /**
+     * Requests a challenge factor be sent to the user via the corresponding {code}factorId{code}.
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param stateToken state token for current transaction
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-sms-factor")
     AuthenticationResponse challengeFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-
+    /**
+     * Verifies a recovery challenge sent to the user for primary authentication for a recovery transaction with RECOVERY_CHALLENGE status.
+     *
+     * @param factorType type of factor
+     * @param request the request object containing the required attributes to fulfill this challenge
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/recovery/factors/{factorType}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-recovery-factor")
     AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
 
     /**
      * Resend an activation factor challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
@@ -321,7 +373,6 @@ public interface AuthenticationClient extends DataStore {
      * Validates a recovery token that was distributed to the end user to continue the recovery transaction.
      *
      * @param recoveryToken Recovery token that was distributed to the end user via out-of-band mechanism such as email
-     * @param stateHandler
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error

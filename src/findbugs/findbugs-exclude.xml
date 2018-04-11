@@ -42,6 +42,17 @@
     </Match>
 
 
+    <Match>
+        <Class name="com.okta.authn.sdk.example.ExampleAuthenticationStateHandler"></Class>
+    </Match>
+
+    <Match>
+        <Class name="com.okta.authn.sdk.example.OverlySimpleCsrfFilter"></Class>
+        <Or>
+            <Bug pattern="SERVLET_PARAMETER" />
+            <Bug pattern="TRUST_BOUNDARY_VIOLATION" />
+        </Or>
+    </Match>
 
 
 </FindBugsFilter>

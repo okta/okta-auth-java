@@ -17,7 +17,6 @@ package com.okta.authn.sdk.example.views.authn;
 
 import com.okta.authn.sdk.example.views.BaseView;
 import com.okta.authn.sdk.resource.Factor;
-import com.okta.sdk.resource.user.factor.FactorType;
 
 public class MfaActivateView extends BaseView {
 

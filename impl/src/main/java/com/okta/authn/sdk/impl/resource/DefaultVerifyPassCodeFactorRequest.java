@@ -18,6 +18,7 @@ package com.okta.authn.sdk.impl.resource;
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.BooleanProperty;
+import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
@@ -34,6 +35,14 @@ public class DefaultVerifyPassCodeFactorRequest extends DefaultVerifyFactorReque
 
     public DefaultVerifyPassCodeFactorRequest(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
+    }
+
+    @Override
+    public Map<String, Property> getPropertyDescriptors() {
+        return createPropertyDescriptorMap(
+                super.getPropertyDescriptors(),
+                PASS_CODE_PROPERTY,
+                REMEMBER_DEVICE_PROPERTY);
     }
 
     @Override

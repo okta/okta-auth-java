@@ -64,9 +64,9 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
     private static final MapProperty LINKS_PROPERTY = new MapProperty("_links");
 
     // Nested under _embedded
-    private static final StringProperty EMBEDDED_USER_PROPERTY = new StringProperty("user");
-    private static final StringProperty EMBEDDED_FACTORS_PROPERTY = new StringProperty("factors");
-    private static final StringProperty EMBEDDED_FACTOR_PROPERTY = new StringProperty("factor");
+    private static final StringProperty NESTED__USER_PROPERTY = new StringProperty("user");
+    private static final StringProperty NESTED__FACTORS_PROPERTY = new StringProperty("factors");
+    private static final StringProperty NESTED__FACTOR_PROPERTY = new StringProperty("factor");
 
     public DefaultAuthenticationResponse(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
@@ -169,7 +169,7 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
 
     @Override
     public User getUser() {
-        Map<String, Object> userDetails = (Map) getEmbedded().get(EMBEDDED_USER_PROPERTY.getName());
+        Map<String, Object> userDetails = (Map) getEmbedded().get(NESTED__USER_PROPERTY.getName());
         if (userDetails != null) {
             return getDataStore().instantiate(User.class, userDetails);
         }
@@ -179,17 +179,15 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
     @Override
     public List<Factor> getFactors() {
         List<Factor> result = new ArrayList<>();
-        List<Map<String, Object>> rawFactors = (List<Map<String, Object>>) getEmbedded().get(EMBEDDED_FACTORS_PROPERTY.getName());
+        List<Map<String, Object>> rawFactors = (List<Map<String, Object>>) getEmbedded().get(NESTED__FACTORS_PROPERTY.getName());
         if (rawFactors != null) {
-            rawFactors.forEach(rawFactor -> {
-                result.add(new DefaultFactor(getDataStore(), rawFactor));
-            });
+            rawFactors.forEach(rawFactor -> result.add(new DefaultFactor(getDataStore(), rawFactor)));
         } else {
 
             // FIXME: i don't like this getFactors and getFactor is already to confusing, maybe the challenge response needs a different type?
 
             // some times we only have a single factor
-            Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(EMBEDDED_FACTOR_PROPERTY.getName());
+            Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(NESTED__FACTOR_PROPERTY.getName());
             if (rawFactor != null) {
                 result.add(new DefaultFactor(getDataStore(), rawFactor));
             }

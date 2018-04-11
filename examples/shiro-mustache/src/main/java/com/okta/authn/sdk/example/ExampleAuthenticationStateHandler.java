@@ -21,13 +21,13 @@ import com.okta.sdk.impl.ds.DefaultResourceConverter;
 import com.okta.sdk.impl.ds.JacksonMapMarshaller;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.ReferenceFactory;
+import com.okta.sdk.lang.Assert;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -109,6 +109,7 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
 
         ReferenceFactory referenceFactory = new ReferenceFactory();
         DefaultResourceConverter resourceConverter = new DefaultResourceConverter(referenceFactory);
+        Assert.isInstanceOf(AbstractResource.class, authenticationResponse);
         Map<String, Object> data = resourceConverter.convert((AbstractResource) authenticationResponse, false);
 
         JacksonMapMarshaller mapMarshaller = new JacksonMapMarshaller();

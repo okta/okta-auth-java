@@ -22,6 +22,7 @@ import com.okta.sdk.impl.resource.DateProperty;
 import com.okta.sdk.impl.resource.MapProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
+import com.okta.sdk.lang.Locales;
 
 import java.util.Date;
 import java.util.Locale;
@@ -35,15 +36,15 @@ public class DefaultUser extends AbstractResource implements User {
     private static final DateProperty PASSWORD_CHANGED_PROPERTY = new DateProperty("passwordChanged");
 
     private static final MapProperty PROFILE_PROPERTY = new MapProperty("profile");
+
     private static final MapProperty RECOVERY_QUESTION_PROPERTY = new MapProperty("recovery_question");
 
     // nested properties exposed directly on this object for ease of use
-
-    private static final StringProperty LOGIN_PROPERTY = new StringProperty("login");
-    private static final StringProperty FIRST_NAME_PROPERTY = new StringProperty("firstName");
-    private static final StringProperty LAST_NAME_PROPERTY = new StringProperty("lastName");
-    private static final StringProperty LOCALE_PROPERTY = new StringProperty("locale");
-    private static final StringProperty TIME_ZONE_PROPERTY = new StringProperty("timeZone");
+    private static final StringProperty NESTED__LOGIN_PROPERTY = new StringProperty("login");
+    private static final StringProperty NESTED__FIRST_NAME_PROPERTY = new StringProperty("firstName");
+    private static final StringProperty NESTED__LAST_NAME_PROPERTY = new StringProperty("lastName");
+    private static final StringProperty NESTED__LOCALE_PROPERTY = new StringProperty("locale");
+    private static final StringProperty NESTED__TIME_ZONE_PROPERTY = new StringProperty("timeZone");
 
     public DefaultUser(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
@@ -54,7 +55,8 @@ public class DefaultUser extends AbstractResource implements User {
         return createPropertyDescriptorMap(
             ID_PROPERTY,
             PASSWORD_CHANGED_PROPERTY,
-            PROFILE_PROPERTY
+            PROFILE_PROPERTY,
+            RECOVERY_QUESTION_PROPERTY
         );
     }
 
@@ -80,28 +82,28 @@ public class DefaultUser extends AbstractResource implements User {
 
     @Override
     public String getLogin() {
-        return getProfile().get(LOGIN_PROPERTY.getName());
+        return getProfile().get(NESTED__LOGIN_PROPERTY.getName());
     }
 
     @Override
     public String getFirstName() {
-        return getProfile().get(FIRST_NAME_PROPERTY.getName());
+        return getProfile().get(NESTED__FIRST_NAME_PROPERTY.getName());
     }
 
     @Override
     public String getLastName() {
-        return getProfile().get(LAST_NAME_PROPERTY.getName());
+        return getProfile().get(NESTED__LAST_NAME_PROPERTY.getName());
     }
 
     @Override
     public Locale getLocale() {
-        String rawLocale = getProfile().get(LOCALE_PROPERTY.getName());
-        return Locale.forLanguageTag(rawLocale);
+        String rawLocale = getProfile().get(NESTED__LOCALE_PROPERTY.getName());
+        return Locales.toLocale(rawLocale);
     }
 
     @Override
     public TimeZone getTimeZone() {
-        String rawTimeZone = getProfile().get(TIME_ZONE_PROPERTY.getName());
+        String rawTimeZone = getProfile().get(NESTED__TIME_ZONE_PROPERTY.getName());
         return TimeZone.getTimeZone(rawTimeZone);
     }
 }

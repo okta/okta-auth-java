@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.impl.client.util
+package com.okta.authn.sdk.impl.client
 
 import com.okta.sdk.impl.http.*
 import com.okta.sdk.impl.http.support.DefaultResponse

@@ -39,7 +39,7 @@ public class DefaultVerifyRecoveryRequest extends AbstractResource implements Ve
 
     @Override
     public Map<String, Property> getPropertyDescriptors() {
-        return null;
+        return createPropertyDescriptorMap(PASS_CODE_PROPERTY, STATE_TOKEN_PROPERTY);
     }
 
     @Override

@@ -1,6 +1,20 @@
+/*
+ * Copyright 2018 Okta, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.okta.authn.sdk.example;
 
-import com.okta.sdk.impl.http.MediaType;
 import com.okta.sdk.lang.Strings;
 import org.apache.shiro.web.servlet.OncePerRequestFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -24,18 +38,18 @@ public class OverlySimpleCsrfFilter extends OncePerRequestFilter {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
 
         String method = httpRequest.getMethod().toUpperCase(Locale.ENGLISH);
-        return ("POST".equals(method) || "PUT".equals(method)) // POST or PUT
-            && httpRequest.getContentType().contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE); // form
+        return "POST".equals(method) || "PUT".equals(method); // POST or PUT
     }
 
     @Override
     protected void doFilterInternal(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
 
         HttpSession session = WebUtils.toHttp(request).getSession(true);
-
         String expectedCsrf = (String) session.getAttribute(CSRF_KEY);
-        // next key
-        session.setAttribute(CSRF_KEY, UUID.randomUUID().toString());
+
+        // figure out the next CSRF token
+        String nextCSRF = UUID.randomUUID().toString();
+        request.setAttribute(CSRF_KEY, nextCSRF);
 
         if (shouldFilter(request)) {
             String actualCsrf = request.getParameter(CSRF_KEY);
@@ -48,5 +62,8 @@ public class OverlySimpleCsrfFilter extends OncePerRequestFilter {
             }
         }
         chain.doFilter(request, response);
+
+        // next key
+        session.setAttribute(CSRF_KEY, nextCSRF);
     }
 }

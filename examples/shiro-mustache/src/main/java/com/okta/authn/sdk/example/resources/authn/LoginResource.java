@@ -290,7 +290,7 @@ public class LoginResource {
 
         AuthenticationResponse previousAuthResult = getPreviousAuthResult();
         com.okta.authn.sdk.resource.Factor factor = getFactor(type, previousAuthResult);
-        AuthenticationResponse response = authenticationClient.resendVerifyFactor(factor.getId(), previousAuthResult.getStateToken(), new ExampleAuthenticationStateHandler());
+        authenticationClient.resendVerifyFactor(factor.getId(), previousAuthResult.getStateToken(), new ExampleAuthenticationStateHandler());
         return new MfaVerifyView(factor);
     }
 

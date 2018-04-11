@@ -41,13 +41,13 @@ public class DefaultFactor extends AbstractResource implements Factor {
 
     private static final StringProperty STATUS_PROPERTY = new StringProperty("status");
 
-    private static final MapProperty PROFILE_PROPERTY = new MapProperty("profile"); // TODO: make this an object?
+    private static final MapProperty PROFILE_PROPERTY = new MapProperty("profile");
 
     private static final MapProperty LINKS_PROPERTY = new MapProperty("_links");
 
     private static final MapProperty EMBEDDED_PROPERTY = new MapProperty("_embedded");
 
-    private static final MapProperty EMBEDDED_ACTIVATION_PROPERTY = new MapProperty("activation");
+    private static final MapProperty NESTED__ACTIVATION_PROPERTY = new MapProperty("activation");
 
     public DefaultFactor(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
@@ -109,7 +109,7 @@ public class DefaultFactor extends AbstractResource implements Factor {
 
     @Override
     public FactorActivation getActivation() {
-        Map<String, Object> activationDetails = (Map) getEmbedded().get(EMBEDDED_ACTIVATION_PROPERTY.getName());
+        Map<String, Object> activationDetails = (Map) getEmbedded().get(NESTED__ACTIVATION_PROPERTY.getName());
         if (activationDetails != null) {
             return getDataStore().instantiate(FactorActivation.class, activationDetails);
         }

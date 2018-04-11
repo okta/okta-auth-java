@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.impl.client.util
+package com.okta.authn.sdk.impl.client
 
-import com.okta.authn.sdk.impl.client.DefaultAuthenticationClient
 import com.okta.sdk.authc.credentials.ClientCredentials
 import com.okta.sdk.cache.CacheManager
 import com.okta.sdk.client.AuthenticationScheme

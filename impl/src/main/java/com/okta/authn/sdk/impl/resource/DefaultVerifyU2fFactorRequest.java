@@ -18,6 +18,7 @@ package com.okta.authn.sdk.impl.resource;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyU2fFactorRequest;
 import com.okta.sdk.impl.ds.InternalDataStore;
+import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
@@ -35,6 +36,11 @@ public class DefaultVerifyU2fFactorRequest extends DefaultVerifyFactorRequest im
 
     public DefaultVerifyU2fFactorRequest(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
+    }
+
+    @Override
+    public Map<String, Property> getPropertyDescriptors() {
+        return createPropertyDescriptorMap(super.getPropertyDescriptors(), SIGNATURE_DATA_PROPERTY, CLIENT_DATA_PROPERTY);
     }
 
     @Override

@@ -18,9 +18,7 @@ package com.okta.authn.sdk.impl.client
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.okta.authn.sdk.*
-import com.okta.authn.sdk.impl.client.util.StubRequestExecutor
-import com.okta.authn.sdk.impl.client.util.TestUtil
-import com.okta.authn.sdk.impl.client.util.WrappedAuthenticationClient
+import com.okta.authn.sdk.impl.util.TestUtil
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus

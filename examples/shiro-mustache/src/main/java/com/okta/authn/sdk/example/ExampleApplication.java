@@ -22,10 +22,6 @@ import com.okta.authn.sdk.example.dao.DefaultStormtrooperDao;
 import com.okta.authn.sdk.example.dao.DefaultTieCraftDao;
 import com.okta.authn.sdk.example.dao.StormtrooperDao;
 import com.okta.authn.sdk.example.dao.TieCraftDao;
-import com.okta.sdk.http.HttpMethod;
-import com.okta.sdk.impl.http.HttpHeaders;
-import com.okta.sdk.impl.http.MediaType;
-import com.okta.sdk.lang.Strings;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
@@ -33,28 +29,14 @@ import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.jaxrs.ShiroFeature;
-import org.apache.shiro.web.servlet.OncePerRequestFilter;
 import org.apache.shiro.web.servlet.ShiroFilter;
-import org.apache.shiro.web.util.WebUtils;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.EnumSet;
-import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 public class ExampleApplication extends Application<ExampleConfiguration> {
 
@@ -92,9 +74,8 @@ public class ExampleApplication extends Application<ExampleConfiguration> {
             }
         });
 
-
-//        environment.servlets().addFilter("csrf", new OverlySimpleCsrfFilter())
-//                .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        environment.servlets().addFilter("csrf", new OverlySimpleCsrfFilter())
+                .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
 
         configureShiro(environment);
 

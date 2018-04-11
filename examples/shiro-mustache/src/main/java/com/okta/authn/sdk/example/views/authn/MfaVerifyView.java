@@ -19,10 +19,6 @@ import com.okta.authn.sdk.example.views.BaseView;
 import com.okta.authn.sdk.resource.Factor;
 import com.okta.sdk.resource.user.factor.FactorType;
 
-import static com.okta.sdk.resource.user.factor.FactorType.*;
-import static com.okta.sdk.resource.user.factor.FactorType.SMS;
-import static com.okta.sdk.resource.user.factor.FactorType.TOKEN_SOFTWARE_TOTP;
-
 public class MfaVerifyView extends BaseView {
 
     private final Factor factor;

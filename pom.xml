@@ -34,7 +34,7 @@
 
     <properties>
         <jackson.version>2.9.5</jackson.version>
-        <okta.sdk.version>1.0.1-SNAPSHOT</okta.sdk.version>
+        <okta.sdk.version>1.1.0-SNAPSHOT</okta.sdk.version>
     </properties>
 
     <modules>

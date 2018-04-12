@@ -44,7 +44,7 @@ import com.okta.sdk.cache.CacheManager;
 import com.okta.sdk.client.AuthenticationScheme;
 import com.okta.sdk.client.Proxy;
 import com.okta.sdk.impl.api.ClientCredentialsResolver;
-import com.okta.sdk.impl.client.AbstractClient;
+import com.okta.sdk.impl.client.BaseClient;
 import com.okta.sdk.impl.http.authc.RequestAuthenticatorFactory;
 import com.okta.sdk.impl.util.BaseUrlResolver;
 import com.okta.sdk.resource.Resource;
@@ -53,7 +53,7 @@ import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
 
-public class DefaultAuthenticationClient extends AbstractClient implements AuthenticationClient {
+public class DefaultAuthenticationClient extends BaseClient implements AuthenticationClient {
 
     /**
      * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level

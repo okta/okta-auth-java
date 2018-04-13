@@ -19,28 +19,6 @@
   -->
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
 
-    <!--&lt;!&ndash; CVE-2016-7051 was fixed in version 2.8.4 &ndash;&gt;-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: jackson-core-2.8.8.jar fix for: CVE-2016-7051]]></notes>-->
-        <!--<sha1>d478fb6de45a7c3d2cad07c8ad70c7f0a797a020</sha1>-->
-        <!--<cpe>cpe:/a:fasterxml:jackson:2.8.8</cpe>-->
-    <!--</suppress>-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: jackson-databind-2.8.8.jar fix for: CVE-2016-7051]]></notes>-->
-        <!--<sha1>bf88c7b27e95cbadce4e7c316a56c3efffda8026</sha1>-->
-        <!--<cpe>cpe:/a:fasterxml:jackson:2.8.8</cpe>-->
-    <!--</suppress>-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: jackson-annotations-2.8.8.jar fix for: CVE-2016-7051]]></notes>-->
-        <!--<sha1>1ed81c0e4eb2d261d1da0a3a45bd6b199fb5cf9a</sha1>-->
-        <!--<cpe>cpe:/a:fasterxml:jackson:2.8.8</cpe>-->
-    <!--</suppress>-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: jackson-dataformat-yaml-2.8.8.jar fix for: CVE-2016-7051]]></notes>-->
-        <!--<sha1>fe81db224d5f06539de17aceb30ea7ba6ef8a300</sha1>-->
-        <!--<cpe>cpe:/a:fasterxml:jackson:2.8.8</cpe>-->
-    <!--</suppress>-->
-
     <suppress>
        <notes><![CDATA[
        file name: okta-sdk-httpclient.jar - scanner thought this was a ruby project

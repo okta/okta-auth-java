@@ -11,6 +11,8 @@ The Okta Authentication SDK is a convenience wrapper around [Okta's Authenticati
 
 Okta's Authentication API is built around a [state machine](https://developer.okta.com/docs/api/resources/authn#transaction-state). In order to use this library you will need to be familiar with the available states. You will need to implement a handler for each state you want to support.  
 
+![State Model Diagram](http://developer.okta.com/assets/img/auth-state-model.png "State Model Diagram")
+
 # Usage
 
 ## Javadocs

@@ -45,19 +45,19 @@ class DefaultUserTest {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
         def user = new DefaultUser(TestUtil.createMockDataStore(), data)
 
-        assertThat user.id, is("00ub0oNGTSWTBKOLGLNR")
-        assertThat user.passwordChanged, is(df.parse("2001-07-04T12:08:56.235-0700"))
-        assertThat user.profile, equalTo([
+        assertThat user.getId(), is("00ub0oNGTSWTBKOLGLNR")
+        assertThat user.getPasswordChanged(), is(df.parse("2001-07-04T12:08:56.235-0700"))
+        assertThat user.getProfile(), equalTo([
                     login: "dade.murphy@example.com",
                     firstName: "Dade",
                     lastName: "Murphy",
                     locale: "en_US",
                     timeZone: "America/Los_Angeles"
                   ])
-        assertThat user.login, is("dade.murphy@example.com")
-        assertThat user.firstName, is("Dade")
-        assertThat user.lastName, is("Murphy")
-        assertThat user.timeZone, is(TimeZone.getTimeZone("America/Los_Angeles"))
-        assertThat user.locale, is(Locale.US)
+        assertThat user.getLogin(), is("dade.murphy@example.com")
+        assertThat user.getFirstName(), is("Dade")
+        assertThat user.getLastName(), is("Murphy")
+        assertThat user.getTimeZone(), is(TimeZone.getTimeZone("America/Los_Angeles"))
+        assertThat user.getLocale(), is(Locale.US)
     }
 }

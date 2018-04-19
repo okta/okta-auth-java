@@ -15,14 +15,12 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
-
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-public interface User extends Resource {
+public interface User extends BaseResource {
 
     String getId();
 

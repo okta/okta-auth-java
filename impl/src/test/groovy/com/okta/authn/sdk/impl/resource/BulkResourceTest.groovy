@@ -99,7 +99,7 @@ class BulkResourceTest {
                 propertiesFromFields.put(property.name, property)
             }
 
-            SortedMap<String, Property> propertiesFromDescriptors = new TreeMap<>((Map) resource.propertyDescriptors)
+            SortedMap<String, Property> propertiesFromDescriptors = new TreeMap<>((Map) resource.getPropertyDescriptors())
             assertThat("Property mismatch in class: ${resource.getClass()}", propertiesFromDescriptors.keySet(), equalTo(propertiesFromFields.keySet()))
         }
     }
@@ -127,7 +127,7 @@ class BulkResourceTest {
 
         Class superClass = type.getSuperclass()
         if (superClass != null && superClass != AbstractResource) {
-            getResourceMethods(type.getSuperclass(), closure, methods)
+            getResourceMethods(superClass, closure, methods)
         }
 
         return methods
@@ -237,7 +237,7 @@ class BulkResourceTest {
     }
 
     static void setViaSetter(AbstractResource resource) {
-        getResourceMethods(resource.class, {it.name.startsWith("set") && it.getParameterTypes().length == 1 })
+        getResourceMethods(resource.getClass(), {it.name.startsWith("set") && it.getParameterTypes().length == 1 })
             .forEach { method ->
 
             def type = method.getParameterTypes()[0]

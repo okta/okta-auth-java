@@ -15,28 +15,10 @@
  */
 package com.okta.authn.sdk.resource;
 
-import java.util.List;
+import com.okta.sdk.resource.PropertyRetriever;
+import com.okta.sdk.resource.Resource;
 
-/**
- * HAL (<a href="http://stateless.co/hal_specification.html">Hypertext Application Language</a>) based links).
- *
- * @since 0.1.0
- */
-public interface Link extends BaseResource {
+import java.util.Map;
 
-    String getName();
-
-    String getType();
-
-    List<String> getHintsAllow();
-
-    String getHref();
-
-    /**
-     * Returns true ONLY if this object contains nested links INSTEAD of containing a link itself.
-     * @return true if this object contains nested links.
-     */
-    boolean hasNestedLinks();
-
-    List<Link> getNestedLinks();
+public interface BaseResource extends Resource, PropertyRetriever, Map<String, Object> {
 }

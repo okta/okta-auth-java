@@ -127,37 +127,36 @@ class DefaultAuthenticationResponseTest {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 
         def response = new DefaultAuthenticationResponse(TestUtil.createMockDataStore(), data)
-        assertThat response.type, is("some_type")
-        assertThat response.expiresAt, is(df.parse("2001-07-04T12:08:56.235-0700"))
-        assertThat response.status, is(AuthenticationStatus.SUCCESS)
-        assertThat response.factorResult, is("WAITING")
-        assertThat response.factorResultMessage, is("factor-result-message")
-        assertThat response.stateToken, is("state-token")
-        assertThat response.relayState, is("relay-state")
-        assertThat response.recoveryToken, is("recovery-token")
-        assertThat response.sessionToken, is("session-token")
-        assertThat response.idToken, is("id-token")
-        assertThat response.factorType, is("factor-type")
-        assertThat response.recoveryType, is("recovery-type")
+        assertThat response.getType(), is("some_type")
+        assertThat response.getExpiresAt(), is(df.parse("2001-07-04T12:08:56.235-0700"))
+        assertThat response.getStatus(), is(AuthenticationStatus.SUCCESS)
+        assertThat response.getFactorResult(), is("WAITING")
+        assertThat response.getFactorResultMessage(), is("factor-result-message")
+        assertThat response.getStateToken(), is("state-token")
+        assertThat response.getRelayState(), is("relay-state")
+        assertThat response.getRecoveryToken(), is("recovery-token")
+        assertThat response.getSessionToken(), is("session-token")
+        assertThat response.getIdToken(), is("id-token")
+        assertThat response.getFactorType(), is("factor-type")
+        assertThat response.getRecoveryType(), is("recovery-type")
 
-        assertThat response.user.id, is("00ub0oNGTSWTBKOLGLNR")
-        assertThat response.user.passwordChanged, is(df.parse("2001-07-04T12:08:56.235-0700"))
-        assertThat response.user.profile, equalTo([
+        assertThat response.getUser().getId(), is("00ub0oNGTSWTBKOLGLNR")
+        assertThat response.getUser().getPasswordChanged(), is(df.parse("2001-07-04T12:08:56.235-0700"))
+        assertThat response.getUser().getProfile(), equalTo([
                     login: "dade.murphy@example.com",
                     firstName: "Dade",
                     lastName: "Murphy",
                     locale: "en_US",
                     timeZone: "America/Los_Angeles"
                   ])
-        assertThat response.user.login, is("dade.murphy@example.com")
-        assertThat response.user.firstName, is("Dade")
-        assertThat response.user.lastName, is("Murphy")
+        assertThat response.getUser().getLogin(), is("dade.murphy@example.com")
+        assertThat response.getUser().getFirstName(), is("Dade")
+        assertThat response.getUser().getLastName(), is("Murphy")
 
-        //TODO: this is wrong
-//        assertThat response.user.locale, is(Locale.US)
-        assertThat response.user.timeZone, is(TimeZone.getTimeZone("America/Los_Angeles"))
+        assertThat response.getUser().getLocale(), is(Locale.US)
+        assertThat response.getUser().getTimeZone(), is(TimeZone.getTimeZone("America/Los_Angeles"))
 
-        Factor factor = response.factors.get(0)
+        Factor factor = response.getFactors().get(0)
         assertThat factor.id, is("opfh52xcuft3J4uZc0g3")
         assertThat factor.type, is(FactorType.PUSH)
         assertThat factor.provider, is(FactorProvider.OKTA)

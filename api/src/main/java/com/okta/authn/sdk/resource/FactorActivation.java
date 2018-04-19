@@ -15,15 +15,12 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
-
 import java.util.Date;
 import java.util.Map;
 
-public interface FactorActivation extends Resource {
+public interface FactorActivation extends BaseResource {
 
     Map<String, Link> getLinks();
-
 
     // TOTP
     Integer getTimeStep();
@@ -33,7 +30,6 @@ public interface FactorActivation extends Resource {
     String getEncoding();
 
     Integer getKeyLength();
-
 
     // Duo
     String getHost();
@@ -52,5 +48,4 @@ public interface FactorActivation extends Resource {
     String getNonce();
 
     Integer getTimeoutSeconds();
-
 }

@@ -15,12 +15,11 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
 
-public interface FactorEnrollRequest extends Resource {
+public interface FactorEnrollRequest extends BaseResource {
 
     String getStateToken();
     FactorEnrollRequest setStateToken(String stateToken);

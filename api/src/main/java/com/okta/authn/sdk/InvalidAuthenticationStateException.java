@@ -18,6 +18,13 @@ package com.okta.authn.sdk;
 import com.okta.sdk.error.Error;
 import com.okta.sdk.resource.ResourceException;
 
+/**
+ * Operation not allowed from the current authentication state. This exception
+ * was thrown as a result of a contains error information returned {@code 4xx} status, related error messages are
+ * contained within this exception.
+ *
+ * @since 0.1.0
+ */
 public class InvalidAuthenticationStateException extends AuthenticationException {
 
     public static final String ERROR_CODE = "E0000079";

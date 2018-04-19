@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * Identifies a method that calls a remote API and adds an external documentation link.
+ * @since 0.1.0
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)
@@ -36,5 +37,4 @@ public @interface ApiReference {
      * External documentation href.
      */
     String href();
-
 }

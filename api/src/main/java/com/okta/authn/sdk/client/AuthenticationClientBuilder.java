@@ -36,41 +36,31 @@ import com.okta.sdk.client.Proxy;
  *
  * <p>This will:</p>
  * <ul>
- *   <li>Automatically attempt to find your API credentials values in a number of default/conventional locations and then use
+ *   <li>Automatically attempt to find your organization URL value in a number of default/conventional locations and then use
  *       the discovered values. Without any other configuration, the following locations will be each be checked,
  *       in order:</li>
  * </ul>
  *
  * <ol>
- *     <li>The environment variable {@code OKTA_CLIENT_TOKEN}.  If either of
- *         these values are present, they override any previously discovered value.</li>
- *     <li>A yaml file that exists at the file path or URL specified by the {@code okta.client.file}
- *         system property.  If this file exists and any values are present, the values override any
- *         previously discovered value.  The {@code okta.client.file} system property String can be an
- *         absolute file path, or it can be a URL or a classpath value by using the {@code url:} or
- *         {@code classpath:} prefixes respectively. Default value is {code ~/.okta/okta.yaml}. </li>
- *     <li>The system properties {@code okta.client.token}.  If this value is present, it will override any
+ *     <li>The environment variable {@code OKTA_CLIENT_ORGURL}. If this values is present, they override
+ *     any previously discovered value.</li>
+ *     <li>A yaml file that exists at the file path {@code ~/.okta/okta.yml} or root of the classpath {@code /okta.yml}.
+ *         If this file exists and any values are present, the values override any
+ *         previously discovered value.
+*      </li>
+ *     <li>The system properties {@code okta.client.orgUrl}.  If this value is present, it will override any
  *     previously discovered values.</li>
  * </ol>
  *
- * <p><b>SECURITY NOTICE:</b> While the {@code okta.client.token} system property may be used to represent your
- * API Key Secret as mentioned above, this is not recommended: process listings on a machine will expose process
- * arguments (like system properties) and expose the secret value to anyone that can read process listings.  As
- * always, secret values should never be exposed to anyone other than the person that owns the API Key.</p>
- *
- * <p>While an API Key ID may be configured anywhere (and be visible by anyone), it is recommended to use a private
- * read-only file or an environment variable to represent API Key secrets.  <b>Never</b> commit secrets to source code
- * or version control.</p>
- *
  * <h2>Explicit API Key Configuration</h2>
  *
- * <p>The above default API Key searching heuristics may not be suitable to your needs.  In that case, you will likely
- * need to explicitly configure your API Key.  For example:</p>
+ * <p>The above default configuration searching heuristics may not be suitable to your needs.  In that case, you will likely
+ * need to explicitly configure the builder.  For example:</p>
  *
  * <pre>
- * ClientCredentials clientCredentials = new TokenClientCredentials("apiToken");
- *
- * AuthenticationClient client = {@link AuthenticationClients AuthenticationClients}.builder().setOrgUrl("https://example.okta.com").build();
+ * AuthenticationClient client = {@link AuthenticationClients AuthenticationClients}.builder()
+ *   .setOrgUrl("https://example.okta.com")
+ *   .build();
  * </pre>
  *
  * @since 0.1.0

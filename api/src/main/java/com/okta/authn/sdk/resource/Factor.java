@@ -42,7 +42,4 @@ public interface Factor extends Resource {
     FactorActivation getActivation();
 
     <T extends FactorActivation> T getActivation(Class<T> activationClass);
-
-//    Object enroll(Object object)
-//    Object verify(Object object)
 }

@@ -20,6 +20,11 @@ import com.okta.sdk.resource.Resource;
 import java.util.List;
 
 public interface Link extends Resource {
+/**
+ * HAL (<a href="http://stateless.co/hal_specification.html">Hypertext Application Language</a>) based links).
+ *
+ * @since 0.1.0
+ */
 
     String getName();
 
@@ -29,8 +34,11 @@ public interface Link extends Resource {
 
     String getHref();
 
+    /**
+     * Returns true ONLY if this object contains nested links INSTEAD of containing a link itself.
+     * @return true if this object contains nested links.
+     */
     boolean hasNestedLinks();
 
     List<Link> getNestedLinks();
-
 }

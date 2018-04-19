@@ -17,6 +17,11 @@ package com.okta.authn.sdk;
 
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 
+/**
+ * Adapter implementation of {@link AuthenticationStateHandler} that calls {@link #handleUnknown(AuthenticationResponse)} for each method.
+ *
+ * @since 0.1.0
+ */
 public abstract class AuthenticationStateHandlerAdapter implements AuthenticationStateHandler {
 
     @Override
@@ -78,6 +83,4 @@ public abstract class AuthenticationStateHandlerAdapter implements Authenticatio
     public void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse) {
         this.handleUnknown(mfaChallengeResponse);
     }
-
-    // force handling of unknown ?
 }

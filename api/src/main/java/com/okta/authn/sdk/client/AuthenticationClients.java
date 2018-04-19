@@ -42,5 +42,4 @@ public final class AuthenticationClients {
     public static AuthenticationClientBuilder builder() {
         return (AuthenticationClientBuilder) Classes.newInstance("com.okta.authn.sdk.impl.client.DefaultAuthenticationClientBuilder");
     }
-
 }

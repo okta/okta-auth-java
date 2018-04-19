@@ -174,7 +174,6 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn.html#enroll-factor")
     AuthenticationResponse enrollFactor(FactorEnrollRequest factorEnrollRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-
     /**
      * Starts a new password recovery transaction for a given user and issues a recovery token that can be used to reset a user’s password.
      * @param username User’s non-qualified short-name (e.g. dade.murphy) or unique fully-qualified login (dade.murphy@example.com)
@@ -303,7 +302,6 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-factor")
     AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-
     /**
      * Requests a challenge factor be sent to the user via the corresponding {code}factorId{code}.
      *
@@ -341,7 +339,6 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/resend", href = "https://developer.okta.com/docs/api/resources/authn.html")
     AuthenticationResponse resendActivateFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
-
     /**
      * Resend a factor verification challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
      * to be resent to ensure delivery.
@@ -354,8 +351,6 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify/resend", href = "https://developer.okta.com/docs/api/resources/authn.html")
     AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-
 
     /**
      * Polls for state of factor. Some factors (Push, Duo, etc) depend on a user action, this method can be used to poll the state of
@@ -379,5 +374,4 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/recovery/token", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-recovery-token")
     AuthenticationResponse verifyRecoveryToken(String recoveryToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
 }

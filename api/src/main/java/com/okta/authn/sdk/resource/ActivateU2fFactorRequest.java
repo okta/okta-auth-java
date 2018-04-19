@@ -24,5 +24,4 @@ public interface ActivateU2fFactorRequest extends ActivateFactorRequest {
     String getClientData();
 
     ActivateU2fFactorRequest setClientData(String clientData);
-
 }

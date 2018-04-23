@@ -22,18 +22,18 @@ source "${COMMON_SCRIPT}"
 
 # TODO: we must use our local maven settings file as this script is NOT ready for triggered by travis
 # GPG agent configuration needed to sign artifacts
-MVN_CMD="mvn"
+MVN_CMD="./mvnw"
 
 # the release plugin uses this dir to cut the release
 cd target/checkout
 
 NEW_VERSION="$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)"
-TAG_NAME="okta-sdk-root-${NEW_VERSION}" # default release plugin tag format
+TAG_NAME="okta-authn-parent-${NEW_VERSION}" # default release plugin tag format
 
 ##Release
 $MVN_CMD org.sonatype.plugins:nexus-staging-maven-plugin:release
 
-git clone -b gh-pages git@github.com:okta/okta-sdk-java.git target/gh-pages
+git clone -b gh-pages git@github.com:${REPO_SLUG}.git target/gh-pages
 
 # publish once to the versioned dir
 $MVN_CMD javadoc:aggregate -Ppub-docs -Djavadoc.version.dir=''
@@ -49,6 +49,3 @@ cd ../../../..
 
 git push origin $(git rev-parse --abbrev-ref HEAD)
 git push origin ${TAG_NAME}
-
-#notify for new release
-#send_tag_notification "${TAG_NAME}"

@@ -215,7 +215,7 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
         return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/resend", toRequest(stateToken), stateHandler);
     }
 
-        @Override
+    @Override
     public AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors/" + factorId + "/verify/resend", toRequest(stateToken), stateHandler);
     }

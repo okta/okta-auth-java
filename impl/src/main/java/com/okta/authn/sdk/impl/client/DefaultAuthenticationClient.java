@@ -105,9 +105,14 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
 
     @Override
     public AuthenticationResponse resetPassword(char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        ChangePasswordRequest request = instantiate(ChangePasswordRequest.class)
-                .setStateToken(stateToken)
-                .setNewPassword(newPassword);
+        return resetPassword(instantiate(ChangePasswordRequest.class)
+                                .setStateToken(stateToken)
+                                .setNewPassword(newPassword),
+                            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse resetPassword(ChangePasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/credentials/reset_password", request, stateHandler);
     }
 

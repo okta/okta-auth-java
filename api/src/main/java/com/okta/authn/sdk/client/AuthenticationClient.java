@@ -148,6 +148,19 @@ public interface AuthenticationClient {
     AuthenticationResponse resetPassword(char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
+     * Resets a user’s password to complete a recovery transaction with a PASSWORD_RESET state.
+     *
+     * @param changePasswordRequest a request object holds all attributes sent to the remote API
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws com.okta.authn.sdk.CredentialsException thrown if old password is invalid, or the new password fails to meet the
+     * requirements of the password policy
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/credentials/reset_password", href = "https://developer.okta.com/docs/api/resources/authn.html#reset-password")
+    AuthenticationResponse resetPassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    /**
      * Enrolls a user with a factor assigned by their MFA Policy.
      *
      * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>

@@ -15,6 +15,8 @@
  */
 package com.okta.authn.sdk.resource;
 
+import com.okta.sdk.resource.ExtensibleResource;
+
 import java.util.List;
 
 /**
@@ -22,7 +24,7 @@ import java.util.List;
  *
  * @since 0.1.0
  */
-public interface Link extends BaseResource {
+public interface Link extends ExtensibleResource {
 
     String getName();
 

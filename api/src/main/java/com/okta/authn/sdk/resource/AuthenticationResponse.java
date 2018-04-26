@@ -15,11 +15,13 @@
  */
 package com.okta.authn.sdk.resource;
 
+import com.okta.sdk.resource.ExtensibleResource;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public interface AuthenticationResponse extends BaseResource {
+public interface AuthenticationResponse extends ExtensibleResource {
 
     String getStateToken();
 

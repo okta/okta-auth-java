@@ -15,10 +15,12 @@
  */
 package com.okta.authn.sdk.resource;
 
+import com.okta.sdk.resource.ExtensibleResource;
+
 import java.util.Date;
 import java.util.Map;
 
-public interface FactorActivation extends BaseResource {
+public interface FactorActivation extends ExtensibleResource {
 
     Map<String, Link> getLinks();
 

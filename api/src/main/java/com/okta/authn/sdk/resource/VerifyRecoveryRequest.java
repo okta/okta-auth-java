@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
-public interface VerifyRecoveryRequest extends Resource {
+public interface VerifyRecoveryRequest extends ExtensibleResource {
 
     String getStateToken();
 

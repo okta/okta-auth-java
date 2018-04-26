@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
-public interface ActivateFactorRequest extends Resource {
+public interface ActivateFactorRequest extends ExtensibleResource {
 
     String getStateToken();
 

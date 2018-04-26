@@ -15,10 +15,10 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 import com.okta.sdk.resource.user.factor.FactorType;
 
-public interface UnlockAccountRequest extends Resource {
+public interface UnlockAccountRequest extends ExtensibleResource {
 
     String getRelayState();
 

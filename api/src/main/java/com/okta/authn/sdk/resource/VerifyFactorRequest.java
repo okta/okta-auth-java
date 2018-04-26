@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
-public interface VerifyFactorRequest extends Resource {
+public interface VerifyFactorRequest extends ExtensibleResource {
 
     String getStateToken();
 

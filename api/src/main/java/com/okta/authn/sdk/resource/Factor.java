@@ -15,13 +15,13 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.util.Map;
 
-public interface Factor extends Resource {
+public interface Factor extends ExtensibleResource {
 
     String getId();
 

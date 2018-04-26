@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
-public interface ResetPasswordRequest extends Resource {
+public interface ResetPasswordRequest extends ExtensibleResource {
 
     String getStateToken();
     ResetPasswordRequest setStateToken(String stateToken);

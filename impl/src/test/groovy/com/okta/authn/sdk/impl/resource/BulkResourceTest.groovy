@@ -28,6 +28,7 @@ import com.okta.sdk.impl.resource.Property
 import com.okta.sdk.impl.resource.ResourceReference
 import com.okta.sdk.impl.resource.StringProperty
 import com.okta.sdk.lang.Assert
+import com.okta.sdk.resource.PropertyRetriever
 import com.okta.sdk.resource.Resource
 import org.testng.TestException
 import org.testng.annotations.Test
@@ -249,7 +250,7 @@ class BulkResourceTest {
                 value = 42
             } else if (Date.isAssignableFrom(type)) {
                 value = "2001-07-04T12:08:56.235-0700"
-            } else if (Map.isAssignableFrom(type)) {
+            } else if (Map.isAssignableFrom(type) && !PropertyRetriever.isAssignableFrom(type)) {
                 value = [one: "two"]
             } else if (Boolean.isAssignableFrom(type)) {
                 value = true

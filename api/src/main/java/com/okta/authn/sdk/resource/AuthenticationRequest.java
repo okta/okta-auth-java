@@ -15,11 +15,11 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
 import java.util.Map;
 
-public interface AuthenticationRequest extends Resource {
+public interface AuthenticationRequest extends ExtensibleResource {
 
     String getRelayState();
     AuthenticationRequest setRelayState(String relayState);

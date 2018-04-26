@@ -157,9 +157,9 @@ class DefaultAuthenticationResponseTest {
         assertThat response.getUser().getTimeZone(), is(TimeZone.getTimeZone("America/Los_Angeles"))
 
         Factor factor = response.getFactors().get(0)
-        assertThat factor.id, is("opfh52xcuft3J4uZc0g3")
-        assertThat factor.type, is(FactorType.PUSH)
-        assertThat factor.provider, is(FactorProvider.OKTA)
-        assertThat factor.embedded, notNullValue(Map)
+        assertThat factor.getId(), is("opfh52xcuft3J4uZc0g3")
+        assertThat factor.getType(), is(FactorType.PUSH)
+        assertThat factor.getProvider(), is(FactorProvider.OKTA)
+        assertThat factor.getEmbedded(), notNullValue(Map)
     }
 }

@@ -15,14 +15,14 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
 /**
  * Opt-in features for the authentication transaction.
  *
  * @since 0.1.0
  */
-public interface Options extends Resource {
+public interface Options extends ExtensibleResource {
 
     /**
      * Returns true if the user should transition back to {@code MFA_ENROLL} state after successful factor enrollment when

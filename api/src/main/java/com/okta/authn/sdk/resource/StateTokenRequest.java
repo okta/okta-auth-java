@@ -15,9 +15,9 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.Resource;
+import com.okta.sdk.resource.ExtensibleResource;
 
-public interface StateTokenRequest extends Resource {
+public interface StateTokenRequest extends ExtensibleResource {
 
     String getStateToken();
     StateTokenRequest setStateToken(String stateToken);

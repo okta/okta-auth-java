@@ -52,7 +52,7 @@ https://oss.sonatype.org/content/repositories/snapshots/
 
 ## Client configuration
 
-There are a few ways to configure the client, but the easiest way is to create a `~/.okta/okta.yaml`file and `orgUrl` value:
+There are a few ways to configure the client, but the easiest way is to create a `~/.okta/okta.yaml` file and `orgUrl` value:
 
 ``` yaml
 okta:

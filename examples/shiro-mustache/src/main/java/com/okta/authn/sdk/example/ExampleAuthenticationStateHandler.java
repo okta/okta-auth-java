@@ -62,7 +62,6 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
         // do nothing this will be handled by the caller
         String factorType = mfaChallengeResponse.getFactors().get(0).getType().name().toLowerCase(Locale.ENGLISH);
         redirect("/login/mfa/verify/"+ factorType, mfaChallengeResponse);
-//        log(mfaChallengeResponse);
     }
 
     @Override

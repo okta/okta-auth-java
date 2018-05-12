@@ -292,7 +292,7 @@ public interface AuthenticationClient {
     AuthenticationResponse cancel(String stateToken);
 
     /**
-     * The sms,call and token:software:totp factor types require activation to complete the enrollment process.
+     * The sms, call and token:software:totp factor types require activation to complete the enrollment process.
      *
      * @param factorId id of factor returned from enrollment
      * @param request the request object containing the required attributes to fulfill the activation

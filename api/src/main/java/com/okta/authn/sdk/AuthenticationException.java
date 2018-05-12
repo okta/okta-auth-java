@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * Base Authentication Exception. You can catch this exception or handle a more specific child exception. This exception
- * was thrown as a result of a contains error information returned {@code 4xx} status, related error messages are
+ * was thrown as a result of an error which returned {@code 4xx} status, related error messages are
  * contained within this exception.
  *
  * @since 0.1.0

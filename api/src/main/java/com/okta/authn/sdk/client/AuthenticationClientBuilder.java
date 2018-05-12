@@ -98,11 +98,7 @@ public interface AuthenticationClientBuilder {
     AuthenticationClientBuilder setConnectionTimeout(int timeout);
 
     /**
-     * Sets the base URL of the Okta REST API to use.  If unspecified, this value defaults to
-     * {@code https://api.okta.com/v1} - the most common use case for Okta's public SaaS cloud.
-     *
-     * <p>Customers using Okta's Enterprise HA cloud might need to configure this to be
-     * {@code https://enterprise.okta.io/v1} for example.</p>
+     * Sets the base URL of the Okta REST API to use.
      *
      * @param baseUrl the base URL of the Okta REST API to use.
      * @return the AuthenticationClientBuilder instance for method chaining

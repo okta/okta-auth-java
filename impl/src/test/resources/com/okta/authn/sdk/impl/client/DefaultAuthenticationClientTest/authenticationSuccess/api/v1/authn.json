@@ -1,0 +1,18 @@
+{
+    "expiresAt": "2018-03-26T15:09:26.000Z",
+    "status": "SUCCESS",
+    "sessionToken": "a-session-token1",
+    "_embedded": {
+        "user": {
+            "id": "00icu812",
+            "passwordChanged": "2017-07-05T20:25:16.000Z",
+            "profile": {
+                "login": "joe.coder@exampe.com",
+                "firstName": "Joe",
+                "lastName": "Coder",
+                "locale": "en",
+                "timeZone": "America/Los_Angeles"
+            }
+        }
+    }
+}

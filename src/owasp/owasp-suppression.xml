@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+
+    <suppress>
+       <notes><![CDATA[
+       file name: okta-sdk-httpclient.jar - scanner thought this was a ruby project
+       ]]></notes>
+       <gav regex="true">^com\.okta\.sdk:okta-sdk-httpclient:.*$</gav>
+       <cpe>cpe:/a:rest-client_project:rest-client</cpe>
+    </suppress>
+
+    <suppress>
+       <notes><![CDATA[
+       file name: dropwizard-views.jar - scanner thought this was a Drupal project
+       ]]></notes>
+       <gav regex="true">^io\.dropwizard:dropwizard-views:.*$</gav>
+       <cpe>cpe:/a:views_project:views</cpe>
+    </suppress>
+
+    <suppress>
+       <notes><![CDATA[
+       file name: dropwizard-views-mustache.jar - scanner thought this was a Drupal project
+       ]]></notes>
+       <gav regex="true">^io\.dropwizard:dropwizard-views-mustache:.*$</gav>
+       <cpe>cpe:/a:views_project:views</cpe>
+    </suppress>
+
+    <suppress>
+       <notes><![CDATA[
+       file name: compiler-0.9.5.jar - scanner thinks this is a node.js project
+       ]]></notes>
+       <gav regex="true">^com\.github\.spullara\.mustache\.java:compiler:.*$</gav>
+       <cpe>cpe:/a:mustache.js_project:mustache.js</cpe>
+    </suppress>
+
+    <!--&lt;!&ndash; invalid artifact detection / swagger uber jars&ndash;&gt;-->
+    <!--<suppress>-->
+        <!--<notes><![CDATA[ file name: io/swagger/swagger-codegen/2.2.2/swagger-codegen-2.2.2.jar/android/gradle-wrapper.jar - uber jar]]></notes>-->
+        <!--<sha1>0f6f1fa2b59ae770ca14f975726bed8d6620ed9b</sha1>-->
+        <!--<cpe>cpe:/a:gradle:gradle:2.12</cpe>-->
+    <!--</suppress>-->
+    <!--<suppress>-->
+        <!--<notes><![CDATA[ file name: swagger-parser-1.0.26.jar]]></notes>-->
+        <!--<sha1>3c13c7e288df23b4ffb924226fad863622579cf7</sha1>-->
+        <!--<cpe>cpe:/a:sonatype:nexus:1.0.26</cpe>-->
+    <!--</suppress>-->
+    <!--<suppress>-->
+        <!--<notes><![CDATA[ file name: swagger-compat-spec-parser-1.0.26.jar]]></notes>-->
+        <!--<sha1>82f5c7ee07659dbbbbce13e7b5f2ed06ffdbd652</sha1>-->
+        <!--<cpe>cpe:/a:sonatype:nexus:1.0.26</cpe>-->
+    <!--</suppress>-->
+
+</suppressions>

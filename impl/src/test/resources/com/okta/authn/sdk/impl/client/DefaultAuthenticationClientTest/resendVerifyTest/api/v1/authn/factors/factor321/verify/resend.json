@@ -1,0 +1,71 @@
+{
+  "_embedded": {
+    "factor": {
+      "id": "factor321",
+      "factorType": "sms",
+      "provider": "OKTA",
+      "vendorName": "OKTA",
+      "profile": {
+        "phoneNumber": "+1 XXX-XXX-1234"
+      }
+    },
+    "user": {
+      "id": "00ub0oNGTSWTBKOLGLNR",
+      "passwordChanged": "2015-09-08T20:14:45.000Z",
+      "profile": {
+        "login": "dade.murphy@example.com",
+        "firstName": "Dade",
+        "lastName": "Murphy",
+        "locale": "en_US",
+        "timeZone": "America/Los_Angeles"
+      }
+    },
+    "policy": {
+      "allowRememberDevice": false,
+      "rememberDeviceLifetimeInMinutes": 0,
+      "rememberDeviceByDefault": false,
+      "factorsPolicyInfo": null
+    }
+  },
+  "_links": {
+    "next": {
+      "name": "verify",
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/factors/factor321/verify",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    },
+    "cancel": {
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/cancel",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    },
+    "resend": [
+      {
+        "name": "sms",
+        "href": "https://dev-259824.oktapreview.com/api/v1/authn/factors/factor321/verify/resend",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      }
+    ],
+    "prev": {
+      "href": "https://dev-259824.oktapreview.com/api/v1/authn/previous",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    }
+  },
+  "stateToken": "007ucIX7PATyn94hsHfOLVaXAmOBkKHWnOOLG43bsb",
+  "expiresAt": "2018-03-30T20:28:03.000Z",
+  "status": "MFA_CHALLENGE"
+}

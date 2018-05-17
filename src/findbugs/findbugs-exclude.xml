@@ -1,0 +1,58 @@
+<!--
+  ~ Copyright 2017 Okta
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<FindBugsFilter>
+
+    <Match>
+        <!-- keep it in one class to make the example easier to follow -->
+        <Package name="com.okta.authn.sdk.example"></Package>
+        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+    </Match>
+
+     <Match>
+         <!-- yes, these are JAX-RS endpoints -->
+        <Package name="com.okta.authn.sdk.example.resources"></Package>
+        <Bug pattern="JAXRS_ENDPOINT" />
+    </Match>
+    <Match>
+        <Package name="com.okta.authn.sdk.example.resources.authn"></Package>
+        <Bug pattern="JAXRS_ENDPOINT" />
+    </Match>
+    <Match>
+        <!-- set by application -->
+        <Class name="com.okta.authn.sdk.example.ExampleAuthenticationStateHandler"></Class>
+        <Bug pattern="UNVALIDATED_REDIRECT" />
+    </Match>
+    <Match>
+        <!-- TODO: fix serialization in example -->
+        <Class name="com.okta.authn.sdk.example.shiro.OktaSuccessLoginToken"></Class>
+        <Bug pattern="SE_BAD_FIELD" />
+    </Match>
+
+
+    <Match>
+        <Class name="com.okta.authn.sdk.example.ExampleAuthenticationStateHandler"></Class>
+    </Match>
+
+    <Match>
+        <Class name="com.okta.authn.sdk.example.OverlySimpleCsrfFilter"></Class>
+        <Or>
+            <Bug pattern="SERVLET_PARAMETER" />
+            <Bug pattern="TRUST_BOUNDARY_VIOLATION" />
+        </Or>
+    </Match>
+
+
+</FindBugsFilter>

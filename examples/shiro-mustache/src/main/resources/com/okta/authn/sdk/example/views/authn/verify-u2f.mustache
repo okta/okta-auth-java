@@ -1,0 +1,66 @@
+{{!
+    Copyright 2018 Okta, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+}}
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/u2f-api-polyfill@0.4.3/u2f-api-polyfill.js"></script>
+    <script>
+
+       function doU2f() {
+
+           let challengeNonce = "{{factor.embedded.challenge.nonce}}"; //use the nonce from the challenge object
+           let appId = "{{factor.profile.appId}}"; //use the appId from factor profile object
+           let version = "{{factor.profile.version}}";
+           let credentialId = "{{factor.profile.credentialId}}";
+
+           //Use the version and credentialId from factor profile object
+           let registeredKeys = [{version: version, keyHandle: credentialId}];
+
+           setTimeout(function () {
+
+               //Call the U2F javascript API to get signed assertion from the U2F token
+               u2f.sign(appId, challengeNonce, registeredKeys, function (data) {
+                   if (data.errorCode && data.errorCode !== 0) {
+                       //Error from U2F platform
+                       console.log("ERROR: " + data.errorCode);
+                       console.log(data);
+                       console.trace();
+                   } else {
+                       //Get the authenticationClient data from callback result
+                       let clientData = data.clientData;
+
+                       //Get the signature data from callback result
+                       let signatureData = data.signatureData;
+                       console.log("clientData:", clientData)
+                   }
+               });
+           }, 5000);
+       }
+     </script>
+ </head>
+ <body onload="doU2f()">
+   <h1>MFA U2F Verify</h1>
+
+   <form method="POST" action="">
+
+     Client Data: <input type="password" name="clientData"/> <br/>
+     Signature Data: <input type="password" name="signatureData"/> <br/>
+     {{>../csrf}}
+     <input type="submit" value="Submit" />
+
+   </form>
+
+ </body>
+</html>

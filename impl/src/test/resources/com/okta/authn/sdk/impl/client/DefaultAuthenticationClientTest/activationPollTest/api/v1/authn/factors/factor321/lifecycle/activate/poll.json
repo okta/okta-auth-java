@@ -1,0 +1,74 @@
+{
+  "stateToken":"007ucIX7PATyn94hsHfOLVaXAmOBkKHWnOOLG43bsb",
+  "expiresAt":"2016-12-22T21:36:47.000Z",
+  "status":"MFA_ENROLL_ACTIVATE",
+  "factorResult":"WAITING",
+  "_embedded":{
+    "user":{
+      "id": "00ub0oNGTSWTBKOLGLNR",
+      "passwordChanged": "2016-12-08T20:14:45.000Z",
+      "profile": {
+        "login": "dade.murphy@example.com",
+        "firstName": "Dade",
+        "lastName": "Murphy",
+        "locale": "en_US",
+        "timeZone": "America/Los_Angeles"
+      }
+    },
+    "factor":{
+      "id":"opfh52xcuft3J4uZc0g3",
+      "factorType":"push",
+      "provider":"OKTA",
+      "vendorName":"OKTA",
+      "_embedded":{
+        "activation":{
+          "expiresAt":"2016-12-22T21:41:47.000Z",
+          "factorResult":"WAITING",
+          "_links":{
+            "send":[
+              {
+                "name":"email",
+                "href":"https://dev-259824.oktapreview.com/api/v1/authn/factors/opfh52xcuft3J4uZc0g3/lifecycle/activate/email",
+                "hints":{
+                  "allow":["POST"]
+                }
+              },
+              {
+                "name":"sms",
+                "href":"https://dev-259824.oktapreview.com/api/v1/authn/factors/opfh52xcuft3J4uZc0g3/lifecycle/activate/sms",
+                "hints":{
+                  "allow":["POST"]
+                }
+              }
+            ],
+            "qrcode":{
+              "href":"https://dev-259824.oktapreview.com/api/v1/users/opfh52xcuft3J4uZc0g3/factors/opfn169oIx3k63Klh0g3/qr/20111huUFWDFTAeq_lFQKfKFS_rLABkE_pKgGl5PBUeLvJVmaIrWq5u",
+              "type":"image/png"
+            }
+          }
+        }
+      }
+    }
+  },
+  "_links":{
+    "next":{
+      "name":"poll",
+      "href":"https://dev-259824.oktapreview.com/api/v1/authn/factors/opfh52xcuft3J4uZc0g3/lifecycle/activate/poll",
+      "hints":{
+        "allow":["POST"]
+      }
+    },
+    "cancel":{
+      "href":"https://dev-259824.oktapreview.com/api/v1/authn/cancel",
+      "hints":{
+        "allow":["POST"]
+      }
+    },
+    "prev":{
+      "href":"https://dev-259824.oktapreview.com/api/v1/authn/previous",
+      "hints":{
+        "allow":["POST"]
+      }
+    }
+  }
+}

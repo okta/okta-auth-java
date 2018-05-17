@@ -1,0 +1,60 @@
+{{!
+    Copyright 2018 Okta, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+}}
+{{>header}}
+
+ <body>
+    <div class="container">
+        <div class="row vertical-offset-100">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Stormtrooper {{stormtrooper.id}}</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <strong>Type:</strong>
+                      </div>
+                      <div class="col-xs-4">
+                        <span>{{stormtrooper.type}}</span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <strong>Species:</strong>
+                      </div>
+                      <div class="col-xs-4">
+                        <span>{{stormtrooper.species}}</span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <strong>Planet Of Origin:</strong>
+                      </div>
+                      <div class="col-xs-4">
+                        <span>{{stormtrooper.planetOfOrigin}}</span>
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </body>
+
+{{>footer}}

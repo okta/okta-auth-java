@@ -15,11 +15,9 @@ Okta's Authentication API is built around a [state machine](https://developer.ok
 
 # Usage
 
-<!--
 ## Javadocs
 
 You can see this project's Javadocs at https://developer.okta.com/okta-authn-java/ 
--->
 
 ## Dependencies
 

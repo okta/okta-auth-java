@@ -20,6 +20,7 @@ import com.okta.sdk.cache.CacheManager
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.client.Proxy
 import com.okta.sdk.impl.api.ClientCredentialsResolver
+import com.okta.sdk.impl.config.ClientConfiguration
 import com.okta.sdk.impl.ds.InternalDataStore
 import com.okta.sdk.impl.http.Request
 import com.okta.sdk.impl.http.RequestExecutor
@@ -37,6 +38,10 @@ class WrappedAuthenticationClient extends DefaultAuthenticationClient {
         super(baseUrlResolver, proxy, cacheManager, authenticationScheme, requestAuthenticatorFactory, connectionTimeout)
     }
 
+    WrappedAuthenticationClient(ClientConfiguration clientConfiguration) {
+        super(clientConfiguration)
+    }
+
     protected InternalDataStore createDataStore(RequestExecutor requestExecutor,
                                                 BaseUrlResolver baseUrlResolver,
                                                 ClientCredentialsResolver clientCredentialsResolver,
@@ -46,6 +51,13 @@ class WrappedAuthenticationClient extends DefaultAuthenticationClient {
         return exposedDataStore
     }
 
+    @Override
+    protected RequestExecutor createRequestExecutor(ClientConfiguration clientConfiguration) {
+        delegatingRequestExecutor = new DelegatingRequestExecutor()
+        return delegatingRequestExecutor
+    }
+
+    @Override
     protected RequestExecutor createRequestExecutor(ClientCredentials clientCredentials,
                                                     Proxy proxy,
                                                     AuthenticationScheme authenticationScheme,

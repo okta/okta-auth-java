@@ -20,7 +20,6 @@ import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClientBuilder;
 import com.okta.sdk.client.AuthenticationScheme;
 import com.okta.sdk.client.Proxy;
-import com.okta.sdk.impl.cache.DisabledCacheManager;
 import com.okta.sdk.impl.config.ClientConfiguration;
 import com.okta.sdk.impl.config.EnvironmentVariablesPropertiesSource;
 import com.okta.sdk.impl.config.OptionalPropertiesSource;
@@ -62,8 +61,6 @@ import java.util.Map;
  * @since 0.1.0
  */
 public class DefaultAuthenticationClientBuilder implements AuthenticationClientBuilder {
-
-    private Proxy proxy;
 
     private static final  String ENVVARS_TOKEN  = "envvars";
     private static final  String SYSPROPS_TOKEN = "sysprops";
@@ -148,6 +145,14 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
         if (Strings.hasText(props.get(DEFAULT_CLIENT_PROXY_PASSWORD_PROPERTY_NAME))) {
             clientConfig.setProxyPassword(props.get(DEFAULT_CLIENT_PROXY_PASSWORD_PROPERTY_NAME));
         }
+
+        if (Strings.hasText(props.get(DEFAULT_CLIENT_REQUEST_TIMEOUT_PROPERTY_NAME))) {
+            clientConfig.setRetryMaxElapsed(Integer.parseInt(props.get(DEFAULT_CLIENT_REQUEST_TIMEOUT_PROPERTY_NAME)));
+        }
+
+        if (Strings.hasText(props.get(DEFAULT_CLIENT_RETRY_MAX_ATTEMPTS_PROPERTY_NAME))) {
+            clientConfig.setRetryMaxAttempts(Integer.parseInt(props.get(DEFAULT_CLIENT_RETRY_MAX_ATTEMPTS_PROPERTY_NAME)));
+        }
     }
 
     @Override
@@ -155,7 +160,10 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
         if (proxy == null) {
             throw new IllegalArgumentException("proxy argument cannot be null.");
         }
-        this.proxy = proxy;
+        clientConfig.setProxyHost(proxy.getHost());
+        clientConfig.setProxyPort(proxy.getPort());
+        clientConfig.setProxyUsername(proxy.getUsername());
+        clientConfig.setProxyPassword(proxy.getPassword());
         return this;
     }
 
@@ -173,26 +181,27 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
     }
 
     @Override
+    public AuthenticationClientBuilder setRetryMaxElapsed(int maxElapsed) {
+        this.clientConfig.setRetryMaxElapsed(maxElapsed);
+        return this;
+    }
+
+    @Override
+    public AuthenticationClientBuilder setRetryMaxAttempts(int maxAttempts) {
+        this.clientConfig.setRetryMaxAttempts(maxAttempts);
+        return this;
+    }
+
+    @Override
     public AuthenticationClient build() {
 
-        // use proxy overrides if they're set
-        if (this.clientConfig.getProxyPort() > 0 || this.clientConfig.getProxyHost() != null &&
-                (this.clientConfig.getProxyUsername() == null || this.clientConfig.getProxyPassword() == null)) {
-            this.proxy = new Proxy(this.clientConfig.getProxyHost(), this.clientConfig.getProxyPort());
-        } else if (this.clientConfig.getProxyUsername() != null && this.clientConfig.getProxyPassword() != null) {
-            this.proxy = new Proxy(this.clientConfig.getProxyHost(), this.clientConfig.getProxyPort(),
-                    this.clientConfig.getProxyUsername(), this.clientConfig.getProxyPassword());
-        }
-
-        BaseUrlResolver baseUrlResolver = this.clientConfig.getBaseUrlResolver();
-
-        if (baseUrlResolver == null) {
+        if (this.clientConfig.getBaseUrlResolver() == null) {
             Assert.notNull(this.clientConfig.getBaseUrl(), "Okta org url must not be null.");
-            baseUrlResolver = new DefaultBaseUrlResolver(this.clientConfig.getBaseUrl());
+            this.clientConfig.setBaseUrlResolver(new DefaultBaseUrlResolver(this.clientConfig.getBaseUrl()));
         }
 
-        return new DefaultAuthenticationClient(baseUrlResolver, this.proxy, new DisabledCacheManager(),
-                this.clientConfig.getAuthenticationScheme(), this.clientConfig.getRequestAuthenticatorFactory(), this.clientConfig.getConnectionTimeout());
+        this.clientConfig.setClientCredentialsResolver(new DisabledClientCredentialsResolver());
+        return new DefaultAuthenticationClient(this.clientConfig);
     }
 
     @Override

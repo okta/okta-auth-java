@@ -26,6 +26,7 @@ import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.cache.DisabledCacheManager
+import com.okta.sdk.impl.config.ClientConfiguration
 import com.okta.sdk.impl.http.MediaType
 import com.okta.sdk.impl.http.Request
 import com.okta.sdk.impl.http.RequestExecutor
@@ -472,12 +473,12 @@ class DefaultAuthenticationClientTest {
     }
 
     WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {
-        def baseUrlResolver = new DefaultBaseUrlResolver("http://${getClass().name}/${callingTestMethodName}")
-        def proxy = null
-        def cacheManager = new DisabledCacheManager()
-        def authScheme = AuthenticationScheme.NONE
-        def requestAuthenticatorFactory = new DefaultRequestAuthenticatorFactory()
-        return new WrappedAuthenticationClient(baseUrlResolver, proxy, cacheManager, authScheme, requestAuthenticatorFactory,  1)
+        def clientConfig = new ClientConfiguration()
+        clientConfig.setBaseUrlResolver(new DefaultBaseUrlResolver("http://${getClass().name}/${callingTestMethodName}"))
+        clientConfig.setAuthenticationScheme(AuthenticationScheme.NONE)
+        clientConfig.setClientCredentialsResolver(new DisabledClientCredentialsResolver())
+
+        return new WrappedAuthenticationClient(clientConfig)
     }
 
 

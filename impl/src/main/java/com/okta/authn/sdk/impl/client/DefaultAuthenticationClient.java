@@ -39,12 +39,12 @@ import com.okta.authn.sdk.resource.UnlockAccountRequest;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoverTokenRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
-import com.okta.sdk.authc.credentials.ClientCredentials;
 import com.okta.sdk.cache.CacheManager;
+import com.okta.sdk.cache.Caches;
 import com.okta.sdk.client.AuthenticationScheme;
 import com.okta.sdk.client.Proxy;
-import com.okta.sdk.impl.api.ClientCredentialsResolver;
 import com.okta.sdk.impl.client.BaseClient;
+import com.okta.sdk.impl.config.ClientConfiguration;
 import com.okta.sdk.impl.http.authc.RequestAuthenticatorFactory;
 import com.okta.sdk.impl.util.BaseUrlResolver;
 import com.okta.sdk.resource.Resource;
@@ -69,8 +69,19 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
      * @param requestAuthenticatorFactory factory used to handle creating authentication requests
      * @param connectionTimeout    connection timeout in seconds
      */
+    @Deprecated
     public DefaultAuthenticationClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout) {
         super(new DisabledClientCredentialsResolver(), baseUrlResolver, proxy, cacheManager, authenticationScheme, requestAuthenticatorFactory, connectionTimeout);
+    }
+
+    /**
+     * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level
+     * JavaDoc for a usage example.
+     *
+     * @param clientConfiguration      the {@link ClientConfiguration} containing the connection information
+     */
+    public DefaultAuthenticationClient(ClientConfiguration clientConfiguration) {
+        super(clientConfiguration, Caches.newDisabledCacheManager());
     }
 
     @Override
@@ -321,24 +332,6 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
 
             default:
                 throw resourceException;
-        }
-    }
-
-    private static class DisabledClientCredentialsResolver implements ClientCredentialsResolver {
-
-        private final ClientCredentials clientCredentials = new DisabledClientCredentials();
-
-        @Override
-        public ClientCredentials getClientCredentials() {
-            return clientCredentials;
-        }
-    }
-
-    private static class DisabledClientCredentials implements ClientCredentials {
-
-        @Override
-        public Object getCredentials() {
-            return null;
         }
     }
 }

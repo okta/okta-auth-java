@@ -74,6 +74,8 @@ public interface AuthenticationClientBuilder {
     String DEFAULT_CLIENT_PROXY_HOST_PROPERTY_NAME = "okta.client.proxy.host";
     String DEFAULT_CLIENT_PROXY_USERNAME_PROPERTY_NAME = "okta.client.proxy.username";
     String DEFAULT_CLIENT_PROXY_PASSWORD_PROPERTY_NAME = "okta.client.proxy.password";
+    String DEFAULT_CLIENT_REQUEST_TIMEOUT_PROPERTY_NAME = "okta.client.requestTimeout";
+    String DEFAULT_CLIENT_RETRY_MAX_ATTEMPTS_PROPERTY_NAME = "okta.client.rateLimit.maxRetries";
 
     /**
      * Sets the HTTP proxy to be used when communicating with the Okta API server.  For example:
@@ -104,6 +106,22 @@ public interface AuthenticationClientBuilder {
      * @return the AuthenticationClientBuilder instance for method chaining
      */
     AuthenticationClientBuilder setOrgUrl(String baseUrl);
+
+    /**
+     * Sets the maximum number of milliseconds to wait when retrying before giving up.
+     *
+     * @param maxElapsed retry max elapsed duration in milliseconds
+     * @return the ClientBuilder instance for method chaining
+     */
+    AuthenticationClientBuilder setRetryMaxElapsed(int maxElapsed);
+
+    /**
+     * Sets the maximum number of attempts to retrying before giving up.
+     *
+     * @param maxAttempts retry max attempts
+     * @return the ClientBuilder instance for method chaining
+     */
+    AuthenticationClientBuilder setRetryMaxAttempts(int maxAttempts);
 
     /**
      * Constructs a new {@link AuthenticationClient} instance based on the AuthenticationClientBuilder's current configuration state.

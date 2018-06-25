@@ -148,6 +148,10 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
         if (Strings.hasText(props.get(DEFAULT_CLIENT_PROXY_PASSWORD_PROPERTY_NAME))) {
             clientConfig.setProxyPassword(props.get(DEFAULT_CLIENT_PROXY_PASSWORD_PROPERTY_NAME));
         }
+
+        if (Strings.hasText(props.get(DEFAULT_CLIENT_RETRY_MAX_ELAPSED_PROPERTY_NAME))) {
+            clientConfig.setRetryMaxElapsed(Integer.parseInt(props.get(DEFAULT_CLIENT_RETRY_MAX_ELAPSED_PROPERTY_NAME)));
+        }
     }
 
     @Override
@@ -169,6 +173,12 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
     public AuthenticationClientBuilder setBaseUrlResolver(BaseUrlResolver baseUrlResolver) {
         Assert.notNull(baseUrlResolver, "baseUrlResolver must not be null");
         this.clientConfig.setBaseUrlResolver(baseUrlResolver);
+        return this;
+    }
+
+    @Override
+    public AuthenticationClientBuilder setRetryMaxElapsed(int maxElapsed) {
+        this.clientConfig.setRetryMaxElapsed(maxElapsed);
         return this;
     }
 

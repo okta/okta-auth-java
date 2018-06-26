@@ -75,6 +75,7 @@ public interface AuthenticationClientBuilder {
     String DEFAULT_CLIENT_PROXY_USERNAME_PROPERTY_NAME = "okta.client.proxy.username";
     String DEFAULT_CLIENT_PROXY_PASSWORD_PROPERTY_NAME = "okta.client.proxy.password";
     String DEFAULT_CLIENT_RETRY_MAX_ELAPSED_PROPERTY_NAME = "okta.client.retry.maxElapsed";
+    String DEFAULT_CLIENT_RETRY_RATE_LIMIT_MAX_OFFSET = "okta.client.retry.rateLimitMaxOffset";
 
     /**
      * Sets the HTTP proxy to be used when communicating with the Okta API server.  For example:

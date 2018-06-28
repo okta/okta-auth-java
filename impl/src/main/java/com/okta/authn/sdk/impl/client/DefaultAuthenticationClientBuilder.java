@@ -150,8 +150,8 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
             clientConfig.setRetryMaxElapsed(Integer.parseInt(props.get(DEFAULT_CLIENT_RETRY_MAX_ELAPSED_PROPERTY_NAME)));
         }
 
-        if (Strings.hasText(props.get(DEFAULT_CLIENT_RETRY_RATE_LIMIT_MAX_OFFSET))) {
-            clientConfig.setRateLimitMaxOffset(Integer.parseInt(props.get(DEFAULT_CLIENT_RETRY_RATE_LIMIT_MAX_OFFSET)));
+        if (Strings.hasText(props.get(DEFAULT_CLIENT_RETRY_MAX_ATTEMPTS_PROPERTY_NAME))) {
+            clientConfig.setRetryMaxAttempts(Integer.parseInt(props.get(DEFAULT_CLIENT_RETRY_MAX_ATTEMPTS_PROPERTY_NAME)));
         }
     }
 
@@ -183,6 +183,12 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
     @Override
     public AuthenticationClientBuilder setRetryMaxElapsed(int maxElapsed) {
         this.clientConfig.setRetryMaxElapsed(maxElapsed);
+        return this;
+    }
+
+    @Override
+    public AuthenticationClientBuilder setRetryMaxAttempts(int maxAttempts) {
+        this.clientConfig.setRetryMaxAttempts(maxAttempts);
         return this;
     }
 

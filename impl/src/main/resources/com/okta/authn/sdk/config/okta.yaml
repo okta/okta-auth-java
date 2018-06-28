@@ -26,5 +26,6 @@ okta:
       username:
       password:
     retry:
-      maxElapsed: 10
-      rateLimitMaxOffset: 1
+    requestTimeout: 10
+    rateLimit:
+      maxRetries: 2

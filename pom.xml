@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.okta</groupId>
         <artifactId>okta-parent</artifactId>
-        <version>5-SNAPSHOT</version>
+        <version>6-SNAPSHOT</version>
         <relativePath>../okta-java-parent</relativePath>
     </parent>
 
@@ -41,6 +41,7 @@
         <module>api</module>
         <module>impl</module>
         <module>examples/shiro-mustache</module>
+        <module>examples/doc-examples</module>
         <module>integration-tests</module>
         <module>coverage</module>
     </modules>
@@ -92,4 +93,18 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.okta</groupId>
+                    <artifactId>okta-code-snippet-maven-plugin</artifactId>
+                    <configuration>
+                        <sourceFile>examples/doc-examples/src/main/java/com/okta/authn/sdk/example/ReadmeSnippets.java</sourceFile>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

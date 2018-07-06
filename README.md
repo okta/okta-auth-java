@@ -18,7 +18,7 @@
  
 The Okta Authentication SDK is a convenience wrapper around [Okta's Authentication API](https://developer.okta.com/docs/api/resources/authn.html).
 
-**NOTE:** Using an OAuth 2.0 or OIDC to integrate your application instead of this library will require much less work, and has a smaller risk profile. Please see [this guide](https://developer.okta.com/use_cases/authentication/) to see if using this API is right for your use case. You could also use our [Spring Boot Integration](https://github.com/okta/okta-spring-boot), or [Spring Security](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc) out of the box.
+**NOTE:** Using OAuth 2.0 or OpenID Connect to integrate your application instead of this library will require much less work, and has a smaller risk profile. Please see [this guide](https://developer.okta.com/use_cases/authentication/) to see if using this API is right for your use case. You could also use our [Spring Boot Integration](https://github.com/okta/okta-spring-boot), or [Spring Security](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc) out of the box.
 
 Okta's Authentication API is built around a [state machine](https://developer.okta.com/docs/api/resources/authn#transaction-state). In order to use this library you will need to be familiar with the available states. You will need to implement a handler for each state you want to support.  
 
@@ -103,7 +103,7 @@ Construct a client instance by passing it your Okta domain name and API token:
 [//]: # (method: createClient)
 ```java
 AuthenticationClient client = AuthenticationClients.builder()
-    .setOrgUrl("https://dev-123456.oktapreview.com/")
+    .setOrgUrl("https://{yourOktaDomain}")
     .build();
 ```
 [//]: # (end: createClient)
@@ -114,7 +114,7 @@ Hard-coding the Okta domain works for quick tests, but for real projects you sho
 
 These examples will help you understand how to use this library. You can also browse the full [API reference documentation][javadocs].
 
-Once you initialize a `AuthenticationClient`, you can call methods to make requests to the Okta API.
+Once you initialize a `AuthenticationClient`, you can call methods to make requests to the Okta Authentication API. To call other Okta APIs, see the [Management SDK](https://github.com/okta/okta-sdk-java).
 
 ### Authenticate a User
 
@@ -161,7 +161,11 @@ public class ExampleAuthenticationStateHandler extends AuthenticationStateHandle
 
 As noted in the above example, a user is ONLY considered authenticated if `AuthenticationResponse.getSessionToken()` is not null. This `sessionToken` can be exchanged via the [Okta Sessions API](https://developer.okta.com/docs/api/resources/authn.html#session-token) to start an SSO session, but that is beyond the scope of this library.
 
-**NOTE:** `UNKNOWN` is not an actual state in Okta's Authentication state model. The method `handleUnknown` is called when an unimplemented state is reached (this could happen if someone turned on MFA support for your Okta organization but was not previously implemented in your state handler). It also possible Okta has added a new state to the state model, and someone from your organization enabled this new state.
+**NOTE:** `UNKNOWN` is not an actual state in Okta's state model. The method handleUnknown is called when an unimplemented or unrecognized state is reached. This could happen if:
+
+- Your handler doesn't have an implementation for the state that was just returned
+- Your Okta organization configuration changed, and a new state is now possible (for example, an admin turned on multi-factor authentication)
+- Okta added something new to the state model entirely
 
 
 ## Configuration reference

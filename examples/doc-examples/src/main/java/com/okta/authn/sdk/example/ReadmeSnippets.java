@@ -10,7 +10,7 @@ public class ReadmeSnippets {
 
     private void createClient() {
         AuthenticationClient client = AuthenticationClients.builder()
-            .setOrgUrl("https://dev-123456.oktapreview.com/")
+            .setOrgUrl("https://{yourOktaDomain}")
             .build();
     }
 }

@@ -231,5 +231,5 @@ We're happy to accept contributions and PRs! Please see the [contribution guide]
 [devforum]: https://devforum.okta.com/
 [javadocs]: https://developer.okta.com/okta-auth-java/
 [lang-landing]: https://developer.okta.com/code/java/
-[github-issues]: /issues
-[github-releases]: /releases
+[github-issues]: https://github.com/okta/okta-auth-java/issues
+[github-releases]: https://github.com/okta/okta-auth-java/releases

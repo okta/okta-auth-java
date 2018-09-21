@@ -19,11 +19,15 @@ package com.okta.authn.sdk.impl.client
 import com.okta.authn.sdk.client.AuthenticationClients
 import com.okta.authn.sdk.impl.test.RestoreEnvironmentVariables
 import com.okta.authn.sdk.impl.test.RestoreSystemProperties
+import com.okta.authn.sdk.impl.util.TestUtil
+import com.okta.sdk.authc.credentials.TokenClientCredentials
 import com.okta.sdk.client.AuthenticationScheme
+import com.okta.sdk.impl.client.DefaultClientBuilder
 import com.okta.sdk.impl.io.DefaultResourceFactory
 import com.okta.sdk.impl.io.Resource
 import com.okta.sdk.impl.io.ResourceFactory
 import com.okta.sdk.impl.util.BaseUrlResolver
+import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 import org.testng.annotations.Listeners
@@ -92,6 +96,35 @@ class DefaultAuthenticationClientBuilderTest {
         clearOktaEnvAndSysProps()
         def client = new DefaultAuthenticationClientBuilder(noDefaultYamlResourceFactory()).build()
         assertEquals(client.dataStore.baseUrlResolver.getBaseUrl(), "https://api.okta.com/v42")
+    }
+
+    @Test
+    void nonHttpsBaseUrl() {
+        clearOktaEnvAndSysProps()
+        TestUtil.expectException(IllegalArgumentException) {
+            new DefaultAuthenticationClientBuilder(noDefaultYamlNoAppYamlResourceFactory())
+                .setBaseUrlResolver(new DefaultBaseUrlResolver("http://okta.example.com"))
+                .build()
+        }
+    }
+
+    static ResourceFactory noDefaultYamlNoAppYamlResourceFactory() {
+        def resourceFactory = spy(new DefaultResourceFactory())
+        doAnswer(new Answer<Resource>() {
+            @Override
+            Resource answer(InvocationOnMock invocation) throws Throwable {
+                String arg = invocation.arguments[0].toString();
+                if (arg.endsWith("/.okta/okta.yaml") || arg.equals("classpath:okta.yaml")) {
+                    return mock(Resource)
+                }
+                else {
+                    return invocation.callRealMethod()
+                }
+            }
+        })
+        .when(resourceFactory).createResource(anyString())
+
+        return resourceFactory
     }
 
     static ResourceFactory noDefaultYamlResourceFactory() {

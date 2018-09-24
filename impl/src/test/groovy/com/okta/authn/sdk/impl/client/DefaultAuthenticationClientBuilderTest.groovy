@@ -16,13 +16,12 @@
  */
 package com.okta.authn.sdk.impl.client
 
+import com.okta.authn.sdk.client.AuthenticationClientBuilder
 import com.okta.authn.sdk.client.AuthenticationClients
 import com.okta.authn.sdk.impl.test.RestoreEnvironmentVariables
 import com.okta.authn.sdk.impl.test.RestoreSystemProperties
 import com.okta.authn.sdk.impl.util.TestUtil
-import com.okta.sdk.authc.credentials.TokenClientCredentials
 import com.okta.sdk.client.AuthenticationScheme
-import com.okta.sdk.impl.client.DefaultClientBuilder
 import com.okta.sdk.impl.io.DefaultResourceFactory
 import com.okta.sdk.impl.io.Resource
 import com.okta.sdk.impl.io.ResourceFactory
@@ -103,8 +102,29 @@ class DefaultAuthenticationClientBuilderTest {
         clearOktaEnvAndSysProps()
         TestUtil.expectException(IllegalArgumentException) {
             new DefaultAuthenticationClientBuilder(noDefaultYamlNoAppYamlResourceFactory())
-                .setBaseUrlResolver(new DefaultBaseUrlResolver("http://okta.example.com"))
+                .setOrgUrl("http://okta.example.com")
                 .build()
+        }
+    }
+
+    @Test
+    void testHttpBaseUrlForTesting() {
+        clearOktaEnvAndSysProps()
+        System.setProperty(AuthenticationClientBuilder.DEFAULT_CLIENT_TESTING_DISABLE_HTTPS_CHECK_PROPERTY_NAME, "true")
+        // shouldn't throw IllegalArgumentException
+        new DefaultAuthenticationClientBuilder(noDefaultYamlNoAppYamlResourceFactory())
+            .setOrgUrl("http://okta.example.com")
+            .build()
+    }
+
+    @Test
+    void testHttpBaseUrlForTestingDisabled() {
+        clearOktaEnvAndSysProps()
+        System.setProperty(AuthenticationClientBuilder.DEFAULT_CLIENT_TESTING_DISABLE_HTTPS_CHECK_PROPERTY_NAME, "false")
+        TestUtil.expectException(IllegalArgumentException) {
+            new DefaultAuthenticationClientBuilder(noDefaultYamlNoAppYamlResourceFactory())
+                    .setOrgUrl("http://okta.example.com")
+                    .build()
         }
     }
 

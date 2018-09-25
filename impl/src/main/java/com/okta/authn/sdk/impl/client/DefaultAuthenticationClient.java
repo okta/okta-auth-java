@@ -145,6 +145,12 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
+    public AuthenticationResponse verifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        // same request body as challengeFactor
+        return challengeFactor(factorId, stateToken, stateHandler);
+    }
+
+    @Override
     public AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors/" + factorId + "/verify", request, stateHandler);
     }
@@ -232,7 +238,7 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse pollFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse getFactorActivationStatus(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler);
     }
 

@@ -195,7 +195,7 @@ class DefaultAuthenticationClientTest {
         ))
 
         def stateHandler = mock(AuthenticationStateHandler)
-        AuthenticationResponse response = client.pollFactor(factorId, "stateToken1", stateHandler)
+        AuthenticationResponse response = client.getFactorActivationStatus(factorId, "stateToken1", stateHandler)
         verify(stateHandler).handleMfaEnrollActivate(response)
         assertThat response.factorResult, is("WAITING")
     }
@@ -303,6 +303,27 @@ class DefaultAuthenticationClientTest {
 
         def stateHandler = mock(AuthenticationStateHandler)
         AuthenticationResponse response = client.challengeFactor(factorId, "stateToken1", stateHandler)
+        verify(stateHandler).handleMfaChallenge(response)
+    }
+
+    @Test
+    void verifyFactorForStatusTest() {
+        def client = createClient("verifyFactorForStatusTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        def factorId = "factor321"
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/factors/${factorId}/verify")
+        ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.verifyFactor(factorId, "stateToken1", stateHandler)
         verify(stateHandler).handleMfaChallenge(response)
     }
 

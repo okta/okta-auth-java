@@ -316,6 +316,19 @@ public interface AuthenticationClient {
     AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
+     * Verifies the state of a factor. Some factors (Push, Duo, etc) depend on a user action, this method can be used to poll the state of
+     * the a factor and transition to the next state when completed.
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param stateToken state token for current transaction
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation")
+    AuthenticationResponse verifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    /**
      * Requests a challenge factor be sent to the user via the corresponding {code}factorId{code}.
      *
      * @param factorId id of factor returned from enrollment
@@ -366,16 +379,16 @@ public interface AuthenticationClient {
     AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
-     * Polls for state of factor. Some factors (Push, Duo, etc) depend on a user action, this method can be used to poll the state of
-     * the a factor and transition to the next state when completed.
+     * Returns the state of factor's activation. Some factors (Push, Duo, etc) depend on a user action, this method can
+     * be used to poll the state of the a factor's activation and transition to the next state when completed.
      *
      * @param stateToken state token for current transaction
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/poll", href = "https://developer.okta.com/docs/api/resources/authn.html#poll-for-push-factor-activation")
-    AuthenticationResponse pollFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/poll", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation")
+    AuthenticationResponse getFactorActivationStatus(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
      * Validates a recovery token that was distributed to the end user to continue the recovery transaction.

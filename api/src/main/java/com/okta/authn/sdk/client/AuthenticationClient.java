@@ -325,7 +325,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation") //TODO: fix link
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-push-factor")
     AuthenticationResponse verifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**

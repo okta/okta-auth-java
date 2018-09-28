@@ -25,12 +25,10 @@ import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
-import com.okta.sdk.impl.cache.DisabledCacheManager
 import com.okta.sdk.impl.config.ClientConfiguration
 import com.okta.sdk.impl.http.MediaType
 import com.okta.sdk.impl.http.Request
 import com.okta.sdk.impl.http.RequestExecutor
-import com.okta.sdk.impl.http.authc.DefaultRequestAuthenticatorFactory
 import com.okta.sdk.impl.http.support.DefaultResponse
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import com.okta.sdk.resource.ResourceException
@@ -195,7 +193,7 @@ class DefaultAuthenticationClientTest {
         ))
 
         def stateHandler = mock(AuthenticationStateHandler)
-        AuthenticationResponse response = client.getFactorActivationStatus(factorId, "stateToken1", stateHandler)
+        AuthenticationResponse response = client.verifyActivation(factorId, "stateToken1", stateHandler)
         verify(stateHandler).handleMfaEnrollActivate(response)
         assertThat response.factorResult, is("WAITING")
     }

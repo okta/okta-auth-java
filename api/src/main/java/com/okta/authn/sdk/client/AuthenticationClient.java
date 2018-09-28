@@ -89,7 +89,7 @@ public interface AuthenticationClient {
      * @throws com.okta.authn.sdk.AuthenticationFailureException when username or password are invalid
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn", href = "https://developer.okta.com/docs/api/resources/authn.html#primary-authentication")
+    @ApiReference(path = "/api/v1/authn", href = "https://developer.okta.com/docs/api/resources/authn#primary-authentication")
     AuthenticationResponse authenticate(String username, char[] password, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -102,7 +102,7 @@ public interface AuthenticationClient {
      * @throws com.okta.authn.sdk.AuthenticationFailureException when username or password are invalid
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn", href = "https://developer.okta.com/docs/api/resources/authn.html#primary-authentication")
+    @ApiReference(path = "/api/v1/authn", href = "https://developer.okta.com/docs/api/resources/authn#primary-authentication")
     AuthenticationResponse authenticate(AuthenticationRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -117,7 +117,7 @@ public interface AuthenticationClient {
      * requirements of the password policy
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/credentials/change_password", href = "https://developer.okta.com/docs/api/resources/authn.html#change-password")
+    @ApiReference(path = "/api/v1/authn/credentials/change_password", href = "https://developer.okta.com/docs/api/resources/authn#change-password")
     AuthenticationResponse changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -130,7 +130,7 @@ public interface AuthenticationClient {
      * requirements of the password policy
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/credentials/change_password", href = "https://developer.okta.com/docs/api/resources/authn.html#change-password")
+    @ApiReference(path = "/api/v1/authn/credentials/change_password", href = "https://developer.okta.com/docs/api/resources/authn#change-password")
     AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -144,7 +144,7 @@ public interface AuthenticationClient {
      * requirements of the password policy
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/credentials/reset_password", href = "https://developer.okta.com/docs/api/resources/authn.html#reset-password")
+    @ApiReference(path = "/api/v1/authn/credentials/reset_password", href = "https://developer.okta.com/docs/api/resources/authn#reset-password")
     AuthenticationResponse resetPassword(char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -157,7 +157,7 @@ public interface AuthenticationClient {
      * requirements of the password policy
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/credentials/reset_password", href = "https://developer.okta.com/docs/api/resources/authn.html#reset-password")
+    @ApiReference(path = "/api/v1/authn/credentials/reset_password", href = "https://developer.okta.com/docs/api/resources/authn#reset-password")
     AuthenticationResponse resetPassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -172,7 +172,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn.html#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, FactorProfile factorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -184,7 +184,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn.html#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
     AuthenticationResponse enrollFactor(FactorEnrollRequest factorEnrollRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -196,7 +196,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/password", href = "https://developer.okta.com/docs/api/resources/authn.html#recovery-operations")
+    @ApiReference(path = "/api/v1/authn/recovery/password", href = "https://developer.okta.com/docs/api/resources/authn#recovery-operations")
     AuthenticationResponse recoverPassword(String username, FactorType factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -206,7 +206,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/password", href = "https://developer.okta.com/docs/api/resources/authn.html#recovery-operations")
+    @ApiReference(path = "/api/v1/authn/recovery/password", href = "https://developer.okta.com/docs/api/resources/authn#recovery-operations")
     AuthenticationResponse recoverPassword(RecoverPasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -219,7 +219,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/unlock", href = "https://developer.okta.com/docs/api/resources/authn.html#unlock-account")
+    @ApiReference(path = "/api/v1/authn/recovery/unlock", href = "https://developer.okta.com/docs/api/resources/authn#unlock-account")
     AuthenticationResponse unlockAccount(String username, FactorType factorType, String relayState, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -230,7 +230,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/unlock", href = "https://developer.okta.com/docs/api/resources/authn.html#unlock-account")
+    @ApiReference(path = "/api/v1/authn/recovery/unlock", href = "https://developer.okta.com/docs/api/resources/authn#unlock-account")
     AuthenticationResponse unlockAccount(UnlockAccountRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -244,7 +244,7 @@ public interface AuthenticationClient {
      * @throws com.okta.authn.sdk.InvalidRecoveryAnswerException thrown when the answer is invalid
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/answer", href = "https://developer.okta.com/docs/api/resources/authn.html#answer-recovery-question")
+    @ApiReference(path = "/api/v1/authn/recovery/answer", href = "https://developer.okta.com/docs/api/resources/authn#answer-recovery-question")
     AuthenticationResponse answerRecoveryQuestion(String answer, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -257,7 +257,7 @@ public interface AuthenticationClient {
      * @throws com.okta.authn.sdk.InvalidRecoveryAnswerException thrown when the answer is invalid
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/answer", href = "https://developer.okta.com/docs/api/resources/authn.html#answer-recovery-question")
+    @ApiReference(path = "/api/v1/authn/recovery/answer", href = "https://developer.okta.com/docs/api/resources/authn#answer-recovery-question")
     AuthenticationResponse answerRecoveryQuestion(RecoveryQuestionAnswerRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -268,7 +268,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/previous", href = "https://developer.okta.com/docs/api/resources/authn.html#previous-transaction-state")
+    @ApiReference(path = "/api/v1/authn/previous", href = "https://developer.okta.com/docs/api/resources/authn#previous-transaction-state")
     AuthenticationResponse previous(String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -279,7 +279,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/skip", href = "https://developer.okta.com/docs/api/resources/authn.html#skip-transaction-state")
+    @ApiReference(path = "/api/v1/authn/skip", href = "https://developer.okta.com/docs/api/resources/authn#skip-transaction-state")
     AuthenticationResponse skip(String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -288,7 +288,7 @@ public interface AuthenticationClient {
      * @param stateToken state token for current transaction
      * @return An authentication response
      */
-    @ApiReference(path = "/api/v1/authn/cancel", href = "https://developer.okta.com/docs/api/resources/authn.html#cancel-transaction")
+    @ApiReference(path = "/api/v1/authn/cancel", href = "https://developer.okta.com/docs/api/resources/authn#cancel-transaction")
     AuthenticationResponse cancel(String stateToken);
 
     /**
@@ -300,7 +300,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate", href = "https://developer.okta.com/docs/api/resources/authn.html#activate-factor")
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate", href = "https://developer.okta.com/docs/api/resources/authn#activate-factor")
     AuthenticationResponse activateFactor(String factorId, ActivateFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -312,7 +312,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-factor")
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-factor")
     AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -325,7 +325,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation")
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation") //TODO: fix link
     AuthenticationResponse verifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -337,7 +337,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-sms-factor")
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-sms-factor")
     AuthenticationResponse challengeFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -349,7 +349,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/factors/{factorType}/verify", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-recovery-factor")
+    @ApiReference(path = "/api/v1/authn/recovery/factors/{factorType}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-recovery-factor")
     AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -388,7 +388,7 @@ public interface AuthenticationClient {
      * @throws AuthenticationException any other authentication related error
      */
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/poll", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation")
-    AuthenticationResponse getFactorActivationStatus(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    AuthenticationResponse verifyActivation(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
      * Validates a recovery token that was distributed to the end user to continue the recovery transaction.
@@ -398,6 +398,6 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/recovery/token", href = "https://developer.okta.com/docs/api/resources/authn.html#verify-recovery-token")
+    @ApiReference(path = "/api/v1/authn/recovery/token", href = "https://developer.okta.com/docs/api/resources/authn#verify-recovery-token")
     AuthenticationResponse verifyRecoveryToken(String recoveryToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 }

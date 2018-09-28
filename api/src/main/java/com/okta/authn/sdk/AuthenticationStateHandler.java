@@ -51,7 +51,7 @@ import com.okta.authn.sdk.resource.AuthenticationResponse;
  */
 public interface AuthenticationStateHandler {
 
-    void handleUnauthenticated(AuthenticationResponse typedUnauthenticatedResponse);
+    void handleUnauthenticated(AuthenticationResponse unauthenticatedResponse);
 
     void handlePasswordWarning(AuthenticationResponse passwordWarning);
 
@@ -75,5 +75,5 @@ public interface AuthenticationStateHandler {
 
     void handleSuccess(AuthenticationResponse successResponse);
 
-    void handleUnknown(AuthenticationResponse typedUnknownResponse);
+    void handleUnknown(AuthenticationResponse unknownResponse);
 }

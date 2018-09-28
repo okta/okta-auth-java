@@ -238,7 +238,7 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse getFactorActivationStatus(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse verifyActivation(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler);
     }
 

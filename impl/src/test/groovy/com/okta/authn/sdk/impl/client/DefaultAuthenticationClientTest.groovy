@@ -493,7 +493,7 @@ class DefaultAuthenticationClientTest {
 
     WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {
         def clientConfig = new ClientConfiguration()
-        clientConfig.setBaseUrlResolver(new DefaultBaseUrlResolver("http://${getClass().name}/${callingTestMethodName}"))
+        clientConfig.setBaseUrlResolver(new DefaultBaseUrlResolver("https://${getClass().name}/${callingTestMethodName}"))
         clientConfig.setAuthenticationScheme(AuthenticationScheme.NONE)
         clientConfig.setClientCredentialsResolver(new DisabledClientCredentialsResolver())
 

@@ -18,6 +18,7 @@ package com.okta.authn.sdk.impl.client;
 
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClientBuilder;
+import com.okta.commons.configcheck.ConfigurationValidator;
 import com.okta.sdk.client.AuthenticationScheme;
 import com.okta.sdk.client.Proxy;
 import com.okta.sdk.impl.config.ClientConfiguration;
@@ -76,6 +77,7 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
     };
 
     private ClientConfiguration clientConfig = new ClientConfiguration();
+    private boolean allowNonHttpsForTesting = false;
 
     public DefaultAuthenticationClientBuilder() {
         this(new DefaultResourceFactory());
@@ -115,10 +117,15 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
             props.putAll(srcProps);
         }
 
+        if (Strings.hasText(props.get(DEFAULT_CLIENT_TESTING_DISABLE_HTTPS_CHECK_PROPERTY_NAME))) {
+            allowNonHttpsForTesting = Boolean.valueOf(props.get(DEFAULT_CLIENT_TESTING_DISABLE_HTTPS_CHECK_PROPERTY_NAME));
+        }
+
         if (Strings.hasText(props.get(DEFAULT_CLIENT_ORG_URL_PROPERTY_NAME))) {
             String baseUrl = props.get(DEFAULT_CLIENT_ORG_URL_PROPERTY_NAME);
             // remove backslashes that can end up in file when it's written programmatically, e.g. in a test
             baseUrl = baseUrl.replace("\\:", ":");
+            ConfigurationValidator.assertOrgUrl(baseUrl, allowNonHttpsForTesting);
             clientConfig.setBaseUrl(baseUrl);
         }
 
@@ -206,7 +213,7 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
 
     @Override
     public AuthenticationClientBuilder setOrgUrl(String baseUrl) {
-        Assert.notNull(baseUrl, "baseUrl argument cannot be null.");
+        ConfigurationValidator.assertOrgUrl(baseUrl, allowNonHttpsForTesting);
         this.clientConfig.setBaseUrl(baseUrl);
         return this;
     }

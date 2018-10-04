@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 Okta
+# Copyright 2017-Present Okta, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 #
 
 #Using xmllint is faster than invoking maven
-export ARTIFACT_VERSION="$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)"
-export IS_RELEASE="$([ ${ARTIFACT_VERSION/SNAPSHOT} == $ARTIFACT_VERSION ] && [ $TRAVIS_BRANCH == 'master' ] && echo 'true')"
+ARTIFACT_VERSION="$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)"
+IS_RELEASE=$([ "${ARTIFACT_VERSION/SNAPSHOT}" == "${ARTIFACT_VERSION}" ] && [ "${TRAVIS_BRANCH}" == 'master' ] && echo 'true')
+export ARTIFACT_VERSION
+export IS_RELEASE
 
 echo "Build configuration:"
 echo "Version:             ${ARTIFACT_VERSION}"

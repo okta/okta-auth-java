@@ -57,12 +57,12 @@ For Apache Maven:
 
 ``` xml
 <dependency>
-    <groupId>com.okta.sdk</groupId>
+    <groupId>com.okta.authn.sdk</groupId>
     <artifactId>okta-authn-sdk-api</artifactId>
     <version>${okta.authn.version}</version>
 </dependency>
 <dependency>
-    <groupId>com.okta.sdk</groupId>
+    <groupId>com.okta.authn.sdk</groupId>
     <artifactId>okta-authn-sdk-impl</artifactId>
     <version>${okta.authn.version}</version>
     <scope>runtime</scope>

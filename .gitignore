@@ -47,3 +47,4 @@ npm-debug.log
 travis_phantomjs
 .DS_Store
 .vscode
+android/dependency-reduced-pom.xml

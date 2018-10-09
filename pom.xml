@@ -34,12 +34,13 @@
 
     <properties>
         <jackson.version>2.9.5</jackson.version>
-        <okta.sdk.version>1.3.0</okta.sdk.version>
+        <okta.sdk.version>1.3.1-SNAPSHOT</okta.sdk.version>
     </properties>
 
     <modules>
         <module>api</module>
         <module>impl</module>
+        <module>android</module>
         <module>examples/shiro-mustache</module>
         <module>examples/doc-examples</module>
         <module>integration-tests</module>

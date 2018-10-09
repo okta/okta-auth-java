@@ -19,7 +19,6 @@ import com.okta.sdk.impl.http.*
 import com.okta.sdk.impl.http.support.DefaultResponse
 import com.okta.sdk.impl.io.ClasspathResource
 import groovy.text.StreamingTemplateEngine
-import org.apache.http.HttpHeaders
 import org.hamcrest.Matcher
 
 import static org.hamcrest.MatcherAssert.assertThat
@@ -35,8 +34,8 @@ class StubRequestExecutor implements RequestExecutor {
 
         assertThat(request.headers, allOf(
                 hasEntry(equalTo(HttpHeaders.ACCEPT), everyItem(equalTo(MediaType.APPLICATION_JSON_VALUE))),
-                hasEntry(equalTo(HttpHeaders.USER_AGENT), everyItem(notNullValue())),
-                not(hasKey(equalTo(HttpHeaders.AUTHORIZATION)))
+                hasEntry(equalTo("User-Agent"), everyItem(notNullValue())),
+                not(hasKey(equalTo("Authorization")))
         ))
 
         requestMatchers.forEach {

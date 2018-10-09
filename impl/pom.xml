@@ -65,12 +65,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.okta.sdk</groupId>
-            <artifactId>okta-sdk-httpclient</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         
         <!-- Test deps -->
         <dependency>

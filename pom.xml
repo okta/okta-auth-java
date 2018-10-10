@@ -26,7 +26,7 @@
 
     <groupId>com.okta.authn.sdk</groupId>
     <artifactId>okta-authn-parent</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1-SNAPSHOT</version>
     <name>Okta Authn SDK</name>
     <packaging>pom</packaging>
     <url>https://github.com/okta/okta-auth-java</url>
@@ -58,17 +58,17 @@
             <dependency>
                 <groupId>com.okta.authn.sdk</groupId>
                 <artifactId>okta-authn-sdk-api</artifactId>
-                <version>0.2.0</version>
+                <version>0.2.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.okta.authn.sdk</groupId>
                 <artifactId>okta-authn-sdk-impl</artifactId>
-                <version>0.2.0</version>
+                <version>0.2.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.okta.authn.sdk</groupId>
                 <artifactId>okta-authn-sdk-integration-tests</artifactId>
-                <version>0.2.0</version>
+                <version>0.2.1-SNAPSHOT</version>
             </dependency>
 
             <dependency>
@@ -107,8 +107,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-  <scm>
-    <tag>okta-authn-parent-0.2.0</tag>
-  </scm>
 </project>

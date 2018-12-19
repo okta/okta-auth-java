@@ -22,6 +22,7 @@
         <groupId>com.okta.authn.sdk</groupId>
         <artifactId>okta-authn-parent</artifactId>
         <version>0.2.1-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
     </parent>
 
     <artifactId>okta-authn-sdk-examples-docs</artifactId>

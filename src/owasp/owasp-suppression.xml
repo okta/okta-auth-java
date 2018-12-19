@@ -51,21 +51,30 @@
        <cpe>cpe:/a:mustache.js_project:mustache.js</cpe>
     </suppress>
 
-    <!--&lt;!&ndash; invalid artifact detection / swagger uber jars&ndash;&gt;-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: io/swagger/swagger-codegen/2.2.2/swagger-codegen-2.2.2.jar/android/gradle-wrapper.jar - uber jar]]></notes>-->
-        <!--<sha1>0f6f1fa2b59ae770ca14f975726bed8d6620ed9b</sha1>-->
-        <!--<cpe>cpe:/a:gradle:gradle:2.12</cpe>-->
-    <!--</suppress>-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: swagger-parser-1.0.26.jar]]></notes>-->
-        <!--<sha1>3c13c7e288df23b4ffb924226fad863622579cf7</sha1>-->
-        <!--<cpe>cpe:/a:sonatype:nexus:1.0.26</cpe>-->
-    <!--</suppress>-->
-    <!--<suppress>-->
-        <!--<notes><![CDATA[ file name: swagger-compat-spec-parser-1.0.26.jar]]></notes>-->
-        <!--<sha1>82f5c7ee07659dbbbbce13e7b5f2ed06ffdbd652</sha1>-->
-        <!--<cpe>cpe:/a:sonatype:nexus:1.0.26</cpe>-->
-    <!--</suppress>-->
+    <!-- wrong GAV, this CVE effects slf4j-ext not the other slf4j- projects
+     https://nvd.nist.gov/vuln/detail/CVE-2018-8088
+
+     > org.slf4j.ext.EventData in the slf4j-ext module in QOS.CH SLF4J ...
+    -->
+    <suppress>
+        <notes><![CDATA[ file name: slf4j-api-1.7.25.jar ]]></notes>
+        <gav regex="true">^org\.slf4j:slf4j-api:.*$</gav>
+        <cve>CVE-2018-8088</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[ file name: jcl-over-slf4j-1.7.25.jar ]]></notes>
+        <gav regex="true">^org\.slf4j:jcl-over-slf4j:.*$</gav>
+        <cve>CVE-2018-8088</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[ file name: jul-to-slf4j-1.7.25.jar ]]></notes>
+        <gav regex="true">^org\.slf4j:jul-to-slf4j:.*$</gav>
+        <cve>CVE-2018-8088</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[ file name: log4j-over-slf4j-1.7.25.jar ]]></notes>
+        <gav regex="true">^org\.slf4j:log4j-over-slf4j:.*$</gav>
+        <cve>CVE-2018-8088</cve>
+    </suppress>
 
 </suppressions>

@@ -34,8 +34,8 @@ import com.okta.sdk.impl.io.Resource;
 import com.okta.sdk.impl.io.ResourceFactory;
 import com.okta.sdk.impl.util.BaseUrlResolver;
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver;
-import com.okta.sdk.lang.Assert;
-import com.okta.sdk.lang.Strings;
+import com.okta.commons.lang.Assert;
+import com.okta.commons.lang.Strings;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,29 +47,31 @@ import java.util.Map;
  * <p>The default {@link AuthenticationClientBuilder} implementation. This looks for configuration files
  * in the following locations and order of precedence (last one wins).</p>
  * <ul>
- * <li>classpath:com/okta/sdk/config/okta.properties</li>
+ * <li>classpath:com/okta/authn/sdk/config/okta.properties</li>
+ * <li>classpath:com/okta/authn/sdk/config/okta.yaml</li>
  * <li>classpath:okta.properties</li>
- * <li>classpath:okta.json</li>
  * <li>classpath:okta.yaml</li>
- * <li>~/.okta/okta.properties</li>
- * <li>~/.okta/okta.json</li>
  * <li>~/.okta/okta.yaml</li>
- * <li>~/okta.properties</li>
- * <li>~/okta.json</li>
- * <li>~/okta.yaml</li>
+ * <li>Environment Variables (with dot notation converted to uppercase + underscores)</li>
+ * <li>System Properties</li>
+ * <li>Programmatically</li>
  * </ul>
  *
  * @since 0.1.0
  */
 public class DefaultAuthenticationClientBuilder implements AuthenticationClientBuilder {
 
-    private static final  String ENVVARS_TOKEN  = "envvars";
-    private static final  String SYSPROPS_TOKEN = "sysprops";
-    private static final String OKTA_YAML      = "okta.yaml";
-    private static final String USER_HOME      = System.getProperty("user.home") + File.separatorChar;
+    private static final String ENVVARS_TOKEN   = "envvars";
+    private static final String SYSPROPS_TOKEN  = "sysprops";
+    private static final String OKTA_CONFIG_CP  = "com/okta/authn/sdk/config/";
+    private static final String OKTA_YAML       = "okta.yaml";
+    private static final String OKTA_PROPERTIES = "okta.properties";
+    private static final String USER_HOME       = System.getProperty("user.home") + File.separatorChar;
 
     private static final String[] DEFAULT_OKTA_PROPERTIES_FILE_LOCATIONS = {
-                                                 ClasspathResource.SCHEME_PREFIX + "com/okta/authn/sdk/config/" + OKTA_YAML,
+                                                 ClasspathResource.SCHEME_PREFIX + OKTA_CONFIG_CP + OKTA_PROPERTIES,
+                                                 ClasspathResource.SCHEME_PREFIX + OKTA_CONFIG_CP + OKTA_YAML,
+                                                 ClasspathResource.SCHEME_PREFIX + OKTA_PROPERTIES,
                                                  ClasspathResource.SCHEME_PREFIX + OKTA_YAML,
                                                  USER_HOME + ".okta" + File.separatorChar + OKTA_YAML,
                                                  ENVVARS_TOKEN,
@@ -98,8 +100,7 @@ public class DefaultAuthenticationClientBuilder implements AuthenticationClientB
                 Resource resource = resourceFactory.createResource(location);
 
                 PropertiesSource wrappedSource;
-                if (Strings.endsWithIgnoreCase(location, ".yaml") ||
-                        Strings.endsWithIgnoreCase(location, ".yml")) {
+                if (Strings.endsWithIgnoreCase(location, ".yaml")) {
                     wrappedSource = new YAMLPropertiesSource(resource);
                 } else {
                     wrappedSource = new ResourcePropertiesSource(resource);

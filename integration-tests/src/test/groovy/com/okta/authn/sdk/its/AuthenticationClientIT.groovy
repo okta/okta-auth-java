@@ -42,7 +42,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
     @Test
     void userLoginTest() {
         def user = randomUser()
-        def response = authClient.authenticate(user.profile.getEmail(), USER_PASSWORD, null, ignoringStateHandler)
+        def response = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, null, ignoringStateHandler)
         assertThat response.getStatus(), is(AuthenticationStatus.SUCCESS)
         assertThat response.getSessionToken(), not(isEmptyString())
     }
@@ -53,13 +53,13 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         // first login to this group requires MFA enrollment
         def user = randomUser(null, TestConfiguration.CONFIG.mfaEnrollRequiredGroupId)
 
-        def response1 = authClient.authenticate(user.profile.getEmail(), USER_PASSWORD, null, ignoringStateHandler)
+        def response1 = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, null, ignoringStateHandler)
         assertThat response1.getStatus(), is(AuthenticationStatus.MFA_ENROLL)
         assertThat response1.getSessionToken(), nullValue()
 
         // enroll in TOTP factor
         def totpFactor = authClient.instantiate(TotpFactorProfile)
-                .setCredentialId(user.profile.getEmail())
+                .setCredentialId(user.getProfile().getEmail())
 
         def response2 = authClient.enrollFactor(FactorType.TOKEN_SOFTWARE_TOTP,
                 FactorProvider.OKTA,
@@ -84,7 +84,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response3.getSessionToken(), not(isEmptyString())
 
         // now login again and verify the factor on login
-        def response4 = authClient.authenticate(user.profile.getEmail(), USER_PASSWORD, null, ignoringStateHandler)
+        def response4 = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, null, ignoringStateHandler)
         assertThat response4.getStatus(), is(AuthenticationStatus.MFA_REQUIRED)
         assertThat response4.getSessionToken(), nullValue()
 
@@ -108,12 +108,12 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         def user = randomUser(emailClient.emailAddress)
 
         // login once
-        def response1 = authClient.authenticate(user.profile.getEmail(), USER_PASSWORD, null, ignoringStateHandler)
+        def response1 = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, null, ignoringStateHandler)
         assertThat response1.getStatus(), is(AuthenticationStatus.SUCCESS)
         assertThat response1.getSessionToken(), not(isEmptyString())
 
         // try forget password flow
-        def response2 = authClient.recoverPassword(user.profile.getEmail(), FactorType.EMAIL, null, ignoringStateHandler)
+        def response2 = authClient.recoverPassword(user.getProfile().getEmail(), FactorType.EMAIL, null, ignoringStateHandler)
         assertThat response2.getStatus(), is(AuthenticationStatus.RECOVERY_CHALLENGE)
         assertThat response2.getSessionToken(), not(isEmptyString())
         String id = getRecoveryTokenFromEmail(emailClient)
@@ -127,18 +127,18 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response3.getUser().getRecoveryQuestion().get("question"), is(SECURITY_QUESTION)
 
         // answer the security question
-        def response4 = authClient.answerRecoveryQuestion(SECURITY_ANSWER, response3.stateToken, ignoringStateHandler)
+        def response4 = authClient.answerRecoveryQuestion(SECURITY_ANSWER, response3.getStateToken(), ignoringStateHandler)
         assertThat response4.getStatus(), is(AuthenticationStatus.PASSWORD_RESET)
         assertThat response4.getSessionToken(), nullValue()
 
         // change the password
         def newPassword = "Password2".toCharArray()
-        def response5 = authClient.resetPassword(newPassword, response4.stateToken, ignoringStateHandler)
+        def response5 = authClient.resetPassword(newPassword, response4.getStateToken(), ignoringStateHandler)
         assertThat response5.getStatus(), is(AuthenticationStatus.SUCCESS)
         assertThat response5.getSessionToken(), not(isEmptyString())
 
         // login again with new password
-        def response6 = authClient.authenticate(user.profile.getEmail(), newPassword, null, ignoringStateHandler)
+        def response6 = authClient.authenticate(user.getProfile().getEmail(), newPassword, null, ignoringStateHandler)
         assertThat response6.getStatus(), is(AuthenticationStatus.SUCCESS)
         assertThat response6.getSessionToken(), not(isEmptyString())
     }
@@ -163,7 +163,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         def user = randomUser()
         def tempPassword = user.expirePassword(true).tempPassword.toCharArray()
 
-        def response1 = authClient.authenticate(user.profile.getEmail(), tempPassword, null, ignoringStateHandler)
+        def response1 = authClient.authenticate(user.getProfile().getEmail(), tempPassword, null, ignoringStateHandler)
         assertThat response1.getStatus(), is(AuthenticationStatus.PASSWORD_EXPIRED)
         assertThat response1.getSessionToken(), nullValue()
 
@@ -174,7 +174,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response2.getSessionToken(), not(isEmptyString())
 
         // login again with new password
-        def response3 = authClient.authenticate(user.profile.getEmail(), newPassword, null, ignoringStateHandler)
+        def response3 = authClient.authenticate(user.getProfile().getEmail(), newPassword, null, ignoringStateHandler)
         assertThat response3.getStatus(), is(AuthenticationStatus.SUCCESS)
         assertThat response3.getSessionToken(), not(isEmptyString())
     }
@@ -190,7 +190,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
 
         3.times {
             ignoring(AuthenticationFailureException) {
-                response1 = authClient.authenticate(user.profile.getEmail(),
+                response1 = authClient.authenticate(user.getProfile().getEmail(),
                                                     "wrong-password".toCharArray(),
                                                     null,
                                                     ignoringStateHandler)
@@ -199,7 +199,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response1.getStatus(), is(AuthenticationStatus.LOCKED_OUT)
         assertThat response1.getSessionToken(), nullValue()
 
-        def response2 = authClient.unlockAccount(user.profile.getEmail(), FactorType.EMAIL, null, ignoringStateHandler)
+        def response2 = authClient.unlockAccount(user.getProfile().getEmail(), FactorType.EMAIL, null, ignoringStateHandler)
         assertThat response2.getStatus(), is(AuthenticationStatus.RECOVERY_CHALLENGE)
         assertThat response2.getSessionToken(), not(isEmptyString())
         String recoveryToken = getUnlockRecoveryTokenFromEmail(emailClient)
@@ -234,7 +234,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         def relayState = "my-relay-state"
         // first login to this group requires MFA enrollment
         def user = randomUser(null, TestConfiguration.CONFIG.mfaEnrollRequiredGroupId)
-        def response1 = authClient.authenticate(user.profile.getEmail(), USER_PASSWORD, relayState, ignoringStateHandler)
+        def response1 = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, relayState, ignoringStateHandler)
 
         assertThat response1.getStatus(), is(AuthenticationStatus.MFA_ENROLL)
         assertThat response1.getSessionToken(), nullValue()
@@ -249,14 +249,14 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
     void previousStateTest() {
         // first login to this group requires MFA enrollment
         def user = randomUser(null, TestConfiguration.CONFIG.mfaEnrollRequiredGroupId)
-        def response1 = authClient.authenticate(user.profile.getEmail(), USER_PASSWORD, null, ignoringStateHandler)
+        def response1 = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, null, ignoringStateHandler)
 
         assertThat response1.getStatus(), is(AuthenticationStatus.MFA_ENROLL)
         assertThat response1.getSessionToken(), nullValue()
 
         // enroll in TOTP factor
         def totpFactor = authClient.instantiate(TotpFactorProfile)
-                .setCredentialId(user.profile.getEmail())
+                .setCredentialId(user.getProfile().getEmail())
 
         def response2 = authClient.enrollFactor(FactorType.TOKEN_SOFTWARE_TOTP,
                 FactorProvider.OKTA,

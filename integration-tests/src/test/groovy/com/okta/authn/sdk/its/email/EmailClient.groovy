@@ -43,8 +43,8 @@ class EmailClient {
 
         def waitTime = StopWatch.timeEventInSeconds {
 
-            while (emailId == null && count++ < 1000) {
-                Thread.sleep(500l)
+            while (emailId == null && count++ < 10) {
+                Thread.sleep(1000l * 15l)
                 def jsonResponse =
                         get(GUERILLA_MAIL_BASE + "?f=get_email_list&offset=0&sid_token=${sidToken}").asString()
 
@@ -64,6 +64,8 @@ class EmailClient {
                         if (mailFrom.contains(fromAddressDomain)) {
                             emailId = localEmailId
                             break
+                        } else {
+                            print("Retrying 'getEmail(${fromAddressDomain})' attempt: ${count}")
                         }
                     }
                 }
@@ -71,7 +73,7 @@ class EmailClient {
         }
 
         if (emailId == null) {
-            Assert.fail("Couldn't retrieve email, timeout after ${waitTime} seconds")
+            Assert.fail("Couldn't retrieve email, timeout after ${waitTime} seconds, attempt: ${count}")
             return null
         }
 

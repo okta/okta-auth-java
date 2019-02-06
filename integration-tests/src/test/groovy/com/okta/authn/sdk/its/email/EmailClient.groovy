@@ -44,7 +44,7 @@ class EmailClient {
         def waitTime = StopWatch.timeEventInSeconds {
 
             while (emailId == null && count++ < 10) {
-                Thread.sleep(1000l * 15l)
+                Thread.sleep(1000l * 30l)
                 def jsonResponse =
                         get(GUERILLA_MAIL_BASE + "?f=get_email_list&offset=0&sid_token=${sidToken}").asString()
 

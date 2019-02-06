@@ -35,6 +35,7 @@
     <properties>
         <jackson.version>2.9.5</jackson.version>
         <okta.sdk.version>1.4.1-SNAPSHOT</okta.sdk.version>
+        <okta.authn.previousVersion>0.2</okta.authn.previousVersion>
     </properties>
 
     <modules>
@@ -102,6 +103,26 @@
                     <artifactId>okta-code-snippet-maven-plugin</artifactId>
                     <configuration>
                         <sourceFile>examples/doc-examples/src/main/java/com/okta/authn/sdk/example/ReadmeSnippets.java</sourceFile>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.siom79.japicmp</groupId>
+                    <artifactId>japicmp-maven-plugin</artifactId>
+                    <version>0.13.0</version>
+                    <configuration>
+                        <oldVersion>
+                            <dependency>
+                                <groupId>${project.groupId}</groupId>
+                                <artifactId>${project.artifactId}</artifactId>
+                                <version>${okta.authn.previousVersion}</version>
+                                <type>jar</type>
+                            </dependency>
+                        </oldVersion>
+                        <parameter>
+                            <onlyModified>true</onlyModified>
+                            <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+                            <breakBuildBasedOnSemanticVersioning>true</breakBuildBasedOnSemanticVersioning>
+                        </parameter>
                     </configuration>
                 </plugin>
             </plugins>

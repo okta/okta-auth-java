@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.its
 
-import com.okta.sdk.lang.Strings
+import com.okta.commons.lang.Strings
 import org.testng.TestException
 import org.yaml.snakeyaml.Yaml
 
@@ -39,32 +39,22 @@ class TestConfiguration {
         return getConfigValue("okta.authn.its.mfaEnrollGroupId")
     }
 
-    String getPasswordWarningGroupId() {
-        return getConfigValue("okta.authn.its.passwordWarningGroupId")
+    long getAddUserDelay() {
+        return getConfigValue("okta.authn.its.addUserDelay", "0") as Long
     }
 
-    String getTwilioSid() {
-        return getConfigValue("okta.authn.its.twilio.sid")
-    }
-
-    String getTwilioApiKey() {
-        return getConfigValue("okta.authn.its.twilio.apiKey")
-    }
-
-    String getTelesignId() {
-        return getConfigValue("okta.authn.its.telesign.customerId")
-    }
-
-    String getTelesignApiKey() {
-        return getConfigValue("okta.authn.its.telesign.apiKey")
-    }
-
-    private String getConfigValue(String key) {
+    private String getConfigValue(String key, String defaultValue=null) {
         String envVarKey = toEnvVar(key)
+
+        // 1. System property
         String value = System.getProperty(key)
+
+        // 2. Environment variable
         if (Strings.isEmpty(value)) {
             value = System.getenv(envVarKey)
         }
+
+        // 3. ~/.okta/okta.yaml
         if (Strings.isEmpty(value)) {
             def position = localConfig
             for (def item : key.tokenize('.')) {
@@ -76,6 +66,12 @@ class TestConfiguration {
             value = position
         }
 
+        // 4. default value
+        if (Strings.isEmpty(value)) {
+            value = defaultValue
+        }
+
+        // 5. throw exception
         if (value == null) {
             throw new TestException("Configuraion key: '${key}' is missing. Set the value as a System Property, Environment variable [${envVarKey}], or add the value to ${CONFIG_FILE.absolutePath}")
         }

@@ -64,7 +64,7 @@ class AuthenticationTestSupport {
                 .setGroups(groupIds)
                 .buildAndCreate(sdkClient)
         registerForCleanup(user)
-
+        sleep(TestConfiguration.CONFIG.getAddUserDelay()) // work around any async server processing
         return user
     }
 
@@ -75,16 +75,6 @@ class AuthenticationTestSupport {
     void registerForCleanup(Deletable deletable) {
         toBeDeleted.add(deletable)
     }
-
-//    static def ignoring = { Class<? extends Throwable> catchMe, Closure callMe ->
-//        try {
-//            callMe.call()
-//        } catch(e) {
-//            if (!e.class.isAssignableFrom(catchMe)) {
-//                throw e
-//            }
-//        }
-//    }
 
     @AfterMethod
     void clean() {

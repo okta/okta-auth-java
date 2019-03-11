@@ -13,20 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.example;
+package com.okta.authn.sdk.http;
 
-import com.okta.authn.sdk.AuthenticationException;
-import com.okta.authn.sdk.client.AuthenticationClient;
-import com.okta.authn.sdk.client.AuthenticationClients;
+public interface RequestParameter<K, V> {
 
-@SuppressWarnings({"unused"})
-public class ReadmeSnippets {
+    K getKey();
 
-    private final AuthenticationClient client = AuthenticationClients.builder().build();
-
-    private void createClient() throws AuthenticationException {
-        AuthenticationClient client = AuthenticationClients.builder()
-            .setOrgUrl("https://{yourOktaDomain}")
-            .build();
-    }
+    V getValue();
 }

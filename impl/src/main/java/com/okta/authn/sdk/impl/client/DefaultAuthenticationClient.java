@@ -24,6 +24,9 @@ import com.okta.authn.sdk.InvalidAuthenticationStateException;
 import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
+import com.okta.authn.sdk.http.Header;
+import com.okta.authn.sdk.http.QueryParameter;
+import com.okta.authn.sdk.http.RequestContext;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
@@ -52,6 +55,10 @@ import com.okta.sdk.resource.ResourceException;
 import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DefaultAuthenticationClient extends BaseClient implements AuthenticationClient {
 
@@ -94,9 +101,9 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse authenticate(AuthenticationRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn", request, stateHandler);
-     }
+    public AuthenticationResponse authenticate(AuthenticationRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn", request, stateHandler, requestContext);
+    }
 
     @Override
     public AuthenticationResponse changePassword(char[] oldPassword, char[] newPassword, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
@@ -110,8 +117,8 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/credentials/change_password", changePasswordRequest, stateHandler);
+    public AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/credentials/change_password", changePasswordRequest, stateHandler, requestContext);
     }
 
     @Override
@@ -123,8 +130,8 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse resetPassword(ChangePasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/credentials/reset_password", request, stateHandler);
+    public AuthenticationResponse resetPassword(ChangePasswordRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/credentials/reset_password", request, stateHandler, requestContext);
     }
 
     @Override
@@ -137,37 +144,37 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse challengeFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse recoverPassword(RecoverPasswordRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/password", request, stateHandler, requestContext);
+    }
+
+    @Override
+    public AuthenticationResponse challengeFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         ChallengeFactorRequest request = instantiate(ChallengeFactorRequest.class)
                 .setStateToken(stateToken);
         String href = "/api/v1/authn/factors/" + factorId + "/verify";
-        return doPost(href, request, stateHandler);
+        return doPost(href, request, stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse verifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse verifyFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         // same request body as challengeFactor
-        return challengeFactor(factorId, stateToken, stateHandler);
+        return challengeFactor(factorId, stateToken, requestContext, stateHandler);
     }
 
     @Override
-    public AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/factors/" + factorId + "/verify", request, stateHandler);
+    public AuthenticationResponse verifyFactor(String factorId, VerifyFactorRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/verify", request, stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse activateFactor(String factorId, ActivateFactorRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate", request, stateHandler);
+    public AuthenticationResponse activateFactor(String factorId, ActivateFactorRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate", request, stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse recoverPassword(RecoverPasswordRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/recovery/password", request, stateHandler);
-    }
-
-    @Override
-    public AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/recovery/factors/" + factorType.name() + "/verify", request, stateHandler);
+    public AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/factors/" + factorType.name() + "/verify", request, stateHandler, requestContext);
     }
 
     @Override
@@ -180,8 +187,8 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse unlockAccount(UnlockAccountRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/recovery/unlock", request, stateHandler);
+    public AuthenticationResponse unlockAccount(UnlockAccountRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/unlock", request, stateHandler, requestContext);
     }
 
     @Override
@@ -193,8 +200,8 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse answerRecoveryQuestion(RecoveryQuestionAnswerRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/recovery/answer", request, stateHandler);
+    public AuthenticationResponse answerRecoveryQuestion(RecoveryQuestionAnswerRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/recovery/answer", request, stateHandler, requestContext);
     }
 
     @Override
@@ -208,45 +215,45 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse enrollFactor(FactorEnrollRequest request, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/factors", request, stateHandler);
+    public AuthenticationResponse enrollFactor(FactorEnrollRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors", request, stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse previous(String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/previous", toRequest(stateToken), stateHandler);
+    public AuthenticationResponse previous(String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/previous", toRequest(stateToken), stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse skip(String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/skip", toRequest(stateToken), stateHandler);
+    public AuthenticationResponse skip(String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/skip", toRequest(stateToken), stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse cancel(String stateToken) {
-        return getDataStore().create("/api/v1/authn/cancel", toRequest(stateToken), AuthenticationResponse.class);
+    public AuthenticationResponse cancel(String stateToken, RequestContext requestContext) throws AuthenticationException {
+        return doPost("/api/v1/authn/cancel", toRequest(stateToken), null, requestContext);
     }
 
     @Override
-    public AuthenticationResponse resendActivateFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/resend", toRequest(stateToken), stateHandler);
+    public AuthenticationResponse resendActivateFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/resend", toRequest(stateToken), stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/factors/" + factorId + "/verify/resend", toRequest(stateToken), stateHandler);
+    public AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/verify/resend", toRequest(stateToken), stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse verifyActivation(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler);
+    public AuthenticationResponse verifyActivation(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler, requestContext);
     }
 
     @Override
-    public AuthenticationResponse verifyRecoveryToken(String recoveryToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse verifyRecoveryToken(String recoveryToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         VerifyRecoverTokenRequest request = instantiate(VerifyRecoverTokenRequest.class)
                                                             .setRecoveryToken(recoveryToken);
-        return doPost("/api/v1/authn/recovery/token", request, stateHandler);
+        return doPost("/api/v1/authn/recovery/token", request, stateHandler, requestContext);
     }
 
     private StateTokenRequest toRequest(String stateToken) {
@@ -299,10 +306,26 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
          }
     }
 
-    private AuthenticationResponse doPost(String href, Resource request, AuthenticationStateHandler authenticationStateHandler) throws AuthenticationException {
+    private AuthenticationResponse doPost(String href, Resource request, AuthenticationStateHandler authenticationStateHandler, RequestContext requestContext) throws AuthenticationException {
         try {
-            AuthenticationResponse authenticationResponse = getDataStore().create(href, request, AuthenticationResponse.class);
-            handleResult(authenticationResponse, authenticationStateHandler);
+
+            Map<String, Object> query = null;
+            Map<String, List<String>> headers = null;
+
+            if (requestContext != null) {
+                query = requestContext.getQueryParams().stream()
+                        .collect(Collectors.toMap(QueryParameter::getKey, QueryParameter::getValue));
+
+                headers = requestContext.getHeaders().stream()
+                        .collect(Collectors.toMap(Header::getKey, Header::getValue));
+            }
+
+            AuthenticationResponse authenticationResponse = getDataStore().create(href, request, null, AuthenticationResponse.class, query, headers);
+
+            if (authenticationStateHandler != null) {
+                handleResult(authenticationResponse, authenticationStateHandler);
+            }
+
             return authenticationResponse;
         } catch (ResourceException e) {
             translateException(e);

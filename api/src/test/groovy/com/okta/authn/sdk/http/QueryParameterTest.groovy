@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.okta.authn.sdk.example;
+package com.okta.authn.sdk.http
 
-import com.okta.authn.sdk.AuthenticationException;
-import com.okta.authn.sdk.client.AuthenticationClient;
-import com.okta.authn.sdk.client.AuthenticationClients;
+import org.testng.annotations.Test
 
-@SuppressWarnings({"unused"})
-public class ReadmeSnippets {
+import static com.okta.authn.sdk.http.RequestParameterMatcher.isQuery
+import static org.hamcrest.MatcherAssert.assertThat
 
-    private final AuthenticationClient client = AuthenticationClients.builder().build();
+class QueryParameterTest {
 
-    private void createClient() throws AuthenticationException {
-        AuthenticationClient client = AuthenticationClients.builder()
-            .setOrgUrl("https://{yourOktaDomain}")
-            .build();
+    @Test
+    void valuesTest() {
+        assertThat new QueryParameter("aKey", "aValue"), isQuery("aKey", "aValue")
+        assertThat new QueryParameter(null, "aValue"), isQuery(null, "aValue")
+        assertThat new QueryParameter(null, null), isQuery(null, null)
+        assertThat new QueryParameter("aKey", null), isQuery("aKey", null)
     }
 }

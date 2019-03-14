@@ -47,4 +47,8 @@ public final class Header extends BaseRequestParameter<String, List<String>> imp
     public static Header acceptLanguage(String fingerprint) {
         return new Header("Accept-Language", fingerprint);
     }
+
+    public static Header userAgent(String fingerprint) {
+        return new Header("User-Agent", fingerprint);
+    }
 }

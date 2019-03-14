@@ -59,6 +59,7 @@ import com.okta.sdk.resource.user.factor.FactorType;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DefaultAuthenticationClient extends BaseClient implements AuthenticationClient {
 
@@ -317,7 +318,7 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
                         .collect(Collectors.toMap(QueryParameter::getKey, QueryParameter::getValue));
 
                 headers = requestContext.getHeaders().stream()
-                        .collect(Collectors.toMap(Header::getKey, Header::getValue));
+                        .collect(Collectors.toMap(Header::getKey, Header::getValue, (a, b) -> Stream.concat(a.stream(), b.stream()).collect(Collectors.toList())));
             }
 
             AuthenticationResponse authenticationResponse = getDataStore().create(href, request, null, AuthenticationResponse.class, query, headers);

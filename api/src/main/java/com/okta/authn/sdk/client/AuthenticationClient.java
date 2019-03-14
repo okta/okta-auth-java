@@ -17,6 +17,23 @@ package com.okta.authn.sdk.client;
 
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationStateHandler;
+import com.okta.authn.sdk.hacking.ActivateFactorRequestSpec;
+import com.okta.authn.sdk.hacking.AuthenticationRequestSpec;
+import com.okta.authn.sdk.hacking.CancelRequestSpec;
+import com.okta.authn.sdk.hacking.ChallengeFactorRequestSpec;
+import com.okta.authn.sdk.hacking.ChangePasswordRequestSpec;
+import com.okta.authn.sdk.hacking.FactorEnrollRequestSpec;
+import com.okta.authn.sdk.hacking.PreviousRequestSpec;
+import com.okta.authn.sdk.hacking.RecoverPasswordRequestSpec;
+import com.okta.authn.sdk.hacking.RecoveryQuestionAnswerRequestSpec;
+import com.okta.authn.sdk.hacking.ResendActiveFactorRequestSpec;
+import com.okta.authn.sdk.hacking.ResendVerifyFactorRequestSpec;
+import com.okta.authn.sdk.hacking.SkipRequestSpec;
+import com.okta.authn.sdk.hacking.UnlockAccountRequestSpec;
+import com.okta.authn.sdk.hacking.VerifyActivationRequestSpec;
+import com.okta.authn.sdk.hacking.VerifyFactorRequestSpec;
+import com.okta.authn.sdk.hacking.VerifyRecoveryRequestSpec;
+import com.okta.authn.sdk.hacking.VerifyRecoveryTokenRequestSpec;
 import com.okta.authn.sdk.http.RequestContext;
 import com.okta.authn.sdk.doc.ApiReference;
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
@@ -122,6 +139,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn", href = "https://developer.okta.com/docs/api/resources/authn#primary-authentication")
     AuthenticationResponse authenticate(AuthenticationRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    AuthenticationRequestSpec authenticate();
+
     /**
      * This operation changes a user’s password by providing the existing password and the new password password for authentication transactions with either the PASSWORD_EXPIRED or PASSWORD_WARN state.
      *
@@ -166,6 +185,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/credentials/change_password", href = "https://developer.okta.com/docs/api/resources/authn#change-password")
     AuthenticationResponse changePassword(ChangePasswordRequest changePasswordRequest, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    ChangePasswordRequestSpec changePassword();
+
     /**
      * Resets a user’s password to complete a recovery transaction with a PASSWORD_RESET state.
      *
@@ -209,6 +230,7 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/credentials/reset_password", href = "https://developer.okta.com/docs/api/resources/authn#reset-password")
     AuthenticationResponse resetPassword(ChangePasswordRequest changePasswordRequest, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    ChangePasswordRequest resetPassword();
     /**
      * Enrolls a user with a factor assigned by their MFA Policy.
      *
@@ -251,6 +273,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
     AuthenticationResponse enrollFactor(FactorEnrollRequest factorEnrollRequest, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    FactorEnrollRequestSpec enrollFactor();
+
     /**
      * Starts a new password recovery transaction for a given user and issues a recovery token that can be used to reset a user’s password.
      * @param username User’s non-qualified short-name (e.g. dade.murphy) or unique fully-qualified login (dade.murphy@example.com)
@@ -285,6 +309,8 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/recovery/password", href = "https://developer.okta.com/docs/api/resources/authn#recovery-operations")
     AuthenticationResponse recoverPassword(RecoverPasswordRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    RecoverPasswordRequestSpec recoverPassword();
 
     /**
      * Starts a new unlock recovery transaction for a given user and issues a recovery token that can be used to unlock a user’s account.
@@ -323,6 +349,8 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/recovery/unlock", href = "https://developer.okta.com/docs/api/resources/authn#unlock-account")
     AuthenticationResponse unlockAccount(UnlockAccountRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    UnlockAccountRequestSpec unlockAccount();
 
     /**
      * Answers the user’s recovery question to ensure only the end user redeemed the recovery token for recovery transaction
@@ -367,6 +395,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/recovery/answer", href = "https://developer.okta.com/docs/api/resources/authn#answer-recovery-question")
     AuthenticationResponse answerRecoveryQuestion(RecoveryQuestionAnswerRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    RecoveryQuestionAnswerRequestSpec answerRecoveryQuestion();
+
     /**
      * Moves the current transaction state back to the previous state.
      *
@@ -391,6 +421,8 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/previous", href = "https://developer.okta.com/docs/api/resources/authn#previous-transaction-state")
     AuthenticationResponse previous(String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    PreviousRequestSpec previous();
 
     /**
      * Skip the current transaction state and advance to the next state.
@@ -417,6 +449,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/skip", href = "https://developer.okta.com/docs/api/resources/authn#skip-transaction-state")
     AuthenticationResponse skip(String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    SkipRequestSpec skip();
+
     /**
      * Cancels the current transaction and revokes the state token.
      *
@@ -439,6 +473,8 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/cancel", href = "https://developer.okta.com/docs/api/resources/authn#cancel-transaction")
     AuthenticationResponse cancel(String stateToken, RequestContext requestContext) throws AuthenticationException;
+
+    CancelRequestSpec cancel();
 
     /**
      * The sms, call and token:software:totp factor types require activation to complete the enrollment process.
@@ -466,6 +502,8 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate", href = "https://developer.okta.com/docs/api/resources/authn#activate-factor")
     AuthenticationResponse activateFactor(String factorId, ActivateFactorRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    ActivateFactorRequestSpec activateFactor();
 
     /**
      * Verifies an enrolled factor for an authentication transaction with the MFA_REQUIRED or MFA_CHALLENGE state
@@ -523,6 +561,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-push-factor")
     AuthenticationResponse verifyFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    VerifyFactorRequestSpec verifyFactor();
+
     /**
      * Requests a challenge factor be sent to the user via the corresponding {code}factorId{code}.
      *
@@ -550,6 +590,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-sms-factor")
     AuthenticationResponse challengeFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    ChallengeFactorRequestSpec challengeFactor();
+
     /**
      * Verifies a recovery challenge sent to the user for primary authentication for a recovery transaction with RECOVERY_CHALLENGE status.
      *
@@ -576,6 +618,8 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/recovery/factors/{factorType}/verify", href = "https://developer.okta.com/docs/api/resources/authn#verify-recovery-factor")
     AuthenticationResponse verifyUnlockAccount(FactorType factorType, VerifyRecoveryRequest request, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    VerifyRecoveryRequestSpec verifyUnlockAccount();
 
     /**
      * Resend an activation factor challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
@@ -606,6 +650,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/resend", href = "https://developer.okta.com/docs/api/resources/authn.html")
     AuthenticationResponse resendActivateFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    ResendActiveFactorRequestSpec resendActivateFactor();
+
     /**
      * Resend a factor verification challenge to a user. Factors that require the challenge sent to the user (push, call, sms, etc) may need
      * to be resent to ensure delivery.
@@ -635,6 +681,9 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/verify/resend", href = "https://developer.okta.com/docs/api/resources/authn.html")
     AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+
+    ResendVerifyFactorRequestSpec resendVerifyFactor();
+
     /**
      * Returns the state of factor's activation. Some factors (Push, Duo, etc) depend on a user action, this method can
      * be used to poll the state of the a factor's activation and transition to the next state when completed.
@@ -662,6 +711,8 @@ public interface AuthenticationClient {
     @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/poll", href = "https://developer.okta.com/docs/api/resources/authn#poll-for-push-factor-activation")
     AuthenticationResponse verifyActivation(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
+    VerifyActivationRequestSpec verifyActivation();
+
     /**
      * Validates a recovery token that was distributed to the end user to continue the recovery transaction.
      *
@@ -686,4 +737,6 @@ public interface AuthenticationClient {
      */
     @ApiReference(path = "/api/v1/authn/recovery/token", href = "https://developer.okta.com/docs/api/resources/authn#verify-recovery-token")
     AuthenticationResponse verifyRecoveryToken(String recoveryToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    VerifyRecoveryTokenRequestSpec verifyRecoveryToken();
 }

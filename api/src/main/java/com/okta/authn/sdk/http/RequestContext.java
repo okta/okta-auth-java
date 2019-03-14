@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.okta.authn.sdk.http.Header.header;
+import static com.okta.authn.sdk.http.QueryParameter.query;
 
 public final class RequestContext {
 
@@ -58,8 +59,23 @@ public final class RequestContext {
         return this;
     }
 
+    public RequestContext addHeader(String key, String value) {
+        headers.add(header(key, value));
+        return this;
+    }
+
+    public RequestContext addHeader(String key, List<String> values) {
+        headers.add(header(key, values));
+        return this;
+    }
+
     public RequestContext addQuery(QueryParameter query) {
         queryParams.add(query);
+        return this;
+    }
+
+    public RequestContext addQuery(String key, String value) {
+        queryParams.add(query(key, value));
         return this;
     }
 }

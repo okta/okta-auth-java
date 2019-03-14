@@ -18,8 +18,10 @@ package com.okta.authn.sdk.impl.client
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.okta.authn.sdk.*
+import com.okta.authn.sdk.http.RequestContext
 import com.okta.authn.sdk.impl.util.TestUtil
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
+import com.okta.authn.sdk.resource.AuthenticationRequest
 import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
@@ -467,6 +469,36 @@ class DefaultAuthenticationClientTest {
         verifyExceptionThrown(client, 444, "other-code", ResourceException)
     }
 
+    @Test
+    void requestContextIncluded() {
+        def client = createClient("authenticationSuccess")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("username", is(jsonText("username1")))
+                .where("password", is(jsonText("password2")))
+        ))
+        requestExecutor.requestMatchers.add(headerMatches("header1", is(["hvalue1"])))
+        requestExecutor.requestMatchers.add(headerMatches("header2", is(["hvalue2-a", "hvalue2-b"])))
+        requestExecutor.requestMatchers.add(headerMatches("header3", is(["hvalue3-a", "hvalue3-b"])))
+        requestExecutor.requestMatchers.add(queryParamMatches("query1", is("qvalue1")))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        def authRequest = client.instantiate(AuthenticationRequest)
+                .setUsername("username1")
+                .setPassword("password2".toCharArray())
+        def requestContext = new RequestContext()
+                .addHeader("header1", "hvalue1")
+                .addHeader("header2", ["hvalue2-a", "hvalue2-b"])
+                .addHeader("header3", "hvalue3-a")
+                .addHeader("header3", "hvalue3-b")
+                .addQuery("query1", "qvalue1")
+
+        AuthenticationResponse response = client.authenticate(authRequest, requestContext, stateHandler)
+        verify(stateHandler).handleSuccess(response)
+    }
+
     def verifyExceptionThrown(def client, int httpStatus, String errorCode, Class<? extends Exception> exception) {
 
         def stateHandler = mock(AuthenticationStateHandler)
@@ -502,7 +534,6 @@ class DefaultAuthenticationClientTest {
 
 
     // matchers
-    // TODO: move out to own class
     static Matcher<Request> bodyMatches(final IsJsonObject matcher) {
         return new TypeSafeMatcher<Request>() {
 
@@ -547,6 +578,48 @@ class DefaultAuthenticationClientTest {
             @Override
             protected void describeMismatchSafely(Request item, Description mismatchDescription) {
                 matcher.describeMismatch(item.resourceUrl.toString(), mismatchDescription)
+            }
+        }
+    }
+
+    static Matcher<Request> headerMatches(final String key, final Matcher<List<String>> matcher) {
+        return new TypeSafeMatcher<Request>() {
+
+            @Override
+            protected boolean matchesSafely(Request item) {
+                return matcher.matches(item.getHeaders().get(key))
+            }
+
+            @Override
+            void describeTo(Description description) {
+                description.appendText("Request Header failed to match ")
+                matcher.describeTo(description)
+            }
+
+            @Override
+            protected void describeMismatchSafely(Request item, Description mismatchDescription) {
+                matcher.describeMismatch(item.getHeaders().get(key), mismatchDescription)
+            }
+        }
+    }
+
+    static Matcher<Request> queryParamMatches(final String key, final Matcher<String> matcher) {
+        return new TypeSafeMatcher<Request>() {
+
+            @Override
+            protected boolean matchesSafely(Request item) {
+                return matcher.matches(item.queryString.get(key))
+            }
+
+            @Override
+            void describeTo(Description description) {
+                description.appendText("Request Query Parms failed to match ")
+                matcher.describeTo(description)
+            }
+
+            @Override
+            protected void describeMismatchSafely(Request item, Description mismatchDescription) {
+                matcher.describeMismatch(item.queryString.get(key), mismatchDescription)
             }
         }
     }

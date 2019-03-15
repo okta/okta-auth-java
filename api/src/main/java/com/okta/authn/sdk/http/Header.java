@@ -44,11 +44,11 @@ public final class Header extends BaseRequestParameter<String, List<String>> imp
         return new Header("X-Device-Fingerprint", fingerprint);
     }
 
-    public static Header acceptLanguage(String fingerprint) {
-        return new Header("Accept-Language", fingerprint);
+    public static Header acceptLanguage(String language) {
+        return new Header("Accept-Language", language);
     }
 
-    public static Header userAgent(String fingerprint) {
-        return new Header("User-Agent", fingerprint);
+    public static Header userAgent(String userAgent) {
+        return new Header("User-Agent", userAgent);
     }
 }

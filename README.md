@@ -18,7 +18,18 @@
  
 The Okta Authentication SDK is a convenience wrapper around [Okta's Authentication API](https://developer.okta.com/docs/api/resources/authn.html).
 
-**NOTE:** Using OAuth 2.0 or OpenID Connect to integrate your application instead of this library will require much less work, and has a smaller risk profile. Please see [this guide](https://developer.okta.com/use_cases/authentication/) to see if using this API is right for your use case. You could also use our [Spring Boot Integration](https://github.com/okta/okta-spring-boot), or [Spring Security](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc) out of the box.
+## Is This Library Right for Me?
+
+This SDK is a convenient HTTP client wrapper for [Okta's Authentication API](https://developer.okta.com/docs/api/resources/authn/). These APIs are powerful and useful if you need to achieve one of these cases:
+
+- You have an existing application that needs to accept primary credentials (username and password) and do custom logic before communicating with Okta.
+- You have significantly custom authentication workflow or UI needs, such that Okta’s hosted sign-in page or [Sign-In Widget](https://github.com/okta/okta-signin-widget) do not give you enough flexibility.
+
+The power of this SDK comes with more responsibility and maintenance: you will have to design your authentication workflow and UIs by hand, respond to all relevant states in Okta’s authentication state machine, and keep up to date with new features and states in Okta.
+
+Otherwise, most applications can use the Okta hosted sign-in page or the Sign-in Widget. For these cases, you should use [Okta's Spring Boot Starter](https://github.com/okta/okta-spring-boot), [Spring Security](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc) or other OIDC/OAuth 2.0 library.
+
+## Authentication State Machine
 
 Okta's Authentication API is built around a [state machine](https://developer.okta.com/docs/api/resources/authn#transaction-state). In order to use this library you will need to be familiar with the available states. You will need to implement a handler for each state you want to support.  
 

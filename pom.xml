@@ -34,8 +34,8 @@
 
     <properties>
         <jackson.version>2.9.8</jackson.version>
-        <okta.sdk.version>1.5.1</okta.sdk.version>
-        <okta.authn.previousVersion>0.2</okta.authn.previousVersion>
+        <okta.sdk.version>1.5.2</okta.sdk.version>
+        <okta.authn.previousVersion>0.4</okta.authn.previousVersion>
     </properties>
 
     <modules>
@@ -85,6 +85,11 @@
             <dependency>
                 <groupId>com.okta.sdk</groupId>
                 <artifactId>okta-sdk-httpclient</artifactId>
+                <version>${okta.sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.okta.sdk</groupId>
+                <artifactId>okta-sdk-okhttp</artifactId>
                 <version>${okta.sdk.version}</version>
             </dependency>
             <dependency>

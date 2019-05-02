@@ -6,8 +6,6 @@
 
 # Okta Java Authentication SDK
 
-> :warning: Beta alert! This library is in beta. See [release status](#release-status) for more information.
-
 * [Release status](#release-status)
 * [Need help?](#need-help)
 * [Getting started](#getting-started)
@@ -49,7 +47,7 @@ This library uses semantic versioning and follows Okta's [library version policy
 
 | Version | Status                    |
 | ------- | ------------------------- |
-| 0.x     | :warning: Beta            |
+| 1.x   | :heavy_check_mark: Stable |
  
 The latest release can always be found on the [releases page][github-releases].
  

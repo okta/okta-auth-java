@@ -31,7 +31,7 @@ Otherwise, most applications can use the Okta hosted sign-in page or the Sign-in
 
 Okta's Authentication API is built around a [state machine](https://developer.okta.com/docs/api/resources/authn#transaction-state). In order to use this library you will need to be familiar with the available states. You will need to implement a handler for each state you want to support.  
 
-![State Model Diagram](https://raw.githubusercontent.com/okta/okta.github.io/source/_source/_assets/img/auth-state-model.png "State Model Diagram")
+![State Model Diagram](https://developer.okta.com/img/auth-state-model.png "State Model Diagram")
 
 We also publish these libraries for Java:
  

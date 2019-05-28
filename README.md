@@ -87,9 +87,9 @@ For Apache Maven:
 For Gradle:
 
 ```groovy
-compile 'com.okta.sdk:okta-authn-sdk-api:${okta.version}'
-runtime 'com.okta.sdk:okta-authn-sdk-impl:${okta.version}'
-runtime 'com.okta.sdk:okta-sdk-httpclient:${okta.version}'
+compile 'com.okta.authn.sdk:okta-authn-sdk-api:${okta.authn.version}'
+runtime 'com.okta.authn.sdk:okta-authn-sdk-impl:${okta.authn.version}'
+runtime 'com.okta.sdk:okta-sdk-httpclient:${okta.sdk.version}'
 ```
 
 ### SNAPSHOT Dependencies

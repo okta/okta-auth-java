@@ -15,8 +15,12 @@
  */
 package com.okta.authn.sdk.impl.client
 
-import com.okta.sdk.impl.http.*
-import com.okta.sdk.impl.http.support.DefaultResponse
+import com.okta.commons.http.DefaultResponse
+import com.okta.commons.http.HttpException
+import com.okta.commons.http.MediaType
+import com.okta.commons.http.Request
+import com.okta.commons.http.RequestExecutor
+import com.okta.commons.http.Response
 import com.okta.sdk.impl.io.ClasspathResource
 import groovy.text.StreamingTemplateEngine
 import org.apache.http.HttpHeaders
@@ -31,11 +35,16 @@ class StubRequestExecutor implements RequestExecutor {
     Map<String, Object> interpolationData = new HashMap<>()
 
     @Override
-    Response executeRequest(Request request) throws RestException {
+    Response executeRequest(Request request) throws HttpException {
+
+        def userAgentMatcher = allOf(
+            containsString("okta-auth-java/"),
+            containsString("java/${System.getProperty("java.version")}"),
+            containsString("${System.getProperty("os.name")}/${System.getProperty("os.version")}"))
 
         assertThat(request.headers, allOf(
                 hasEntry(equalTo(HttpHeaders.ACCEPT), everyItem(equalTo(MediaType.APPLICATION_JSON_VALUE))),
-                hasEntry(equalTo(HttpHeaders.USER_AGENT), everyItem(notNullValue())),
+                hasEntry(equalTo(HttpHeaders.USER_AGENT), everyItem(userAgentMatcher)),
                 not(hasKey(equalTo(HttpHeaders.AUTHORIZATION)))
         ))
 

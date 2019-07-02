@@ -21,12 +21,11 @@ import com.okta.authn.sdk.client.AuthenticationClients
 import com.okta.authn.sdk.impl.test.RestoreEnvironmentVariables
 import com.okta.authn.sdk.impl.test.RestoreSystemProperties
 import com.okta.authn.sdk.impl.util.TestUtil
+import com.okta.commons.http.config.BaseUrlResolver
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.io.DefaultResourceFactory
 import com.okta.sdk.impl.io.Resource
 import com.okta.sdk.impl.io.ResourceFactory
-import com.okta.sdk.impl.util.BaseUrlResolver
-import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 import org.testng.annotations.Listeners

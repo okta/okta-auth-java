@@ -26,12 +26,12 @@ import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
+import com.okta.commons.http.DefaultResponse
+import com.okta.commons.http.MediaType
+import com.okta.commons.http.Request
+import com.okta.commons.http.RequestExecutor
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.config.ClientConfiguration
-import com.okta.sdk.impl.http.MediaType
-import com.okta.sdk.impl.http.Request
-import com.okta.sdk.impl.http.RequestExecutor
-import com.okta.sdk.impl.http.support.DefaultResponse
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import com.okta.sdk.resource.ResourceException
 import com.okta.sdk.resource.user.factor.CallFactorProfile

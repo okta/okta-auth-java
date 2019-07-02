@@ -34,8 +34,8 @@
 
     <properties>
         <jackson.version>2.9.8</jackson.version>
-        <okta.sdk.version>1.5.2</okta.sdk.version>
-        <okta.authn.previousVersion>0.4</okta.authn.previousVersion>
+        <okta.sdk.version>1.6.0-SNAPSHOT</okta.sdk.version>
+        <okta.authn.previousVersion>1.0.0</okta.authn.previousVersion>
     </properties>
 
     <modules>

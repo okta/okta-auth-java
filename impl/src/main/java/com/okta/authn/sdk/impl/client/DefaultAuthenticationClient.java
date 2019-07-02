@@ -42,14 +42,9 @@ import com.okta.authn.sdk.resource.UnlockAccountRequest;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoverTokenRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
-import com.okta.sdk.cache.CacheManager;
 import com.okta.sdk.cache.Caches;
-import com.okta.sdk.client.AuthenticationScheme;
-import com.okta.sdk.client.Proxy;
 import com.okta.sdk.impl.client.BaseClient;
 import com.okta.sdk.impl.config.ClientConfiguration;
-import com.okta.sdk.impl.http.authc.RequestAuthenticatorFactory;
-import com.okta.sdk.impl.util.BaseUrlResolver;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.ResourceException;
 import com.okta.sdk.resource.user.factor.FactorProfile;
@@ -62,25 +57,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DefaultAuthenticationClient extends BaseClient implements AuthenticationClient {
-
-    /**
-     * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level
-     * JavaDoc for a usage example.
-     *
-     * @param baseUrlResolver      Okta base URL resolver
-     * @param proxy                the HTTP proxy to be used when communicating with the Okta API server (can be
-     *                             null)
-     * @param cacheManager         the {@link com.okta.sdk.cache.CacheManager} that should be used to cache
-     *                             Okta REST resources (can be null)
-     * @param authenticationScheme the HTTP authentication scheme to be used when communicating with the Okta API
-     *                             server (can be null)
-     * @param requestAuthenticatorFactory factory used to handle creating authentication requests
-     * @param connectionTimeout    connection timeout in seconds
-     */
-    @Deprecated
-    public DefaultAuthenticationClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout) {
-        super(new DisabledClientCredentialsResolver(), baseUrlResolver, proxy, cacheManager, authenticationScheme, requestAuthenticatorFactory, connectionTimeout);
-    }
 
     /**
      * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level

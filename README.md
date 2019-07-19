@@ -14,9 +14,9 @@ node index.js -b "full path to bazel repository path" -d "Full path to desugar_j
 ```
 
 This script will persist following tools: 
-desugar java tool in ```${output_folder}/desugar```
-implementation of java8 API's in ```${output_folder}/inject/desugared_java8_legacy_libs.jar```
-shell script for desugaring jar files ```${output_folder}/desugar.sh```
+* desugar java tool in ```${output_folder}/desugar```
+* implementation of java8 API's in ```${output_folder}/inject/desugared_java8_legacy_libs.jar```
+* shell script for desugaring jar files ```${output_folder}/desugar.sh```
 
 To desugar any jar file you should do follow steps:
 

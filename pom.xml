@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.okta</groupId>
         <artifactId>okta-parent</artifactId>
-        <version>14</version>
+        <version>16</version>
         <relativePath>../okta-java-parent</relativePath>
     </parent>
 
@@ -33,9 +33,9 @@
     <inceptionYear>2018</inceptionYear>
 
     <properties>
-        <jackson.version>2.9.8</jackson.version>
-        <okta.sdk.version>1.5.2</okta.sdk.version>
-        <okta.authn.previousVersion>0.4</okta.authn.previousVersion>
+        <jackson.version>2.10.0</jackson.version>
+        <okta.sdk.version>1.6.0-SNAPSHOT</okta.sdk.version>
+        <okta.authn.previousVersion>1.0.0</okta.authn.previousVersion>
     </properties>
 
     <modules>
@@ -95,7 +95,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>2.24.0</version>
+                <version>3.1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

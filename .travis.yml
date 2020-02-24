@@ -1,7 +1,7 @@
 language: java
 
 jdk:
-- oraclejdk8
+- openjdk8
 - openjdk11
 
 addons:
@@ -35,6 +35,6 @@ deploy:
   email: developers@okta.com
   name: Travis CI - Auto Doc Build
   on:
-    jdk: oraclejdk8
+    jdk: openjdk8
     branch: master
     condition: $TRAVIS_EVENT_TYPE != cron

@@ -231,13 +231,13 @@ Setting only one of the values to zero will disable that check. Meaning, by defa
 
 ## Setting Request Headers, Parameters, and Device Fingerprinting
 
-All of the `AuthenticationClient` requests allow setting additional HTTP headers and query parameters.  This is useful in a variaty of situations:
+All of the `AuthenticationClient` requests allow setting additional HTTP headers and query parameters.  This is useful in a variety of situations:
 
 * [Device Finterprinting](https://developer.okta.com/docs/reference/api/authn/#primary-authentication-with-device-fingerprinting)
 * Setting the `X-Forwarded-For` header
 * Setting additional query paramters that have not been added to the SDK yet
 
-Createa a `RequestContext` object, and include it as a method parameter when using the `AuthenticationClient`.
+Create a `RequestContext` object, and include it as a method parameter when using the `AuthenticationClient`.
 
 [//]: # (method: headersAndQuery)
 ```java

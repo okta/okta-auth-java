@@ -18,6 +18,14 @@ package com.okta.authn.sdk.example;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClients;
+import com.okta.authn.sdk.http.Header;
+import com.okta.authn.sdk.http.QueryParameter;
+import com.okta.authn.sdk.http.RequestContext;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.okta.authn.sdk.http.Header.xForwardedFor;
 
 @SuppressWarnings({"unused"})
 public class ReadmeSnippets {
@@ -28,5 +36,17 @@ public class ReadmeSnippets {
         AuthenticationClient client = AuthenticationClients.builder()
             .setOrgUrl("https://{yourOktaDomain}")
             .build();
+    }
+
+    private void headersAndQuery() {
+        List<Header> headers = new ArrayList<>();
+        headers.add(new Header("aHeaderName", "aValue")); // set any header
+        headers.add(Header.xForwardedFor("10.10.0.1")); // X-Forwarded-For
+        headers.add(Header.xDeviceFingerprint("your-finger-print")); // X-Device-Fingerprint
+
+        List<QueryParameter> queryParameters = new ArrayList<>();
+        queryParameters.add(new QueryParameter("aQueryParam", "aValue")); // set query param
+
+        RequestContext requestContext = new RequestContext(headers, queryParameters);
     }
 }

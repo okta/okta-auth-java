@@ -1,4 +1,4 @@
-[<img src="https://devforum.okta.com/uploads/oktadev/original/1X/bf54a16b5fda189e4ad2706fb57cbb7a1e5b8deb.png" align="right" width="256px"/>](https://devforum.okta.com/)
+[<img src="https://aws1.discourse-cdn.com/standard14/uploads/oktadev/original/1X/0c6402653dfb70edc661d4976a43a46f33e5e919.png" align="right" width="256px"/>](https://devforum.okta.com/)
 [![Maven Central](https://img.shields.io/maven-central/v/com.okta.authn.sdk/okta-authn-sdk-api.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.okta.authn.sdk%22%20a%3A%22okta-authn-sdk-api%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Support](https://img.shields.io/badge/support-Developer%20Forum-blue.svg)][devforum]
@@ -107,7 +107,7 @@ You'll also need:
  
 Construct a client instance by passing it your Okta domain name and API token:
  
-[//]: # (NOTE: code snippets in this README are updated automatically via a Maven plugin by running: mvn okta-code-snippet:snip.okta:okta-code-snippet-maven-plugin:snip)
+[//]: # (NOTE: code snippets in this README are updated automatically via a Maven plugin by running: mvn okta-code-snippet:snip)
  
 [//]: # (method: createClient)
 ```java
@@ -228,6 +228,36 @@ Each one of of the configuration values written in 'dot' notation to be used as 
 By default this SDK will retry requests that are return with a `503`, `504`, `429`, or socket/connection exceptions.  To disable this functionality set the properties `okta.client.requestTimeout` and `okta.client.rateLimit.maxRetries` to `0`.
 
 Setting only one of the values to zero will disable that check. Meaning, by default, four retry attempts will be made. If you set `okta.client.requestTimeout` to `45` seconds and `okta.client.rateLimit.maxRetries` to `0`. This SDK will continue to retry indefinitely for `45` seconds.  If both values are non zero, this SDK will attempt to retry until either of the conditions are met (not both).
+
+## Setting Request Headers, Parameters, and Device Fingerprinting
+
+All of the `AuthenticationClient` requests allow setting additional HTTP headers and query parameters.  This is useful in a variaty of situations:
+
+* [Device Finterprinting](https://developer.okta.com/docs/reference/api/authn/#primary-authentication-with-device-fingerprinting)
+* Setting the `X-Forwarded-For` header
+* Setting additional query paramters that have not been added to the SDK yet
+
+Createa a `RequestContext` object, and include it as a method parameter when using the `AuthenticationClient`.
+
+[//]: # (method: headersAndQuery)
+```java
+List<Header> headers = new ArrayList<>();
+
+// set any header
+headers.add(new Header("aHeaderName", "aValue"));
+
+// X-Forwarded-For
+headers.add(Header.xForwardedFor("10.10.0.1"));
+
+// X-Device-Fingerprint
+headers.add(Header.xDeviceFingerprint("your-finger-print"));
+List<QueryParameter> queryParameters = new ArrayList<>();
+
+// set query param
+queryParameters.add(new QueryParameter("aQueryParam", "aValue"));
+RequestContext requestContext = new RequestContext(headers, queryParameters);
+```
+[//]: # (end: headersAndQuery)
 
 ## Building the SDK
  

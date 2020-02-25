@@ -25,9 +25,7 @@ import com.okta.authn.sdk.http.RequestContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.okta.authn.sdk.http.Header.xForwardedFor;
-
-@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused", "PMD.AvoidUsingHardCodedIP"})
 public class ReadmeSnippets {
 
     private final AuthenticationClient client = AuthenticationClients.builder().build();

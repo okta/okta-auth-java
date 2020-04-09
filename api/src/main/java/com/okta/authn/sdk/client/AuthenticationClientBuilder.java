@@ -95,7 +95,7 @@ public interface AuthenticationClientBuilder {
      * Sets both the timeout until a connection is established and the socket timeout (i.e. a maximum period of inactivity
      * between two consecutive data packets).  A timeout value of zero is interpreted as an infinite timeout.
      *
-     * @param timeout connection and socket timeout in milliseconds
+     * @param timeout connection and socket timeout in seconds
      * @return the AuthenticationClientBuilder instance for method chaining
      */
     AuthenticationClientBuilder setConnectionTimeout(int timeout);

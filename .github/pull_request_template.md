@@ -12,41 +12,41 @@ Note: If you have a question about your entire application or use case, please p
 For Security related issues, please fill the below section.
 -->
 
-### Summary
+## Summary
 
 <!-- 
 Please provide a high level summary of the issue you are having
 -->
 
-### Actual Behavior
+## Actual Behavior
 
 <!-- 
 Please describe step by step the behavior you are observing
 -->
 
-### Expected Behavior
+## Expected Behavior
 
 <!--
 Please describe step by step the behavior you expect
 -->
 
-### Configuration
+## Configuration
 
 <!--
 Please provide any configuration you have.
 -->
 
-### Version
+## Version
 
 <!--
 Please describe what version you are using. Does the problem occur in other versions?
 -->
 
-### Sample
+## Sample
 
 <!--
 Providing a complete sample (i.e. link to a github repository) will give this issue higher
-priority than issues that do not have a complete sample
+priority than issues that do not have a complete sample.
 -->
 
 ## Issue(s)

@@ -79,7 +79,7 @@ For Apache Maven:
 <dependency>
     <groupId>com.okta.sdk</groupId>
     <artifactId>okta-sdk-httpclient</artifactId>
-    <version>${okta.sdk.version}</version>
+    <version>1.5.4</version>
     <scope>runtime</scope>
 </dependency>
 ```
@@ -89,7 +89,7 @@ For Gradle:
 ```groovy
 compile 'com.okta.authn.sdk:okta-authn-sdk-api:${okta.authn.version}'
 runtime 'com.okta.authn.sdk:okta-authn-sdk-impl:${okta.authn.version}'
-runtime 'com.okta.sdk:okta-sdk-httpclient:${okta.sdk.version}'
+runtime 'com.okta.sdk:okta-sdk-httpclient:1.5.4'
 ```
 
 ### SNAPSHOT Dependencies

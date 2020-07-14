@@ -28,13 +28,13 @@ import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.config.ClientConfiguration
-import com.okta.sdk.impl.http.MediaType
-import com.okta.sdk.impl.http.Request
-import com.okta.sdk.impl.http.RequestExecutor
-import com.okta.sdk.impl.http.support.DefaultResponse
+import com.okta.commons.http.MediaType
+import com.okta.commons.http.Request
+import com.okta.commons.http.RequestExecutor
+import com.okta.commons.http.DefaultResponse
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import com.okta.sdk.resource.ResourceException
-import com.okta.sdk.resource.user.factor.CallFactorProfile
+import com.okta.sdk.resource.user.factor.CallUserFactorProfile
 import com.okta.sdk.resource.user.factor.FactorProvider
 import com.okta.sdk.resource.user.factor.FactorType
 import com.spotify.hamcrest.jackson.IsJsonObject
@@ -118,7 +118,7 @@ class DefaultAuthenticationClientTest {
                             .where("phoneNumber", is(jsonText("555-555-1212")))))
         ))
 
-        def factorProfile = client.instantiate(CallFactorProfile)
+        def factorProfile = client.instantiate(CallUserFactorProfile)
                                         .setPhoneNumber("555-555-1212")
 
         def stateHandler = mock(AuthenticationStateHandler)

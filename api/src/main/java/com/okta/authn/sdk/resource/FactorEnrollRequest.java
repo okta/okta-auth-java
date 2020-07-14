@@ -16,9 +16,19 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
-import com.okta.sdk.resource.user.factor.FactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.sdk.resource.user.factor.CallUserFactorProfile;
+import com.okta.sdk.resource.user.factor.EmailUserFactorProfile;
+import com.okta.sdk.resource.user.factor.HardwareUserFactorProfile;
+import com.okta.sdk.resource.user.factor.PushUserFactorProfile;
+import com.okta.sdk.resource.user.factor.SecurityQuestionUserFactorProfile;
+import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
+import com.okta.sdk.resource.user.factor.TokenUserFactorProfile;
+import com.okta.sdk.resource.user.factor.TotpUserFactorProfile;
+import com.okta.sdk.resource.user.factor.U2fUserFactorProfile;
+import com.okta.sdk.resource.user.factor.WebAuthnUserFactorProfile;
+import com.okta.sdk.resource.user.factor.WebUserFactorProfile;
 
 public interface FactorEnrollRequest extends ExtensibleResource {
 
@@ -31,6 +41,36 @@ public interface FactorEnrollRequest extends ExtensibleResource {
     FactorProvider getProvider();
     FactorEnrollRequest setProvider(FactorProvider provider);
 
-    FactorProfile getFactorProfile();
-    FactorEnrollRequest setFactorProfile(FactorProfile factorProfile);
+    CallUserFactorProfile getCallUserFactorProfile();
+    FactorEnrollRequest setCallUserFactorProfile(CallUserFactorProfile callUserFactorProfile);
+
+    EmailUserFactorProfile getEmailUserFactorProfile();
+    FactorEnrollRequest setEmailUserFactorProfile(EmailUserFactorProfile emailUserFactorProfile);
+
+    HardwareUserFactorProfile getHardwareUserFactorProfile();
+    FactorEnrollRequest setHardwareUserFactorProfile(HardwareUserFactorProfile hardwareUserFactorProfile);
+
+    PushUserFactorProfile getPushUserFactorProfile();
+    FactorEnrollRequest setPushUserFactorProfile(PushUserFactorProfile pushUserFactorProfile);
+
+    SecurityQuestionUserFactorProfile getSecurityQuestionUserFactorProfile();
+    FactorEnrollRequest setSecurityQuestionUserFactorProfile(SecurityQuestionUserFactorProfile securityQuestionUserFactorProfile);
+
+    SmsUserFactorProfile getSmsUserFactorProfile();
+    FactorEnrollRequest setSmsUserFactorProfile(SmsUserFactorProfile smsUserFactorProfile);
+
+    TokenUserFactorProfile getTokenUserFactorProfile();
+    FactorEnrollRequest setTokenUserFactorProfile(TokenUserFactorProfile tokenUserFactorProfile);
+
+    TotpUserFactorProfile getTotpUserFactorProfile();
+    FactorEnrollRequest setTotpUserFactorProfile(TotpUserFactorProfile totpUserFactorProfile);
+
+    U2fUserFactorProfile getU2fUserFactorProfile();
+    FactorEnrollRequest setU2fUserFactorProfile(U2fUserFactorProfile u2fUserFactorProfile);
+
+    WebAuthnUserFactorProfile getWebAuthnUserFactorProfile();
+    FactorEnrollRequest setWebAuthnUserFactorProfile(WebAuthnUserFactorProfile webAuthnUserFactorProfile);
+
+    WebUserFactorProfile getWebUserFactorProfile();
+    FactorEnrollRequest setWebUserFactorProfile(WebUserFactorProfile webUserFactorProfile);
 }

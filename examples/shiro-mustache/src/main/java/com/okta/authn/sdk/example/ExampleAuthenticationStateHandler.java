@@ -17,11 +17,11 @@ package com.okta.authn.sdk.example;
 
 import com.okta.authn.sdk.AuthenticationStateHandlerAdapter;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
+import com.okta.commons.lang.Assert;
 import com.okta.sdk.impl.ds.DefaultResourceConverter;
 import com.okta.sdk.impl.ds.JacksonMapMarshaller;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.ReferenceFactory;
-import com.okta.sdk.lang.Assert;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;

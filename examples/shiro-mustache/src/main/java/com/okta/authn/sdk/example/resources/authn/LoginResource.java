@@ -43,7 +43,7 @@ import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
-import com.okta.sdk.resource.user.factor.SmsFactorProfile;
+import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -324,7 +324,7 @@ public class LoginResource {
                 .setProvider(FactorProvider.OKTA)
                 .setStateToken(getPreviousAuthResult().getStateToken())
                 .setFactorType(MfaVerifyView.fromRelativeLink(factorType))
-                .setFactorProfile(authenticationClient.instantiate(SmsFactorProfile.class)
+                .setSmsUserFactorProfile(authenticationClient.instantiate(SmsUserFactorProfile.class)
                     .setPhoneNumber(form.asMap().getFirst("phoneNumber")));
         authenticationClient.enrollFactor(request, new ExampleAuthenticationStateHandler());
     }

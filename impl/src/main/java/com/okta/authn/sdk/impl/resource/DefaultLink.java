@@ -88,7 +88,7 @@ public class DefaultLink extends AbstractResource implements Link {
     static Map<String, Link> getLinks(Map rawLinkMap, InternalDataStore dataStore) {
 
         Map<String, Link> result = new LinkedHashMap<>();
-        if (!com.okta.sdk.lang.Collections.isEmpty(rawLinkMap)) {
+        if (!result.isEmpty()) {
             rawLinkMap.forEach((k,v) -> {
 
                     Link link;

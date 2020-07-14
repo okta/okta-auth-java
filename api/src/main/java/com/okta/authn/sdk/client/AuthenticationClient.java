@@ -31,7 +31,7 @@ import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.ds.DataStore;
 import com.okta.sdk.resource.Resource;
-import com.okta.sdk.resource.user.factor.FactorProfile;
+import com.okta.sdk.resource.user.factor.CallUserFactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
 
@@ -215,14 +215,14 @@ public interface AuthenticationClient {
      * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
      * @param factorType type of factor
      * @param factorProvider factor provider
-     * @param factorProfile profile of a supported factor
+     * @param callUserFactorProfile profile of a supported user factor
      * @param stateToken state token for current transaction
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
     @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, FactorProfile factorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, CallUserFactorProfile callUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
      * Enrolls a user with a factor assigned by their MFA Policy.

@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.example;
 
-import com.okta.sdk.lang.Strings;
+import com.okta.commons.lang.Strings;
 import org.apache.shiro.web.servlet.OncePerRequestFilter;
 import org.apache.shiro.web.util.WebUtils;
 

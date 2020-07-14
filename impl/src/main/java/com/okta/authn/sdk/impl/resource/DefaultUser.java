@@ -16,13 +16,13 @@
 package com.okta.authn.sdk.impl.resource;
 
 import com.okta.authn.sdk.resource.User;
+import com.okta.commons.lang.Locales;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.DateProperty;
 import com.okta.sdk.impl.resource.MapProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
-import com.okta.sdk.lang.Locales;
 
 import java.util.Date;
 import java.util.Locale;

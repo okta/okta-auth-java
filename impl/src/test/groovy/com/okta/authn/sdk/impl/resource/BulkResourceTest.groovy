@@ -16,6 +16,7 @@
 package com.okta.authn.sdk.impl.resource
 
 import com.okta.authn.sdk.impl.util.TestUtil
+import com.okta.commons.lang.Assert
 import com.okta.sdk.impl.ds.InternalDataStore
 import com.okta.sdk.impl.resource.AbstractResource
 import com.okta.sdk.impl.resource.BooleanProperty
@@ -27,7 +28,6 @@ import com.okta.sdk.impl.resource.MapProperty
 import com.okta.sdk.impl.resource.Property
 import com.okta.sdk.impl.resource.ResourceReference
 import com.okta.sdk.impl.resource.StringProperty
-import com.okta.sdk.lang.Assert
 import com.okta.sdk.resource.PropertyRetriever
 import com.okta.sdk.resource.Resource
 import org.testng.TestException

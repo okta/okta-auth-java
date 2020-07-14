@@ -18,7 +18,6 @@ package com.okta.authn.sdk.its
 import com.okta.authn.sdk.AuthenticationFailureException
 import com.okta.authn.sdk.its.email.EmailClient
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
-import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.TotpFactorActivation
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest

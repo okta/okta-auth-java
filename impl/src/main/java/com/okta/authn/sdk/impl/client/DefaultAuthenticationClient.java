@@ -48,8 +48,18 @@ import com.okta.sdk.impl.config.ClientConfiguration;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.ResourceException;
 import com.okta.sdk.resource.user.factor.CallUserFactorProfile;
+import com.okta.sdk.resource.user.factor.EmailUserFactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.sdk.resource.user.factor.HardwareUserFactorProfile;
+import com.okta.sdk.resource.user.factor.PushUserFactorProfile;
+import com.okta.sdk.resource.user.factor.SecurityQuestionUserFactorProfile;
+import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
+import com.okta.sdk.resource.user.factor.TokenUserFactorProfile;
+import com.okta.sdk.resource.user.factor.TotpUserFactorProfile;
+import com.okta.sdk.resource.user.factor.U2fUserFactorProfile;
+import com.okta.sdk.resource.user.factor.WebAuthnUserFactorProfile;
+import com.okta.sdk.resource.user.factor.WebUserFactorProfile;
 
 import java.util.List;
 import java.util.Map;
@@ -189,6 +199,106 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
                                     .setCallUserFactorProfile(callUserFactorProfile)
                                     .setStateToken(stateToken),
                                 stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, EmailUserFactorProfile emailUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setEmailUserFactorProfile(emailUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, HardwareUserFactorProfile hardwareUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setHardwareUserFactorProfile(hardwareUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, PushUserFactorProfile pushUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setPushUserFactorProfile(pushUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, SecurityQuestionUserFactorProfile securityQuestionUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setSecurityQuestionUserFactorProfile(securityQuestionUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, SmsUserFactorProfile smsUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setSmsUserFactorProfile(smsUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, TokenUserFactorProfile tokenUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setTokenUserFactorProfile(tokenUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, TotpUserFactorProfile totpUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setTotpUserFactorProfile(totpUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, U2fUserFactorProfile u2fUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setU2fUserFactorProfile(u2fUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, WebAuthnUserFactorProfile webAuthnUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setWebAuthnUserFactorProfile(webAuthnUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
+    }
+
+    @Override
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, WebUserFactorProfile webUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setWebUserFactorProfile(webUserFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
     }
 
     @Override

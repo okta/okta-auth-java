@@ -231,7 +231,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-call-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, CallUserFactorProfile callUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -246,7 +246,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-email-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, EmailUserFactorProfile emailUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -276,7 +276,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-verify-push-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, PushUserFactorProfile pushUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -321,7 +321,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-rsa-securid-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, TokenUserFactorProfile tokenUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -336,7 +336,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-verify-totp-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, TotpUserFactorProfile totpUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -351,7 +351,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-u2f-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, U2fUserFactorProfile u2fUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -366,7 +366,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-webauthn-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, WebAuthnUserFactorProfile webAuthnUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
@@ -381,7 +381,7 @@ public interface AuthenticationClient {
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
+    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-duo-factor")
     AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, WebUserFactorProfile webUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**

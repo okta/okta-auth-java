@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when
 
 class LinkTest {
 
-    //@Test //TODO: uncomment
+    @Test
     void nestedLinksTest() {
 
             def linksNode = [

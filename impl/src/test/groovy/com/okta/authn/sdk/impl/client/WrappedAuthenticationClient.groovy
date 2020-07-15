@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,10 @@ import com.okta.commons.http.Request
 import com.okta.commons.http.RequestExecutor
 import com.okta.commons.http.Response
 import com.okta.commons.http.config.BaseUrlResolver
-import com.okta.sdk.authc.credentials.ClientCredentials
 import com.okta.sdk.cache.CacheManager
-import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.api.ClientCredentialsResolver
 import com.okta.sdk.impl.config.ClientConfiguration
 import com.okta.sdk.impl.ds.InternalDataStore
-import com.okta.sdk.impl.http.authc.RequestAuthenticatorFactory
 
 class WrappedAuthenticationClient extends DefaultAuthenticationClient {
 
@@ -51,16 +48,6 @@ class WrappedAuthenticationClient extends DefaultAuthenticationClient {
         delegatingRequestExecutor = new DelegatingRequestExecutor()
         return delegatingRequestExecutor
     }
-
-//    //@Override
-//    protected RequestExecutor createRequestExecutor(ClientCredentials clientCredentials,
-//                                                    Proxy proxy,
-//                                                    AuthenticationScheme authenticationScheme,
-//                                                    RequestAuthenticatorFactory requestAuthenticatorFactory,
-//                                                    int connectionTimeout) {
-//        delegatingRequestExecutor = new DelegatingRequestExecutor()
-//        return delegatingRequestExecutor
-//    }
 
     void setRequestExecutor(RequestExecutor executor) {
         delegatingRequestExecutor.executor = executor

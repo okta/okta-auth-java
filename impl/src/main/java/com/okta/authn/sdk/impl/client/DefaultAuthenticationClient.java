@@ -24,10 +24,10 @@ import com.okta.authn.sdk.InvalidAuthenticationStateException;
 import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
+import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.http.Header;
 import com.okta.authn.sdk.http.QueryParameter;
 import com.okta.authn.sdk.http.RequestContext;
-import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
@@ -47,20 +47,9 @@ import com.okta.sdk.impl.client.BaseClient;
 import com.okta.sdk.impl.config.ClientConfiguration;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.ResourceException;
-import com.okta.sdk.resource.user.factor.CallUserFactorProfile;
-import com.okta.sdk.resource.user.factor.EmailUserFactorProfile;
-import com.okta.sdk.resource.user.factor.HardwareUserFactorProfile;
-import com.okta.sdk.resource.user.factor.PushUserFactorProfile;
-import com.okta.sdk.resource.user.factor.SecurityQuestionUserFactorProfile;
-import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
-import com.okta.sdk.resource.user.factor.TokenUserFactorProfile;
-import com.okta.sdk.resource.user.factor.TotpUserFactorProfile;
-import com.okta.sdk.resource.user.factor.U2fUserFactorProfile;
-import com.okta.sdk.resource.user.factor.UserFactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
-import com.okta.sdk.resource.user.factor.WebAuthnUserFactorProfile;
-import com.okta.sdk.resource.user.factor.WebUserFactorProfile;
+import com.okta.sdk.resource.user.factor.UserFactorProfile;
 
 import java.util.List;
 import java.util.Map;
@@ -194,36 +183,12 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
 
     @Override
     public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, UserFactorProfile userFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
-        FactorEnrollRequest factorEnrollRequest = instantiate(FactorEnrollRequest.class)
-            .setFactorType(type)
-            .setProvider(provider)
-            .setStateToken(stateToken);
-
-        if (userFactorProfile instanceof CallUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setCallUserFactorProfile((CallUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof EmailUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setEmailUserFactorProfile((EmailUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof HardwareUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setHardwareUserFactorProfile((HardwareUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof PushUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setPushUserFactorProfile((PushUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof SecurityQuestionUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setSecurityQuestionUserFactorProfile((SecurityQuestionUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof SmsUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setSmsUserFactorProfile((SmsUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof TokenUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setTokenUserFactorProfile((TokenUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof TotpUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setTotpUserFactorProfile((TotpUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof U2fUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setU2fUserFactorProfile((U2fUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof WebUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setWebUserFactorProfile((WebUserFactorProfile) userFactorProfile);
-        } else if (userFactorProfile instanceof WebAuthnUserFactorProfile) {
-            factorEnrollRequest = factorEnrollRequest.setWebAuthnUserFactorProfile((WebAuthnUserFactorProfile) userFactorProfile);
-        }
-
-        return enrollFactor(factorEnrollRequest, stateHandler);
+        return enrollFactor(instantiate(FactorEnrollRequest.class)
+                .setFactorType(type)
+                .setProvider(provider)
+                .setUserFactorProfile(userFactorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
     }
 
     @Override

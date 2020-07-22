@@ -324,7 +324,7 @@ public class LoginResource {
                 .setProvider(FactorProvider.OKTA)
                 .setStateToken(getPreviousAuthResult().getStateToken())
                 .setFactorType(MfaVerifyView.fromRelativeLink(factorType))
-                .setSmsUserFactorProfile(authenticationClient.instantiate(SmsUserFactorProfile.class)
+                .setUserFactorProfile(authenticationClient.instantiate(SmsUserFactorProfile.class)
                     .setPhoneNumber(form.asMap().getFirst("phoneNumber")));
         authenticationClient.enrollFactor(request, new ExampleAuthenticationStateHandler());
     }

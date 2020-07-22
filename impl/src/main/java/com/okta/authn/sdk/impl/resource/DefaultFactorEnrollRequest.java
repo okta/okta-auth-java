@@ -33,6 +33,7 @@ import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
 import com.okta.sdk.resource.user.factor.TokenUserFactorProfile;
 import com.okta.sdk.resource.user.factor.TotpUserFactorProfile;
 import com.okta.sdk.resource.user.factor.U2fUserFactorProfile;
+import com.okta.sdk.resource.user.factor.UserFactorProfile;
 import com.okta.sdk.resource.user.factor.WebAuthnUserFactorProfile;
 import com.okta.sdk.resource.user.factor.WebUserFactorProfile;
 
@@ -116,124 +117,32 @@ public class DefaultFactorEnrollRequest extends AbstractResource implements Fact
     }
 
     @Override
-    public CallUserFactorProfile getCallUserFactorProfile() {
-        return getResourceProperty(CALL_USER_FACTOR_PROFILE_PROPERTY);
-    }
+    public FactorEnrollRequest setUserFactorProfile(UserFactorProfile userFactorProfile) {
 
-    @Override
-    public FactorEnrollRequest setCallUserFactorProfile(CallUserFactorProfile callUserFactorProfile) {
-        setProperty(CALL_USER_FACTOR_PROFILE_PROPERTY, callUserFactorProfile);
+        if (userFactorProfile instanceof CallUserFactorProfile) {
+            setProperty(CALL_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof EmailUserFactorProfile) {
+            setProperty(EMAIL_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof HardwareUserFactorProfile) {
+            setProperty(HARDWARE_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof PushUserFactorProfile) {
+            setProperty(PUSH_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof SecurityQuestionUserFactorProfile) {
+            setProperty(SECURITY_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof SmsUserFactorProfile) {
+            setProperty(SMS_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof TokenUserFactorProfile) {
+            setProperty(TOKEN_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof TotpUserFactorProfile) {
+            setProperty(TOTP_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof U2fUserFactorProfile) {
+            setProperty(U2F_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof WebUserFactorProfile) {
+            setProperty(WEB_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        } else if (userFactorProfile instanceof WebAuthnUserFactorProfile) {
+            setProperty(WEB_AUTHN_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);
+        }
+
         return this;
     }
-
-    @Override
-    public EmailUserFactorProfile getEmailUserFactorProfile() {
-        return getResourceProperty(EMAIL_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setEmailUserFactorProfile(EmailUserFactorProfile emailUserFactorProfile) {
-        setProperty(EMAIL_USER_FACTOR_PROFILE_PROPERTY, emailUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public HardwareUserFactorProfile getHardwareUserFactorProfile() {
-        return getResourceProperty(HARDWARE_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setHardwareUserFactorProfile(HardwareUserFactorProfile hardwareUserFactorProfile) {
-        setProperty(HARDWARE_USER_FACTOR_PROFILE_PROPERTY, hardwareUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public PushUserFactorProfile getPushUserFactorProfile() {
-        return getResourceProperty(PUSH_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setPushUserFactorProfile(PushUserFactorProfile pushUserFactorProfile) {
-        setProperty(PUSH_USER_FACTOR_PROFILE_PROPERTY, pushUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public SecurityQuestionUserFactorProfile getSecurityQuestionUserFactorProfile() {
-        return getResourceProperty(SECURITY_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setSecurityQuestionUserFactorProfile(SecurityQuestionUserFactorProfile securityQuestionUserFactorProfile) {
-        setProperty(SECURITY_USER_FACTOR_PROFILE_PROPERTY, securityQuestionUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public SmsUserFactorProfile getSmsUserFactorProfile() {
-        return getResourceProperty(SMS_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setSmsUserFactorProfile(SmsUserFactorProfile smsUserFactorProfile) {
-        setProperty(SMS_USER_FACTOR_PROFILE_PROPERTY, smsUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public TokenUserFactorProfile getTokenUserFactorProfile() {
-        return getResourceProperty(TOKEN_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setTokenUserFactorProfile(TokenUserFactorProfile tokenUserFactorProfile) {
-        setProperty(TOKEN_USER_FACTOR_PROFILE_PROPERTY, tokenUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public TotpUserFactorProfile getTotpUserFactorProfile() {
-        return getResourceProperty(TOTP_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setTotpUserFactorProfile(TotpUserFactorProfile totpUserFactorProfile) {
-        setProperty(TOTP_USER_FACTOR_PROFILE_PROPERTY, totpUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public U2fUserFactorProfile getU2fUserFactorProfile() {
-        return getResourceProperty(U2F_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setU2fUserFactorProfile(U2fUserFactorProfile u2fUserFactorProfile) {
-        setProperty(U2F_USER_FACTOR_PROFILE_PROPERTY, u2fUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public WebAuthnUserFactorProfile getWebAuthnUserFactorProfile() {
-        return getResourceProperty(WEB_AUTHN_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setWebAuthnUserFactorProfile(WebAuthnUserFactorProfile webAuthnUserFactorProfile) {
-        setProperty(WEB_AUTHN_USER_FACTOR_PROFILE_PROPERTY, webAuthnUserFactorProfile);
-        return this;
-    }
-
-    @Override
-    public WebUserFactorProfile getWebUserFactorProfile() {
-        return getResourceProperty(WEB_USER_FACTOR_PROFILE_PROPERTY);
-    }
-
-    @Override
-    public FactorEnrollRequest setWebUserFactorProfile(WebUserFactorProfile webUserFactorProfile) {
-        setProperty(WEB_USER_FACTOR_PROFILE_PROPERTY, webUserFactorProfile);
-        return this;
-    }
-
 }

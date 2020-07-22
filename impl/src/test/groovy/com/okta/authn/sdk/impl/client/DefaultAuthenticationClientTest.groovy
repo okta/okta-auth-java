@@ -38,11 +38,8 @@ import com.okta.sdk.resource.user.factor.CallUserFactorProfile
 import com.okta.sdk.resource.user.factor.FactorProvider
 import com.okta.sdk.resource.user.factor.FactorType
 import com.spotify.hamcrest.jackson.IsJsonObject
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import static org.hamcrest.Matchers.containsString
 import org.hamcrest.TypeSafeMatcher
 import org.mockito.Mockito
 import org.testng.annotations.Test

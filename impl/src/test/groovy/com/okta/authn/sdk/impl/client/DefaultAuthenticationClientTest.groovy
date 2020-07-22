@@ -57,22 +57,6 @@ import static org.mockito.Mockito.*
 class DefaultAuthenticationClientTest {
 
     @Test
-    void simpleSuccessTest() {
-
-        def client = createClient("simpleSuccessTest")
-        def server = new MockWebServer()
-        server.enqueue(new MockResponse().setBody("a response body"))
-        def url = server.url("/api/v1/authn").url()
-        try {
-            def responseStream = client.authenticate("username1", "password2".toCharArray(), null, mock(AuthenticationStateHandler))
-            assertThat responseStream.text, is("a response body")
-            assertThat server.takeRequest().getHeader("User-Agent"), containsString("okta-jwt-verifier-java/")
-        } finally {
-            server.shutdown()
-        }
-    }
-
-    @Test
     void authenticationSuccessTest() {
 
         def client = createClient("authenticationSuccessTest")

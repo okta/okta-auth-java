@@ -20,10 +20,10 @@ import com.okta.authn.sdk.its.email.EmailClient
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.TotpFactorActivation
+import com.okta.authn.sdk.resource.TotpUserFactorProfile
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.sdk.resource.user.factor.FactorProvider
 import com.okta.sdk.resource.user.factor.FactorType
-import com.okta.sdk.resource.user.factor.TotpUserFactorProfile
 import org.jboss.aerogear.security.otp.Totp
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

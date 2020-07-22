@@ -16,26 +16,26 @@
 package com.okta.authn.sdk.impl.resource;
 
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
+import com.okta.authn.sdk.resource.UserFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.EnumProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.ResourceReference;
 import com.okta.sdk.impl.resource.StringProperty;
-import com.okta.sdk.resource.user.factor.CallUserFactorProfile;
-import com.okta.sdk.resource.user.factor.EmailUserFactorProfile;
+import com.okta.authn.sdk.resource.CallUserFactorProfile;
+import com.okta.authn.sdk.resource.EmailUserFactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
-import com.okta.sdk.resource.user.factor.HardwareUserFactorProfile;
-import com.okta.sdk.resource.user.factor.PushUserFactorProfile;
-import com.okta.sdk.resource.user.factor.SecurityQuestionUserFactorProfile;
-import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
-import com.okta.sdk.resource.user.factor.TokenUserFactorProfile;
-import com.okta.sdk.resource.user.factor.TotpUserFactorProfile;
-import com.okta.sdk.resource.user.factor.U2fUserFactorProfile;
-import com.okta.sdk.resource.user.factor.UserFactorProfile;
-import com.okta.sdk.resource.user.factor.WebAuthnUserFactorProfile;
-import com.okta.sdk.resource.user.factor.WebUserFactorProfile;
+import com.okta.authn.sdk.resource.HardwareUserFactorProfile;
+import com.okta.authn.sdk.resource.PushUserFactorProfile;
+import com.okta.authn.sdk.resource.SecurityQuestionUserFactorProfile;
+import com.okta.authn.sdk.resource.SmsUserFactorProfile;
+import com.okta.authn.sdk.resource.TokenUserFactorProfile;
+import com.okta.authn.sdk.resource.TotpUserFactorProfile;
+import com.okta.authn.sdk.resource.U2fUserFactorProfile;
+import com.okta.authn.sdk.resource.WebAuthnUserFactorProfile;
+import com.okta.authn.sdk.resource.WebUserFactorProfile;
 
 import java.util.Map;
 
@@ -117,7 +117,7 @@ public class DefaultFactorEnrollRequest extends AbstractResource implements Fact
     }
 
     @Override
-    public FactorEnrollRequest setUserFactorProfile(UserFactorProfile userFactorProfile) {
+    public FactorEnrollRequest setFactorProfile(UserFactorProfile userFactorProfile) {
 
         if (userFactorProfile instanceof CallUserFactorProfile) {
             setProperty(CALL_USER_FACTOR_PROFILE_PROPERTY, userFactorProfile);

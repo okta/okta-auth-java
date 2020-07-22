@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2020-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,11 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
 
-public interface FactorEnrollRequest extends ExtensibleResource {
+public interface EmailUserFactorProfile extends ExtensibleResource, UserFactorProfile {
 
-    String getStateToken();
-    FactorEnrollRequest setStateToken(String stateToken);
+    String getEmail();
 
-    FactorType getFactorType();
-    FactorEnrollRequest setFactorType(FactorType factorType);
+    EmailUserFactorProfile setEmail(String email);
 
-    FactorProvider getProvider();
-    FactorEnrollRequest setProvider(FactorProvider provider);
-
-    FactorEnrollRequest setFactorProfile(UserFactorProfile userFactorProfile);
 }

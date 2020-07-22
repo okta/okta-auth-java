@@ -15,20 +15,5 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.ExtensibleResource;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
-
-public interface FactorEnrollRequest extends ExtensibleResource {
-
-    String getStateToken();
-    FactorEnrollRequest setStateToken(String stateToken);
-
-    FactorType getFactorType();
-    FactorEnrollRequest setFactorType(FactorType factorType);
-
-    FactorProvider getProvider();
-    FactorEnrollRequest setProvider(FactorProvider provider);
-
-    FactorEnrollRequest setFactorProfile(UserFactorProfile userFactorProfile);
+public interface UserFactorProfile {
 }

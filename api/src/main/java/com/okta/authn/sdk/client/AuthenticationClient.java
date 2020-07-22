@@ -27,11 +27,11 @@ import com.okta.authn.sdk.resource.FactorEnrollRequest;
 import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
+import com.okta.authn.sdk.resource.UserFactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.ds.DataStore;
 import com.okta.sdk.resource.Resource;
-import com.okta.sdk.resource.user.factor.UserFactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
 

@@ -24,6 +24,7 @@ import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationRequest
 import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
+import com.okta.authn.sdk.resource.CallUserFactorProfile
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
@@ -34,14 +35,12 @@ import com.okta.commons.http.RequestExecutor
 import com.okta.commons.http.DefaultResponse
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import com.okta.sdk.resource.ResourceException
-import com.okta.sdk.resource.user.factor.CallUserFactorProfile
 import com.okta.sdk.resource.user.factor.FactorProvider
 import com.okta.sdk.resource.user.factor.FactorType
 import com.spotify.hamcrest.jackson.IsJsonObject
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-import org.mockito.Mockito
 import org.testng.annotations.Test
 
 import static com.spotify.hamcrest.jackson.JsonMatchers.jsonObject
@@ -393,7 +392,6 @@ class DefaultAuthenticationClientTest {
         verify(stateHandler).handleRecovery(response)
     }
 
-
     @Test
     void eachStatusTest() {
 
@@ -499,7 +497,7 @@ class DefaultAuthenticationClientTest {
         verify(stateHandler).handleSuccess(response)
     }
 
-    def verifyExceptionThrown(def client, int httpStatus, String errorCode, Class<? extends Exception> exception) {
+    static def verifyExceptionThrown(def client, int httpStatus, String errorCode, Class<? extends Exception> exception) {
 
         def stateHandler = mock(AuthenticationStateHandler)
         def requestExecutor = mock(RequestExecutor)
@@ -517,13 +515,13 @@ class DefaultAuthenticationClientTest {
 
         TestUtil.expectException(exception) {
             def response = new DefaultResponse(httpStatus, MediaType.APPLICATION_JSON, new ByteArrayInputStream(responseText.bytes), responseText.length())
-            when(requestExecutor.executeRequest(Mockito.any(Request))).thenReturn(response)
+            when(requestExecutor.executeRequest(any(Request))).thenReturn(response)
             client.authenticate("wrong-username", "or-password".toCharArray(), null, stateHandler)
         }
         verifyZeroInteractions(stateHandler)
     }
 
-    WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {
+    static WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {
         def clientConfig = new ClientConfiguration()
         clientConfig.setBaseUrlResolver(new DefaultBaseUrlResolver("https://${getClass().name}/${callingTestMethodName}"))
         clientConfig.setAuthenticationScheme(AuthenticationScheme.NONE)
@@ -531,7 +529,6 @@ class DefaultAuthenticationClientTest {
 
         return new WrappedAuthenticationClient(clientConfig)
     }
-
 
     // matchers
     static Matcher<Request> bodyMatches(final IsJsonObject matcher) {
@@ -624,5 +621,3 @@ class DefaultAuthenticationClientTest {
         }
     }
 }
-
-

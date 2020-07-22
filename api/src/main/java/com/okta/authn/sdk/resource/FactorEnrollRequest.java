@@ -30,5 +30,6 @@ public interface FactorEnrollRequest extends ExtensibleResource {
     FactorProvider getProvider();
     FactorEnrollRequest setProvider(FactorProvider provider);
 
+    UserFactorProfile getFactorProfile();
     FactorEnrollRequest setFactorProfile(UserFactorProfile userFactorProfile);
 }

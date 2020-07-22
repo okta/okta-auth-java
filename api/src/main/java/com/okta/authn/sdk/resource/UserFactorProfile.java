@@ -15,5 +15,7 @@
  */
 package com.okta.authn.sdk.resource;
 
-public interface UserFactorProfile {
+import com.okta.sdk.resource.ExtensibleResource;
+
+public interface UserFactorProfile extends ExtensibleResource {
 }

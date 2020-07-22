@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.okta</groupId>
         <artifactId>okta-parent</artifactId>
-        <version>14</version>
+        <version>17</version>
         <relativePath>../okta-java-parent</relativePath>
     </parent>
 
@@ -41,6 +41,7 @@
     <modules>
         <module>api</module>
         <module>impl</module>
+        <module>android</module>
         <module>examples/shiro-mustache</module>
         <module>examples/doc-examples</module>
         <module>integration-tests</module>

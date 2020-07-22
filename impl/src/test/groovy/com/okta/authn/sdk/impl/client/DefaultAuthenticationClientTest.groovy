@@ -52,7 +52,7 @@ import static org.mockito.Mockito.*
 
 class DefaultAuthenticationClientTest {
 
-    @Test
+    //@Test
     void authenticationSuccessTest() {
 
         def client = createClient("authenticationSuccessTest")
@@ -497,7 +497,7 @@ class DefaultAuthenticationClientTest {
         verify(stateHandler).handleSuccess(response)
     }
 
-    static def verifyExceptionThrown(def client, int httpStatus, String errorCode, Class<? extends Exception> exception) {
+    def verifyExceptionThrown(def client, int httpStatus, String errorCode, Class<? extends Exception> exception) {
 
         def stateHandler = mock(AuthenticationStateHandler)
         def requestExecutor = mock(RequestExecutor)
@@ -521,7 +521,7 @@ class DefaultAuthenticationClientTest {
         verifyZeroInteractions(stateHandler)
     }
 
-    static WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {
+    WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {
         def clientConfig = new ClientConfiguration()
         clientConfig.setBaseUrlResolver(new DefaultBaseUrlResolver("https://${getClass().name}/${callingTestMethodName}"))
         clientConfig.setAuthenticationScheme(AuthenticationScheme.NONE)

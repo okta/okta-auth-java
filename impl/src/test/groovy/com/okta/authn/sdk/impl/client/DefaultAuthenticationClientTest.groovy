@@ -38,8 +38,11 @@ import com.okta.sdk.resource.user.factor.CallUserFactorProfile
 import com.okta.sdk.resource.user.factor.FactorProvider
 import com.okta.sdk.resource.user.factor.FactorType
 import com.spotify.hamcrest.jackson.IsJsonObject
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import static org.hamcrest.Matchers.containsString
 import org.hamcrest.TypeSafeMatcher
 import org.mockito.Mockito
 import org.testng.annotations.Test
@@ -54,9 +57,25 @@ import static org.mockito.Mockito.*
 class DefaultAuthenticationClientTest {
 
     @Test
-    void authenticationSuccess() {
+    void simpleSuccessTest() {
 
-        def client = createClient("authenticationSuccess")
+        def client = createClient("simpleSuccessTest")
+        def server = new MockWebServer()
+        server.enqueue(new MockResponse().setBody("a response body"))
+        def url = server.url("/api/v1/authn").url()
+        try {
+            def responseStream = client.authenticate("username1", "password2".toCharArray(), null, mock(AuthenticationStateHandler))
+            assertThat responseStream.text, is("a response body")
+            assertThat server.takeRequest().getHeader("User-Agent"), containsString("okta-jwt-verifier-java/")
+        } finally {
+            server.shutdown()
+        }
+    }
+
+    @Test
+    void authenticationSuccessTest() {
+
+        def client = createClient("authenticationSuccessTest")
         StubRequestExecutor requestExecutor = client.getRequestExecutor()
 
         requestExecutor.requestMatchers.add(bodyMatches(

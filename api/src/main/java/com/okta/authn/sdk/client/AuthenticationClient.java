@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2018 Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,19 +31,9 @@ import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.ds.DataStore;
 import com.okta.sdk.resource.Resource;
-import com.okta.sdk.resource.user.factor.CallUserFactorProfile;
-import com.okta.sdk.resource.user.factor.EmailUserFactorProfile;
+import com.okta.sdk.resource.user.factor.UserFactorProfile;
 import com.okta.sdk.resource.user.factor.FactorProvider;
 import com.okta.sdk.resource.user.factor.FactorType;
-import com.okta.sdk.resource.user.factor.HardwareUserFactorProfile;
-import com.okta.sdk.resource.user.factor.PushUserFactorProfile;
-import com.okta.sdk.resource.user.factor.SecurityQuestionUserFactorProfile;
-import com.okta.sdk.resource.user.factor.SmsUserFactorProfile;
-import com.okta.sdk.resource.user.factor.TokenUserFactorProfile;
-import com.okta.sdk.resource.user.factor.TotpUserFactorProfile;
-import com.okta.sdk.resource.user.factor.U2fUserFactorProfile;
-import com.okta.sdk.resource.user.factor.WebAuthnUserFactorProfile;
-import com.okta.sdk.resource.user.factor.WebUserFactorProfile;
 
 /**
  * The Okta Authentication API provides operations to authenticate users, perform multi-factor enrollment and verification,
@@ -220,169 +210,19 @@ public interface AuthenticationClient {
     AuthenticationResponse resetPassword(ChangePasswordRequest changePasswordRequest, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
-     * Enrolls a user with a Call factor assigned by their MFA Policy.
+     * Enrolls a user with a factor assigned by their MFA Policy.
      *
      * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
      * @param factorType type of factor
      * @param factorProvider factor provider
-     * @param callUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-call-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, CallUserFactorProfile callUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with an Email factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param emailUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-email-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, EmailUserFactorProfile emailUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a Hardware factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param hardwareUserFactorProfile profile of a supported user factor
+     * @param userFactorProfile profile of a supported user factor
      * @param stateToken state token for current transaction
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
     @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, HardwareUserFactorProfile hardwareUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a Push factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param pushUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-verify-push-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, PushUserFactorProfile pushUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a Security question factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param securityQuestionUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, SecurityQuestionUserFactorProfile securityQuestionUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a SMS factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param smsUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, SmsUserFactorProfile smsUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a Token factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param tokenUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-rsa-securid-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, TokenUserFactorProfile tokenUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a TOTP factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param totpUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-okta-verify-totp-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, TotpUserFactorProfile totpUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with an U2F factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param u2fUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-u2f-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, U2fUserFactorProfile u2fUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a WebAuthn factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param webAuthnUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-webauthn-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, WebAuthnUserFactorProfile webAuthnUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
-
-    /**
-     * Enrolls a user with a Web factor assigned by their MFA Policy.
-     *
-     * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
-     * @param factorType type of factor
-     * @param factorProvider factor provider
-     * @param webUserFactorProfile profile of a supported user factor
-     * @param stateToken state token for current transaction
-     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
-     * @return An authentication response
-     * @throws AuthenticationException any other authentication related error
-     */
-    @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/reference/api/authn/#enroll-duo-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, WebUserFactorProfile webUserFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, UserFactorProfile userFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
      * Enrolls a user with a factor assigned by their MFA Policy.

@@ -52,10 +52,10 @@ import static org.mockito.Mockito.*
 
 class DefaultAuthenticationClientTest {
 
-    //@Test
+    @Test
     void authenticationSuccessTest() {
 
-        def client = createClient("authenticationSuccessTest")
+        def client = createClient("authenticationSuccess")
         StubRequestExecutor requestExecutor = client.getRequestExecutor()
 
         requestExecutor.requestMatchers.add(bodyMatches(

@@ -13,10 +13,10 @@ In addition to se new classes/interfaces, some existing classes/interfaces are n
 - Replaced `com.okta.sdk.resource.user.factor.FactorProvider` interface with `com.okta.authn.sdk.resource.FactorProvider` interface.
 - Replaced `com.okta.sdk.resource.user.factor.FactorType` interface with `com.okta.authn.sdk.resource.FactorType` interface.
 
-Note that the old interfaces above were pulled in from **okta-sdk-java** earlier. 
-These are now migrated and would reside locally within Authentication SDK. 
+Note: Old interfaces above were pulled in from **okta-sdk-java** Management SDK hitherto. 
+These are now migrated to reside locally within this Authentication SDK. 
 
-- Added below interfaces that are extensions of `com.okta.authn.sdk.resource.FactorProfile` interface:
+- Added below extensions of `com.okta.authn.sdk.resource.FactorProfile` interface:
   ```java
   - CallFactorProfile
   - EmailFactorProfile

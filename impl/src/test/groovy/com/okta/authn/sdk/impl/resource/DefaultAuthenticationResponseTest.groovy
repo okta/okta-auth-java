@@ -18,8 +18,8 @@ package com.okta.authn.sdk.impl.resource
 import com.okta.authn.sdk.impl.util.TestUtil
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.Factor
-import com.okta.sdk.resource.user.factor.FactorProvider
-import com.okta.sdk.resource.user.factor.FactorType
+import com.okta.authn.sdk.resource.FactorProvider
+import com.okta.authn.sdk.resource.FactorType
 import org.testng.annotations.Test
 
 import java.text.DateFormat

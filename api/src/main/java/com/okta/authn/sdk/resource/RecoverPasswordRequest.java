@@ -16,7 +16,6 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
-import com.okta.sdk.resource.user.factor.FactorType;
 
 public interface RecoverPasswordRequest extends ExtensibleResource {
 

@@ -42,8 +42,8 @@ import com.okta.authn.sdk.resource.SmsUserFactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

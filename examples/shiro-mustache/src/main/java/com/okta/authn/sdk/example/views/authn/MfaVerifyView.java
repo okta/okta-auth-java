@@ -17,7 +17,7 @@ package com.okta.authn.sdk.example.views.authn;
 
 import com.okta.authn.sdk.example.views.BaseView;
 import com.okta.authn.sdk.resource.Factor;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorType;
 
 public class MfaVerifyView extends BaseView {
 

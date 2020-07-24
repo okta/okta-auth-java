@@ -17,7 +17,7 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface EmailUserFactorProfile extends ExtensibleResource, UserFactorProfile {
+public interface EmailUserFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getEmail();
 

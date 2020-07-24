@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2020-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,29 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.ExtensibleResource;
+public enum FactorProvider {
 
-public interface FactorEnrollRequest extends ExtensibleResource {
+  OKTA("OKTA"),
 
-    String getStateToken();
-    FactorEnrollRequest setStateToken(String stateToken);
+  RSA("RSA"),
 
-    FactorType getFactorType();
-    FactorEnrollRequest setFactorType(FactorType factorType);
+  GOOGLE("GOOGLE"),
 
-    FactorProvider getProvider();
-    FactorEnrollRequest setProvider(FactorProvider provider);
+  SYMANTEC("SYMANTEC"),
 
-    FactorProfile getFactorProfile();
-    FactorEnrollRequest setFactorProfile(FactorProfile factorProfile);
+  DUO("DUO"),
+
+  YUBICO("YUBICO");
+
+  private String value;
+
+  FactorProvider(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
 }

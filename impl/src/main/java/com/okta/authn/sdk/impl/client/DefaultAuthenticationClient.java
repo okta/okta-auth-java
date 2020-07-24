@@ -39,7 +39,7 @@ import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
 import com.okta.authn.sdk.resource.StateTokenRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
-import com.okta.authn.sdk.resource.UserFactorProfile;
+import com.okta.authn.sdk.resource.FactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoverTokenRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
@@ -48,8 +48,8 @@ import com.okta.sdk.impl.client.BaseClient;
 import com.okta.sdk.impl.config.ClientConfiguration;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.ResourceException;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 import java.util.List;
 import java.util.Map;
@@ -182,11 +182,11 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, UserFactorProfile userFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, FactorProfile factorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return enrollFactor(instantiate(FactorEnrollRequest.class)
                 .setFactorType(type)
                 .setProvider(provider)
-                .setFactorProfile(userFactorProfile)
+                .setFactorProfile(factorProfile)
                 .setStateToken(stateToken),
             stateHandler);
     }

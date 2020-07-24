@@ -17,7 +17,7 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface WebAuthnUserFactorProfile extends ExtensibleResource, UserFactorProfile {
+public interface WebAuthnUserFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getCredentialId();
 

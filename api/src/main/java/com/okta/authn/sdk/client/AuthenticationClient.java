@@ -27,13 +27,13 @@ import com.okta.authn.sdk.resource.FactorEnrollRequest;
 import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
-import com.okta.authn.sdk.resource.UserFactorProfile;
+import com.okta.authn.sdk.resource.FactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.ds.DataStore;
 import com.okta.sdk.resource.Resource;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 /**
  * The Okta Authentication API provides operations to authenticate users, perform multi-factor enrollment and verification,
@@ -215,14 +215,14 @@ public interface AuthenticationClient {
      * @see <a href="https://developer.okta.com/docs/api/resources/factors#supported-factors-for-providers">supported factor profiles</a>
      * @param factorType type of factor
      * @param factorProvider factor provider
-     * @param userFactorProfile profile of a supported user factor
+     * @param factorProfile profile of a supported factor
      * @param stateToken state token for current transaction
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
      * @return An authentication response
      * @throws AuthenticationException any other authentication related error
      */
     @ApiReference(path = "/api/v1/authn/factors", href = "https://developer.okta.com/docs/api/resources/authn#enroll-factor")
-    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, UserFactorProfile userFactorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+    AuthenticationResponse enrollFactor(FactorType factorType, FactorProvider factorProvider, FactorProfile factorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
      * Enrolls a user with a factor assigned by their MFA Policy.

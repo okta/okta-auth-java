@@ -16,15 +16,15 @@
 package com.okta.authn.sdk.impl.resource;
 
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
-import com.okta.authn.sdk.resource.UserFactorProfile;
+import com.okta.authn.sdk.resource.FactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.EnumProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.ResourceReference;
 import com.okta.sdk.impl.resource.StringProperty;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class DefaultFactorEnrollRequest extends AbstractResource implements Fact
 
     private static final StringProperty STATE_TOKEN_PROPERTY = new StringProperty("stateToken");
     private static final EnumProperty<FactorType> FACTOR_TYPE_PROPERTY = new EnumProperty<>("factorType", FactorType.class);
-    private static final ResourceReference<UserFactorProfile> FACTOR_PROFILE_PROPERTY = new ResourceReference<>("profile", UserFactorProfile.class, true);
+    private static final ResourceReference<FactorProfile> FACTOR_PROFILE_PROPERTY = new ResourceReference<>("profile", FactorProfile.class, true);
     private static final EnumProperty<FactorProvider> PROVIDER_PROPERTY = new EnumProperty<>("provider", FactorProvider.class);
 
     public DefaultFactorEnrollRequest(InternalDataStore dataStore) {
@@ -82,13 +82,13 @@ public class DefaultFactorEnrollRequest extends AbstractResource implements Fact
     }
 
     @Override
-    public UserFactorProfile getFactorProfile() {
+    public FactorProfile getFactorProfile() {
         return getResourceProperty(FACTOR_PROFILE_PROPERTY);
     }
 
     @Override
-    public FactorEnrollRequest setFactorProfile(UserFactorProfile userFactorProfile) {
-        setProperty(FACTOR_PROFILE_PROPERTY, userFactorProfile);
+    public FactorEnrollRequest setFactorProfile(FactorProfile factorProfile) {
+        setProperty(FACTOR_PROFILE_PROPERTY, factorProfile);
         return this;
     }
 }

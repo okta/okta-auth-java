@@ -17,7 +17,7 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface SmsUserFactorProfile extends ExtensibleResource, UserFactorProfile {
+public interface SmsUserFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getPhoneNumber();
 

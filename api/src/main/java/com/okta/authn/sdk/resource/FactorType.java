@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2020-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,41 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.ExtensibleResource;
+public enum FactorType {
 
-public interface UserFactorProfile extends ExtensibleResource {
+  CALL("call"),
+
+  EMAIL("email"),
+
+  PUSH("push"),
+
+  QUESTION("question"),
+
+  SMS("sms"),
+
+  TOKEN_HARDWARE("token:hardware"),
+
+  TOKEN_HOTP("token:hotp"),
+
+  TOKEN_SOFTWARE_TOTP("token:software:totp"),
+
+  TOKEN("token"),
+
+  U2F("u2f"),
+
+  WEB("web"),
+
+  WEBAUTHN("webauthn");
+
+  private String value;
+
+  FactorType(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
 }

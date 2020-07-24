@@ -35,8 +35,8 @@ import com.okta.commons.http.RequestExecutor
 import com.okta.commons.http.DefaultResponse
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import com.okta.sdk.resource.ResourceException
-import com.okta.sdk.resource.user.factor.FactorProvider
-import com.okta.sdk.resource.user.factor.FactorType
+import com.okta.authn.sdk.resource.FactorProvider
+import com.okta.authn.sdk.resource.FactorType
 import com.spotify.hamcrest.jackson.IsJsonObject
 import org.hamcrest.Description
 import org.hamcrest.Matcher

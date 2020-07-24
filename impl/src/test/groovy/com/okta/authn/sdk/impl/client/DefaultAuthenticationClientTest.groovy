@@ -24,7 +24,7 @@ import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationRequest
 import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
-import com.okta.authn.sdk.resource.CallUserFactorProfile
+import com.okta.authn.sdk.resource.CallFactorProfile
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
@@ -117,7 +117,7 @@ class DefaultAuthenticationClientTest {
                             .where("phoneNumber", is(jsonText("555-555-1212")))))
         ))
 
-        def factorProfile = client.instantiate(CallUserFactorProfile)
+        def factorProfile = client.instantiate(CallFactorProfile)
                                         .setPhoneNumber("555-555-1212")
 
         def stateHandler = mock(AuthenticationStateHandler)

@@ -17,10 +17,10 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface TotpUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface TotpFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getCredentialId();
 
-    TotpUserFactorProfile setCredentialId(String credentialId);
+    TotpFactorProfile setCredentialId(String credentialId);
 
 }

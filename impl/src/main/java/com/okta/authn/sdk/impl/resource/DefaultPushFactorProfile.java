@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.PushUserFactorProfile;
+import com.okta.authn.sdk.resource.PushFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,7 +23,7 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultPushUserFactorProfile extends AbstractResource implements PushUserFactorProfile {
+public class DefaultPushFactorProfile extends AbstractResource implements PushFactorProfile {
 
     private final static StringProperty credentialIdProperty = new StringProperty("credentialId");
     private final static StringProperty deviceTokenProperty = new StringProperty("deviceToken");
@@ -34,11 +34,11 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
 
     private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty, deviceTokenProperty, deviceTypeProperty, nameProperty, platformProperty, versionProperty);
 
-    public DefaultPushUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultPushFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultPushUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultPushFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -52,7 +52,7 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
         return  getString(credentialIdProperty);
     }
 
-    public PushUserFactorProfile setCredentialId(String credentialId) {
+    public PushFactorProfile setCredentialId(String credentialId) {
         setProperty(credentialIdProperty, credentialId);
         return this;
     }
@@ -61,7 +61,7 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
         return  getString(deviceTokenProperty);
     }
 
-    public PushUserFactorProfile setDeviceToken(String deviceToken) {
+    public PushFactorProfile setDeviceToken(String deviceToken) {
         setProperty(deviceTokenProperty, deviceToken);
         return this;
     }
@@ -70,7 +70,7 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
         return  getString(deviceTypeProperty);
     }
 
-    public PushUserFactorProfile setDeviceType(String deviceType) {
+    public PushFactorProfile setDeviceType(String deviceType) {
         setProperty(deviceTypeProperty, deviceType);
         return this;
     }
@@ -79,7 +79,7 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
         return  getString(nameProperty);
     }
 
-    public PushUserFactorProfile setName(String name) {
+    public PushFactorProfile setName(String name) {
         setProperty(nameProperty, name);
         return this;
     }
@@ -88,7 +88,7 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
         return  getString(platformProperty);
     }
 
-    public PushUserFactorProfile setPlatform(String platform) {
+    public PushFactorProfile setPlatform(String platform) {
         setProperty(platformProperty, platform);
         return this;
     }
@@ -97,7 +97,7 @@ public class DefaultPushUserFactorProfile extends AbstractResource implements Pu
         return  getString(versionProperty);
     }
 
-    public PushUserFactorProfile setVersion(String version) {
+    public PushFactorProfile setVersion(String version) {
         setProperty(versionProperty, version);
         return this;
     }

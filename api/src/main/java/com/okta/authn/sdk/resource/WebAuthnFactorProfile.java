@@ -17,10 +17,14 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface EmailUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface WebAuthnFactorProfile extends ExtensibleResource, FactorProfile {
 
-    String getEmail();
+    String getCredentialId();
 
-    EmailUserFactorProfile setEmail(String email);
+    WebAuthnFactorProfile setCredentialId(String credentialId);
+
+    String getAuthenticatorName();
+
+    WebAuthnFactorProfile setAuthenticatorName(String authenticatorName);
 
 }

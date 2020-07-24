@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.TokenUserFactorProfile;
+import com.okta.authn.sdk.resource.TotpFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,17 +23,17 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultTokenUserFactorProfile extends AbstractResource implements TokenUserFactorProfile {
+public class DefaultTotpFactorProfile extends AbstractResource implements TotpFactorProfile {
 
     private final static StringProperty credentialIdProperty = new StringProperty("credentialId");
 
     private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty);
 
-    public DefaultTokenUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultTotpFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultTokenUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultTotpFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -47,7 +47,7 @@ public class DefaultTokenUserFactorProfile extends AbstractResource implements T
         return  getString(credentialIdProperty);
     }
 
-    public TokenUserFactorProfile setCredentialId(String credentialId) {
+    public TotpFactorProfile setCredentialId(String credentialId) {
         setProperty(credentialIdProperty, credentialId);
         return this;
     }

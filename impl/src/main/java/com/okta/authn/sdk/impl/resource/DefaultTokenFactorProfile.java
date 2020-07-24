@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2020-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.SmsUserFactorProfile;
+import com.okta.authn.sdk.resource.TokenFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,17 +23,17 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultSmsUserFactorProfile extends AbstractResource implements SmsUserFactorProfile {
+public class DefaultTokenFactorProfile extends AbstractResource implements TokenFactorProfile {
 
-    private final static StringProperty phoneNumberProperty = new StringProperty("phoneNumber");
+    private final static StringProperty credentialIdProperty = new StringProperty("credentialId");
 
-    private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(phoneNumberProperty);
+    private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty);
 
-    public DefaultSmsUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultTokenFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultSmsUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultTokenFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -43,12 +43,12 @@ public class DefaultSmsUserFactorProfile extends AbstractResource implements Sms
     }
 
 
-    public String getPhoneNumber() {
-        return  getString(phoneNumberProperty);
+    public String getCredentialId() {
+        return  getString(credentialIdProperty);
     }
 
-    public SmsUserFactorProfile setPhoneNumber(String phoneNumber) {
-        setProperty(phoneNumberProperty, phoneNumber);
+    public DefaultTokenFactorProfile setCredentialId(String credentialId) {
+        setProperty(credentialIdProperty, credentialId);
         return this;
     }
 

@@ -17,10 +17,10 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface SmsUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface SmsFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getPhoneNumber();
 
-    SmsUserFactorProfile setPhoneNumber(String phoneNumber);
+    SmsFactorProfile setPhoneNumber(String phoneNumber);
 
 }

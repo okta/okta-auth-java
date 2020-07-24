@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.CallUserFactorProfile;
+import com.okta.authn.sdk.resource.CallFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,18 +23,18 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultCallUserFactorProfile extends AbstractResource implements CallUserFactorProfile {
+public class DefaultCallFactorProfile extends AbstractResource implements CallFactorProfile {
 
     private final static StringProperty phoneExtensionProperty = new StringProperty("phoneExtension");
     private final static StringProperty phoneNumberProperty = new StringProperty("phoneNumber");
 
     private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(phoneExtensionProperty, phoneNumberProperty);
 
-    public DefaultCallUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultCallFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultCallUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultCallFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -48,7 +48,7 @@ public class DefaultCallUserFactorProfile extends AbstractResource implements Ca
         return  getString(phoneExtensionProperty);
     }
 
-    public CallUserFactorProfile setPhoneExtension(String phoneExtension) {
+    public CallFactorProfile setPhoneExtension(String phoneExtension) {
         setProperty(phoneExtensionProperty, phoneExtension);
         return this;
     }
@@ -57,7 +57,7 @@ public class DefaultCallUserFactorProfile extends AbstractResource implements Ca
         return  getString(phoneNumberProperty);
     }
 
-    public CallUserFactorProfile setPhoneNumber(String phoneNumber) {
+    public CallFactorProfile setPhoneNumber(String phoneNumber) {
         setProperty(phoneNumberProperty, phoneNumber);
         return this;
     }

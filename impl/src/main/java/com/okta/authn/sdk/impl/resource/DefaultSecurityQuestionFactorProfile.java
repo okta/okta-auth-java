@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.SecurityQuestionUserFactorProfile;
+import com.okta.authn.sdk.resource.SecurityQuestionFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,7 +23,7 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultSecurityQuestionUserFactorProfile extends AbstractResource implements SecurityQuestionUserFactorProfile {
+public class DefaultSecurityQuestionFactorProfile extends AbstractResource implements SecurityQuestionFactorProfile {
 
     private final static StringProperty answerProperty = new StringProperty("answer");
     private final static StringProperty questionProperty = new StringProperty("question");
@@ -31,11 +31,11 @@ public class DefaultSecurityQuestionUserFactorProfile extends AbstractResource i
 
     private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(answerProperty, questionProperty, questionTextProperty);
 
-    public DefaultSecurityQuestionUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultSecurityQuestionFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultSecurityQuestionUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultSecurityQuestionFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -49,7 +49,7 @@ public class DefaultSecurityQuestionUserFactorProfile extends AbstractResource i
         return  getString(answerProperty);
     }
 
-    public SecurityQuestionUserFactorProfile setAnswer(String answer) {
+    public SecurityQuestionFactorProfile setAnswer(String answer) {
         setProperty(answerProperty, answer);
         return this;
     }
@@ -58,7 +58,7 @@ public class DefaultSecurityQuestionUserFactorProfile extends AbstractResource i
         return  getString(questionProperty);
     }
 
-    public SecurityQuestionUserFactorProfile setQuestion(String question) {
+    public SecurityQuestionFactorProfile setQuestion(String question) {
         setProperty(questionProperty, question);
         return this;
     }
@@ -67,7 +67,7 @@ public class DefaultSecurityQuestionUserFactorProfile extends AbstractResource i
         return  getString(questionTextProperty);
     }
 
-    public SecurityQuestionUserFactorProfile setQuestionText(String questionText) {
+    public SecurityQuestionFactorProfile setQuestionText(String questionText) {
         setProperty(questionTextProperty, questionText);
         return this;
     }

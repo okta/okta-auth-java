@@ -20,7 +20,7 @@ import com.okta.authn.sdk.its.email.EmailClient
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.TotpFactorActivation
-import com.okta.authn.sdk.resource.TotpUserFactorProfile
+import com.okta.authn.sdk.resource.TotpFactorProfile
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.FactorProvider
 import com.okta.authn.sdk.resource.FactorType
@@ -58,7 +58,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response1.getSessionToken(), nullValue()
 
         // enroll in TOTP factor
-        def totpFactor = authClient.instantiate(TotpUserFactorProfile)
+        def totpFactor = authClient.instantiate(TotpFactorProfile)
                 .setCredentialId(user.getProfile().getEmail())
 
         def response2 = authClient.enrollFactor(FactorType.TOKEN_SOFTWARE_TOTP,
@@ -255,7 +255,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response1.getSessionToken(), nullValue()
 
         // enroll in TOTP factor
-        def totpFactor = authClient.instantiate(TotpUserFactorProfile)
+        def totpFactor = authClient.instantiate(TotpFactorProfile)
                 .setCredentialId(user.getProfile().getEmail())
 
         def response2 = authClient.enrollFactor(FactorType.TOKEN_SOFTWARE_TOTP,

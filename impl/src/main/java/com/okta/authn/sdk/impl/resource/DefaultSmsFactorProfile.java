@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-Present Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.U2fUserFactorProfile;
+import com.okta.authn.sdk.resource.SmsFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,17 +23,17 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultU2fUserFactorProfile extends AbstractResource implements U2fUserFactorProfile {
+public class DefaultSmsFactorProfile extends AbstractResource implements SmsFactorProfile {
 
-    private final static StringProperty credentialIdProperty = new StringProperty("credentialId");
+    private final static StringProperty phoneNumberProperty = new StringProperty("phoneNumber");
 
-    private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty);
+    private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(phoneNumberProperty);
 
-    public DefaultU2fUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultSmsFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultU2fUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultSmsFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -43,12 +43,12 @@ public class DefaultU2fUserFactorProfile extends AbstractResource implements U2f
     }
 
 
-    public String getCredentialId() {
-        return  getString(credentialIdProperty);
+    public String getPhoneNumber() {
+        return  getString(phoneNumberProperty);
     }
 
-    public U2fUserFactorProfile setCredentialId(String credentialId) {
-        setProperty(credentialIdProperty, credentialId);
+    public SmsFactorProfile setPhoneNumber(String phoneNumber) {
+        setProperty(phoneNumberProperty, phoneNumber);
         return this;
     }
 

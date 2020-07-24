@@ -17,30 +17,10 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface PushUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface EmailFactorProfile extends ExtensibleResource, FactorProfile {
 
-    String getCredentialId();
+    String getEmail();
 
-    PushUserFactorProfile setCredentialId(String credentialId);
-
-    String getDeviceToken();
-
-    PushUserFactorProfile setDeviceToken(String deviceToken);
-
-    String getDeviceType();
-
-    PushUserFactorProfile setDeviceType(String deviceType);
-
-    String getName();
-
-    PushUserFactorProfile setName(String name);
-
-    String getPlatform();
-
-    PushUserFactorProfile setPlatform(String platform);
-
-    String getVersion();
-
-    PushUserFactorProfile setVersion(String version);
+    EmailFactorProfile setEmail(String email);
 
 }

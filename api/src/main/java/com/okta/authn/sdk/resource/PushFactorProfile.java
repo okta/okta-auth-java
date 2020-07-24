@@ -17,14 +17,30 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface WebAuthnUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface PushFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getCredentialId();
 
-    WebAuthnUserFactorProfile setCredentialId(String credentialId);
+    PushFactorProfile setCredentialId(String credentialId);
 
-    String getAuthenticatorName();
+    String getDeviceToken();
 
-    WebAuthnUserFactorProfile setAuthenticatorName(String authenticatorName);
+    PushFactorProfile setDeviceToken(String deviceToken);
+
+    String getDeviceType();
+
+    PushFactorProfile setDeviceType(String deviceType);
+
+    String getName();
+
+    PushFactorProfile setName(String name);
+
+    String getPlatform();
+
+    PushFactorProfile setPlatform(String platform);
+
+    String getVersion();
+
+    PushFactorProfile setVersion(String version);
 
 }

@@ -17,14 +17,10 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface CallUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface WebFactorProfile extends ExtensibleResource, FactorProfile {
 
-    String getPhoneExtension();
+    String getCredentialId();
 
-    CallUserFactorProfile setPhoneExtension(String phoneExtension);
-
-    String getPhoneNumber();
-
-    CallUserFactorProfile setPhoneNumber(String phoneNumber);
+    WebFactorProfile setCredentialId(String credentialId);
 
 }

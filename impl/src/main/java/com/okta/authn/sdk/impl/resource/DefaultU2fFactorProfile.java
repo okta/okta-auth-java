@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.WebAuthnUserFactorProfile;
+import com.okta.authn.sdk.resource.U2fFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,18 +23,17 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultWebAuthnUserFactorProfile extends AbstractResource implements WebAuthnUserFactorProfile {
+public class DefaultU2fFactorProfile extends AbstractResource implements U2fFactorProfile {
 
     private final static StringProperty credentialIdProperty = new StringProperty("credentialId");
-    private final static StringProperty authenticatorNameProperty = new StringProperty("authenticatorName");
 
-    private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty, authenticatorNameProperty);
+    private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty);
 
-    public DefaultWebAuthnUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultU2fFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultWebAuthnUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultU2fFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -48,17 +47,8 @@ public class DefaultWebAuthnUserFactorProfile extends AbstractResource implement
         return  getString(credentialIdProperty);
     }
 
-    public WebAuthnUserFactorProfile setCredentialId(String credentialId) {
+    public U2fFactorProfile setCredentialId(String credentialId) {
         setProperty(credentialIdProperty, credentialId);
-        return this;
-    }
-
-    public String getAuthenticatorName() {
-        return  getString(authenticatorNameProperty);
-    }
-
-    public WebAuthnUserFactorProfile setAuthenticatorName(String authenticatorName) {
-        setProperty(authenticatorNameProperty, authenticatorName);
         return this;
     }
 

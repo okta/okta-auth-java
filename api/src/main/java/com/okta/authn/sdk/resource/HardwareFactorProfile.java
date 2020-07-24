@@ -17,10 +17,10 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface U2fUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface HardwareFactorProfile extends ExtensibleResource, FactorProfile {
 
     String getCredentialId();
 
-    U2fUserFactorProfile setCredentialId(String credentialId);
+    HardwareFactorProfile setCredentialId(String credentialId);
 
 }

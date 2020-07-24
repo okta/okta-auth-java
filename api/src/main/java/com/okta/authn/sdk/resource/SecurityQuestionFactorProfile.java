@@ -17,10 +17,18 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface TokenUserFactorProfile extends ExtensibleResource, FactorProfile {
+public interface SecurityQuestionFactorProfile extends ExtensibleResource, FactorProfile {
 
-    String getCredentialId();
+    String getAnswer();
 
-    TokenUserFactorProfile setCredentialId(String credentialId);
+    SecurityQuestionFactorProfile setAnswer(String answer);
+
+    String getQuestion();
+
+    SecurityQuestionFactorProfile setQuestion(String question);
+
+    String getQuestionText();
+
+    SecurityQuestionFactorProfile setQuestionText(String questionText);
 
 }

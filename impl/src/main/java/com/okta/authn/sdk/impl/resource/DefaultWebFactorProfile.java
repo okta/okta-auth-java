@@ -15,7 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource;
 
-import com.okta.authn.sdk.resource.WebUserFactorProfile;
+import com.okta.authn.sdk.resource.WebFactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.Property;
@@ -23,17 +23,17 @@ import com.okta.sdk.impl.resource.StringProperty;
 
 import java.util.Map;
 
-public class DefaultWebUserFactorProfile extends AbstractResource implements WebUserFactorProfile {
+public class DefaultWebFactorProfile extends AbstractResource implements WebFactorProfile {
 
     private final static StringProperty credentialIdProperty = new StringProperty("credentialId");
 
     private final static Map<String, Property> PROPERTY_DESCRIPTORS = createPropertyDescriptorMap(credentialIdProperty);
 
-    public DefaultWebUserFactorProfile(InternalDataStore dataStore) {
+    public DefaultWebFactorProfile(InternalDataStore dataStore) {
         super(dataStore);
     }
 
-    public DefaultWebUserFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
+    public DefaultWebFactorProfile(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
     }
 
@@ -47,7 +47,7 @@ public class DefaultWebUserFactorProfile extends AbstractResource implements Web
         return  getString(credentialIdProperty);
     }
 
-    public WebUserFactorProfile setCredentialId(String credentialId) {
+    public WebFactorProfile setCredentialId(String credentialId) {
         setProperty(credentialIdProperty, credentialId);
         return this;
     }

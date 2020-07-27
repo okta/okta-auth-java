@@ -83,7 +83,8 @@
     </suppress>
     <suppress>
         <notes><![CDATA[ file name: logback-throttling-appender-1.1.0.jar ]]></notes>
-        <gav regex="true">^io\.dropwizard\.logback:logback-throttling-appender:.*$</gav>
+        <gav regex="true">^io\.dropwizard\.logback:logback-throttling-appender:.*$</gav> 
+        <!-- See https://github.com/jeremylong/DependencyCheck/issues/2473 -->
         <cve>CVE-2017-5929</cve>
     </suppress>
     <suppress>

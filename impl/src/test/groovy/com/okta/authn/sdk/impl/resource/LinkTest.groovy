@@ -17,7 +17,7 @@ package com.okta.authn.sdk.impl.resource
 
 import com.okta.authn.sdk.resource.Link
 import com.okta.sdk.impl.ds.InternalDataStore
-import org.junit.Test
+import org.testng.annotations.Test
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 

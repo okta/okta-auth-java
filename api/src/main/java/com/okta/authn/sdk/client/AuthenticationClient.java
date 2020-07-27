@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,13 @@ import com.okta.authn.sdk.resource.FactorEnrollRequest;
 import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
+import com.okta.authn.sdk.resource.FactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
 import com.okta.sdk.ds.DataStore;
 import com.okta.sdk.resource.Resource;
-import com.okta.sdk.resource.user.factor.FactorProfile;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 /**
  * The Okta Authentication API provides operations to authenticate users, perform multi-factor enrollment and verification,

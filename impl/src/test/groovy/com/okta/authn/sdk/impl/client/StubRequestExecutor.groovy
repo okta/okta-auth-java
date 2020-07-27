@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,12 @@
  */
 package com.okta.authn.sdk.impl.client
 
-import com.okta.sdk.impl.http.*
-import com.okta.sdk.impl.http.support.DefaultResponse
+import com.okta.commons.http.DefaultResponse
+import com.okta.commons.http.HttpException
+import com.okta.commons.http.MediaType
+import com.okta.commons.http.Request
+import com.okta.commons.http.RequestExecutor
+import com.okta.commons.http.Response
 import com.okta.sdk.impl.io.ClasspathResource
 import groovy.text.StreamingTemplateEngine
 import org.apache.http.HttpHeaders
@@ -31,7 +35,7 @@ class StubRequestExecutor implements RequestExecutor {
     Map<String, Object> interpolationData = new HashMap<>()
 
     @Override
-    Response executeRequest(Request request) throws RestException {
+    Response executeRequest(Request request) throws HttpException {
 
         assertThat(request.headers, allOf(
                 hasEntry(equalTo(HttpHeaders.ACCEPT), everyItem(equalTo(MediaType.APPLICATION_JSON_VALUE))),

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,24 +24,23 @@ import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationRequest
 import com.okta.authn.sdk.resource.AuthenticationResponse
 import com.okta.authn.sdk.resource.AuthenticationStatus
+import com.okta.authn.sdk.resource.CallFactorProfile
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest
 import com.okta.sdk.client.AuthenticationScheme
 import com.okta.sdk.impl.config.ClientConfiguration
-import com.okta.sdk.impl.http.MediaType
-import com.okta.sdk.impl.http.Request
-import com.okta.sdk.impl.http.RequestExecutor
-import com.okta.sdk.impl.http.support.DefaultResponse
+import com.okta.commons.http.MediaType
+import com.okta.commons.http.Request
+import com.okta.commons.http.RequestExecutor
+import com.okta.commons.http.DefaultResponse
 import com.okta.sdk.impl.util.DefaultBaseUrlResolver
 import com.okta.sdk.resource.ResourceException
-import com.okta.sdk.resource.user.factor.CallFactorProfile
-import com.okta.sdk.resource.user.factor.FactorProvider
-import com.okta.sdk.resource.user.factor.FactorType
+import com.okta.authn.sdk.resource.FactorProvider
+import com.okta.authn.sdk.resource.FactorType
 import com.spotify.hamcrest.jackson.IsJsonObject
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-import org.mockito.Mockito
 import org.testng.annotations.Test
 
 import static com.spotify.hamcrest.jackson.JsonMatchers.jsonObject
@@ -54,7 +53,7 @@ import static org.mockito.Mockito.*
 class DefaultAuthenticationClientTest {
 
     @Test
-    void authenticationSuccess() {
+    void authenticationSuccessTest() {
 
         def client = createClient("authenticationSuccess")
         StubRequestExecutor requestExecutor = client.getRequestExecutor()
@@ -393,7 +392,6 @@ class DefaultAuthenticationClientTest {
         verify(stateHandler).handleRecovery(response)
     }
 
-
     @Test
     void eachStatusTest() {
 
@@ -517,7 +515,7 @@ class DefaultAuthenticationClientTest {
 
         TestUtil.expectException(exception) {
             def response = new DefaultResponse(httpStatus, MediaType.APPLICATION_JSON, new ByteArrayInputStream(responseText.bytes), responseText.length())
-            when(requestExecutor.executeRequest(Mockito.any(Request))).thenReturn(response)
+            when(requestExecutor.executeRequest(any(Request))).thenReturn(response)
             client.authenticate("wrong-username", "or-password".toCharArray(), null, stateHandler)
         }
         verifyZeroInteractions(stateHandler)
@@ -531,7 +529,6 @@ class DefaultAuthenticationClientTest {
 
         return new WrappedAuthenticationClient(clientConfig)
     }
-
 
     // matchers
     static Matcher<Request> bodyMatches(final IsJsonObject matcher) {
@@ -624,5 +621,3 @@ class DefaultAuthenticationClientTest {
         }
     }
 }
-
-

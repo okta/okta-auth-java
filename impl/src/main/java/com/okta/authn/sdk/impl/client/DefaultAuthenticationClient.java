@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ import com.okta.authn.sdk.InvalidAuthenticationStateException;
 import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
+import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.http.Header;
 import com.okta.authn.sdk.http.QueryParameter;
 import com.okta.authn.sdk.http.RequestContext;
-import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.ActivateFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
@@ -39,22 +39,17 @@ import com.okta.authn.sdk.resource.RecoverPasswordRequest;
 import com.okta.authn.sdk.resource.RecoveryQuestionAnswerRequest;
 import com.okta.authn.sdk.resource.StateTokenRequest;
 import com.okta.authn.sdk.resource.UnlockAccountRequest;
+import com.okta.authn.sdk.resource.FactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoverTokenRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
-import com.okta.sdk.cache.CacheManager;
 import com.okta.sdk.cache.Caches;
-import com.okta.sdk.client.AuthenticationScheme;
-import com.okta.sdk.client.Proxy;
 import com.okta.sdk.impl.client.BaseClient;
 import com.okta.sdk.impl.config.ClientConfiguration;
-import com.okta.sdk.impl.http.authc.RequestAuthenticatorFactory;
-import com.okta.sdk.impl.util.BaseUrlResolver;
 import com.okta.sdk.resource.Resource;
 import com.okta.sdk.resource.ResourceException;
-import com.okta.sdk.resource.user.factor.FactorProfile;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 import java.util.List;
 import java.util.Map;
@@ -62,25 +57,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DefaultAuthenticationClient extends BaseClient implements AuthenticationClient {
-
-    /**
-     * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level
-     * JavaDoc for a usage example.
-     *
-     * @param baseUrlResolver      Okta base URL resolver
-     * @param proxy                the HTTP proxy to be used when communicating with the Okta API server (can be
-     *                             null)
-     * @param cacheManager         the {@link com.okta.sdk.cache.CacheManager} that should be used to cache
-     *                             Okta REST resources (can be null)
-     * @param authenticationScheme the HTTP authentication scheme to be used when communicating with the Okta API
-     *                             server (can be null)
-     * @param requestAuthenticatorFactory factory used to handle creating authentication requests
-     * @param connectionTimeout    connection timeout in seconds
-     */
-    @Deprecated
-    public DefaultAuthenticationClient(BaseUrlResolver baseUrlResolver, Proxy proxy, CacheManager cacheManager, AuthenticationScheme authenticationScheme, RequestAuthenticatorFactory requestAuthenticatorFactory, int connectionTimeout) {
-        super(new DisabledClientCredentialsResolver(), baseUrlResolver, proxy, cacheManager, authenticationScheme, requestAuthenticatorFactory, connectionTimeout);
-    }
 
     /**
      * Instantiates a new AuthenticationClient instance that will communicate with the Okta REST API.  See the class-level
@@ -206,13 +182,13 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
-    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, FactorProfile profile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+    public AuthenticationResponse enrollFactor(FactorType type, FactorProvider provider, FactorProfile factorProfile, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return enrollFactor(instantiate(FactorEnrollRequest.class)
-                                    .setFactorType(type)
-                                    .setProvider(provider)
-                                    .setFactorProfile(profile)
-                                    .setStateToken(stateToken),
-                                stateHandler);
+                .setFactorType(type)
+                .setProvider(provider)
+                .setFactorProfile(factorProfile)
+                .setStateToken(stateToken),
+            stateHandler);
     }
 
     @Override

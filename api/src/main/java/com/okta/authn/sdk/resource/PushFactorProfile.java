@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2017-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,30 @@ package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
 
-public interface FactorEnrollRequest extends ExtensibleResource {
+public interface PushFactorProfile extends ExtensibleResource, FactorProfile {
 
-    String getStateToken();
-    FactorEnrollRequest setStateToken(String stateToken);
+    String getCredentialId();
 
-    FactorType getFactorType();
-    FactorEnrollRequest setFactorType(FactorType factorType);
+    PushFactorProfile setCredentialId(String credentialId);
 
-    FactorProvider getProvider();
-    FactorEnrollRequest setProvider(FactorProvider provider);
+    String getDeviceToken();
 
-    FactorProfile getFactorProfile();
-    FactorEnrollRequest setFactorProfile(FactorProfile factorProfile);
+    PushFactorProfile setDeviceToken(String deviceToken);
+
+    String getDeviceType();
+
+    PushFactorProfile setDeviceType(String deviceType);
+
+    String getName();
+
+    PushFactorProfile setName(String name);
+
+    String getPlatform();
+
+    PushFactorProfile setPlatform(String platform);
+
+    String getVersion();
+
+    PushFactorProfile setVersion(String version);
+
 }

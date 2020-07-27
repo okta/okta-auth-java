@@ -16,7 +16,7 @@
  */
 package com.okta.authn.sdk.client;
 
-import com.okta.sdk.client.Proxy;
+import com.okta.commons.http.config.Proxy;
 
 /**
  * A <a href="http://en.wikipedia.org/wiki/Builder_pattern">Builder design pattern</a> used to

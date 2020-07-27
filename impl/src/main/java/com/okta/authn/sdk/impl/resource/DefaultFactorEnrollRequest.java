@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
 package com.okta.authn.sdk.impl.resource;
 
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
+import com.okta.authn.sdk.resource.FactorProfile;
 import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.EnumProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.ResourceReference;
 import com.okta.sdk.impl.resource.StringProperty;
-import com.okta.sdk.resource.user.factor.FactorProfile;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 import java.util.Map;
 
@@ -87,8 +87,8 @@ public class DefaultFactorEnrollRequest extends AbstractResource implements Fact
     }
 
     @Override
-    public FactorEnrollRequest setFactorProfile(FactorProfile profile) {
-        setProperty(FACTOR_PROFILE_PROPERTY, profile);
+    public FactorEnrollRequest setFactorProfile(FactorProfile factorProfile) {
+        setProperty(FACTOR_PROFILE_PROPERTY, factorProfile);
         return this;
     }
 }

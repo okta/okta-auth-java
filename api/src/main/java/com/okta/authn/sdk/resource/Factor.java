@@ -16,8 +16,6 @@
 package com.okta.authn.sdk.resource;
 
 import com.okta.sdk.resource.ExtensibleResource;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
 
 import java.util.Map;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ import com.okta.authn.sdk.its.email.EmailClient
 import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest
 import com.okta.authn.sdk.resource.AuthenticationStatus
 import com.okta.authn.sdk.resource.TotpFactorActivation
+import com.okta.authn.sdk.resource.TotpFactorProfile
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest
-import com.okta.sdk.resource.user.factor.FactorProvider
-import com.okta.sdk.resource.user.factor.FactorType
-import com.okta.sdk.resource.user.factor.TotpFactorProfile
+import com.okta.authn.sdk.resource.FactorProvider
+import com.okta.authn.sdk.resource.FactorType
 import org.jboss.aerogear.security.otp.Totp
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -161,7 +161,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
     void passwordExpiredTest() {
 
         def user = randomUser()
-        def tempPassword = user.expirePassword(true).tempPassword.toCharArray()
+        def tempPassword = user.expirePasswordAndGetTemporaryPassword().getTempPassword().toCharArray()
 
         def response1 = authClient.authenticate(user.getProfile().getEmail(), tempPassword, null, ignoringStateHandler)
         assertThat response1.getStatus(), is(AuthenticationStatus.PASSWORD_EXPIRED)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ public class DefaultLink extends AbstractResource implements Link {
     static Map<String, Link> getLinks(Map rawLinkMap, InternalDataStore dataStore) {
 
         Map<String, Link> result = new LinkedHashMap<>();
-        if (!com.okta.sdk.lang.Collections.isEmpty(rawLinkMap)) {
+        if (!com.okta.commons.lang.Collections.isEmpty(rawLinkMap)) {
             rawLinkMap.forEach((k,v) -> {
 
                     Link link;

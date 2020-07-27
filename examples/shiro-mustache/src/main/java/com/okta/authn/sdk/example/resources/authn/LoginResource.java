@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Okta, Inc.
+ * Copyright 2018-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,12 +38,12 @@ import com.okta.authn.sdk.resource.ActivatePassCodeFactorRequest;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.AuthenticationStatus;
 import com.okta.authn.sdk.resource.FactorEnrollRequest;
+import com.okta.authn.sdk.resource.SmsFactorProfile;
 import com.okta.authn.sdk.resource.VerifyFactorRequest;
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import com.okta.authn.sdk.resource.VerifyRecoveryRequest;
-import com.okta.sdk.resource.user.factor.FactorProvider;
-import com.okta.sdk.resource.user.factor.FactorType;
-import com.okta.sdk.resource.user.factor.SmsFactorProfile;
+import com.okta.authn.sdk.resource.FactorProvider;
+import com.okta.authn.sdk.resource.FactorType;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

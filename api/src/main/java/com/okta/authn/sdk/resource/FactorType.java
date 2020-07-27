@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Okta, Inc.
+ * Copyright 2017-Present Okta, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,41 @@
  */
 package com.okta.authn.sdk.resource;
 
-import com.okta.sdk.resource.ExtensibleResource;
+public enum FactorType {
 
-public interface FactorEnrollRequest extends ExtensibleResource {
+  CALL("call"),
 
-    String getStateToken();
-    FactorEnrollRequest setStateToken(String stateToken);
+  EMAIL("email"),
 
-    FactorType getFactorType();
-    FactorEnrollRequest setFactorType(FactorType factorType);
+  PUSH("push"),
 
-    FactorProvider getProvider();
-    FactorEnrollRequest setProvider(FactorProvider provider);
+  QUESTION("question"),
 
-    FactorProfile getFactorProfile();
-    FactorEnrollRequest setFactorProfile(FactorProfile factorProfile);
+  SMS("sms"),
+
+  TOKEN_HARDWARE("token:hardware"),
+
+  TOKEN_HOTP("token:hotp"),
+
+  TOKEN_SOFTWARE_TOTP("token:software:totp"),
+
+  TOKEN("token"),
+
+  U2F("u2f"),
+
+  WEB("web"),
+
+  WEBAUTHN("webauthn");
+
+  private String value;
+
+  FactorType(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
 }

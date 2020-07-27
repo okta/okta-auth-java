@@ -76,5 +76,19 @@
         <gav regex="true">^org\.slf4j:log4j-over-slf4j:.*$</gav>
         <cve>CVE-2018-8088</cve>
     </suppress>
-
+    <suppress>
+        <notes><![CDATA[ file name: caffeine-2.8.5.jar ]]></notes>
+        <gav regex="true">^com\.github\.ben-manes\.caffeine:caffeine:.*$</gav>
+        <cve>CVE-2017-18365</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[ file name: logback-throttling-appender-1.1.0.jar ]]></notes>
+        <gav regex="true">^io\.dropwizard\.logback:logback-throttling-appender:.*$</gav>
+        <cve>CVE-2017-5929</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[ file name: log4j-over-slf4j-1.7.30.jar ]]></notes>
+        <gav regex="true">^org\.slf4j:log4j-over-slf4j:.*$</gav>
+        <cve>CVE-2020-9488</cve>
+    </suppress>
 </suppressions>

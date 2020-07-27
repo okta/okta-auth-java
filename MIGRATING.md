@@ -25,10 +25,4 @@ Below SDK classes were previously moved to [okta-commons-java](https://github.co
 - com.okta.sdk.lang.Strings
 - com.okta.sdk.lang.Collections
 - com.okta.sdk.lang.Locales
-- com.okta.sdk.impl.http.MediaType
-- com.okta.sdk.impl.http.Request
-- com.okta.sdk.impl.http.RequestExecutor
-- com.okta.sdk.impl.http.support.DefaultResponse
-- com.okta.sdk.impl.util.BaseUrlResolver
-- com.okta.sdk.impl.http.Response
 ```

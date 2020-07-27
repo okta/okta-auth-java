@@ -91,6 +91,7 @@
     <suppress>
         <notes><![CDATA[ file name: log4j-over-slf4j-1.7.30.jar ]]></notes>
         <gav regex="true">^org\.slf4j:log4j-over-slf4j:.*$</gav>
+        <!-- See https://github.com/jeremylong/DependencyCheck/issues/2626 -->
         <cve>CVE-2020-9488</cve>
     </suppress>
 </suppressions>

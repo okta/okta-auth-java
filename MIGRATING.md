@@ -16,31 +16,6 @@ In addition to se new classes/interfaces, some existing classes/interfaces are n
 Note: Old interfaces above were pulled in from **okta-sdk-java** Management SDK hitherto. 
 These are now migrated to reside locally within this Authentication SDK. 
 
-- Added below extensions of `com.okta.authn.sdk.resource.FactorProfile` interface:
-  ```java
-  - CallFactorProfile
-  - EmailFactorProfile
-  - HardwareFactorProfile
-  - PushFactorProfile
-  - SecurityQuestionFactorProfile
-  - SmsFactorProfile
-  - TokenFactorProfile
-  - TotpFactorProfile
-  - U2fFactorProfile
-  - WebAuthnFactorProfile
-  - WebFactorProfile
-  ```
- 
-Below SDK classes/interfaces are **deprecated** and will be removed from this project.
-
-```
-- com.okta.sdk.http.UserAgentProvider
-- com.okta.authn.sdk.impl.http.AuthnSdkUserAgentProvider
-- com.okta.sdk.cache.CacheManager
-- com.okta.sdk.client.AuthenticationScheme
-- com.okta.sdk.impl.http.authc.RequestAuthenticatorFactory
-```
-
 Below SDK classes were previously moved to [okta-commons-java](https://github.com/okta/okta-commons-java)).
 
 ```

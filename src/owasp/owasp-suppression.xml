@@ -79,7 +79,8 @@
     <suppress>
         <notes><![CDATA[ file name: caffeine-2.8.5.jar ]]></notes>
         <gav regex="true">^com\.github\.ben-manes\.caffeine:caffeine:.*$</gav>
-        <cve>CVE-2017-18365</cve> <!-- See https://github.com/dropwizard/dropwizard/issues/3185 -->
+        <!-- See https://github.com/dropwizard/dropwizard/issues/3185 -->
+        <cve>CVE-2017-18365</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[ file name: logback-throttling-appender-1.1.0.jar ]]></notes>

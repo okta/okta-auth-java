@@ -79,19 +79,29 @@
     <suppress>
         <notes><![CDATA[ file name: caffeine-2.8.5.jar ]]></notes>
         <gav regex="true">^com\.github\.ben-manes\.caffeine:caffeine:.*$</gav>
-        <!-- See https://github.com/dropwizard/dropwizard/issues/3185 -->
+        <!--
+        This is a false positive. This dependency is brought in by dropwizard-views-mustache library.
+        For more info, see https://github.com/dropwizard/dropwizard/issues/3185.
+        -->
         <cve>CVE-2017-18365</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[ file name: logback-throttling-appender-1.1.0.jar ]]></notes>
         <gav regex="true">^io\.dropwizard\.logback:logback-throttling-appender:.*$</gav> 
-        <!-- See https://github.com/jeremylong/DependencyCheck/issues/2473 -->
+        <!--
+        This is a false positive. This dependency is brought in by dropwizard-logging library.
+        For more info, see https://github.com/jeremylong/DependencyCheck/issues/2473.
+        -->
         <cve>CVE-2017-5929</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[ file name: log4j-over-slf4j-1.7.30.jar ]]></notes>
         <gav regex="true">^org\.slf4j:log4j-over-slf4j:.*$</gav>
-        <!-- See https://github.com/jeremylong/DependencyCheck/issues/2626 -->
+        <!--
+        This is a false positive. This incorrectly includes all of the log4j
+        dependencies, though we do not include any log4j dependencies here.
+        For more info, see https://github.com/jeremylong/DependencyCheck/issues/2626.
+        -->
         <cve>CVE-2020-9488</cve>
     </suppress>
 </suppressions>

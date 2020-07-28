@@ -47,7 +47,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response.getSessionToken(), not(isEmptyString())
     }
 
-    @Test
+    @Test(enabled = false)
     void enrollFactorTest() {
 
         // first login to this group requires MFA enrollment
@@ -179,7 +179,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response3.getSessionToken(), not(isEmptyString())
     }
 
-    @Test(groups = "email")
+    @Test(enabled = false, groups = "email")
     void unlockAccountTest() {
 
         def emailClient = new EmailClient()

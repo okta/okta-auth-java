@@ -47,7 +47,8 @@ This library uses semantic versioning and follows Okta's [library version policy
 
 | Version | Status                    |
 | ------- | ------------------------- |
-| 1.x   | :heavy_check_mark: Stable |
+| 1.x   | :clock9: Retiring effective April 28, 2021 |
+| 2.x.x | :heavy_check_mark: Stable ([migration guide](https://github.com/okta/okta-auth-java/blob/master/MIGRATING.md)) |
  
 The latest release can always be found on the [releases page][github-releases].
  
@@ -79,7 +80,7 @@ For Apache Maven:
 <dependency>
     <groupId>com.okta.sdk</groupId>
     <artifactId>okta-sdk-httpclient</artifactId>
-    <version>1.5.4</version>
+    <version>2.0.0</version>
     <scope>runtime</scope>
 </dependency>
 ```
@@ -89,7 +90,7 @@ For Gradle:
 ```groovy
 compile 'com.okta.authn.sdk:okta-authn-sdk-api:${okta.authn.version}'
 runtime 'com.okta.authn.sdk:okta-authn-sdk-impl:${okta.authn.version}'
-runtime 'com.okta.sdk:okta-sdk-httpclient:1.5.4'
+runtime 'com.okta.sdk:okta-sdk-httpclient:2.0.0'
 ```
 
 ### SNAPSHOT Dependencies

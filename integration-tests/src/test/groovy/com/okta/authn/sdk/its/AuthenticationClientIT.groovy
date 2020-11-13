@@ -85,21 +85,20 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
 
         // now login again and verify the factor on login
         def response4 = authClient.authenticate(user.getProfile().getEmail(), USER_PASSWORD, null, ignoringStateHandler)
-        assertThat response4.getStatus(), is(AuthenticationStatus.SUCCESS)
-        assertThat response4.getSessionToken(), not(isEmptyString())
-//        assertThat response4.getSessionToken(), nullValue()
-//
-//        // force sleep to get next token
-//        sleep(30000l)
-//
-//        def factorId = response4.getFactors().get(0).getId()
-//        def factorVerifyRequest = authClient.instantiate(VerifyPassCodeFactorRequest)
-//                                                            .setPassCode(totp.now())
-//                                                            .setStateToken(response4.getStateToken())
-//
-//        def response5 = authClient.verifyFactor(factorId, factorVerifyRequest, ignoringStateHandler)
-//        assertThat response5.getStatus(), is(AuthenticationStatus.SUCCESS)
-//        assertThat response5.getSessionToken(), not(isEmptyString())
+        assertThat response4.getStatus(), is(AuthenticationStatus.MFA_REQUIRED)
+        assertThat response4.getSessionToken(), nullValue()
+
+        // force sleep to get next token
+        sleep(30000l)
+
+        def factorId = response4.getFactors().get(0).getId()
+        def factorVerifyRequest = authClient.instantiate(VerifyPassCodeFactorRequest)
+                                                            .setPassCode(totp.now())
+                                                            .setStateToken(response4.getStateToken())
+
+        def response5 = authClient.verifyFactor(factorId, factorVerifyRequest, ignoringStateHandler)
+        assertThat response5.getStatus(), is(AuthenticationStatus.SUCCESS)
+        assertThat response5.getSessionToken(), not(isEmptyString())
     }
 
     @Test(groups = "email")

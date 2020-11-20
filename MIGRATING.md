@@ -5,7 +5,7 @@ This SDK uses semantic versioning and follows Okta's [library version policy](ht
 ## Migrating from 1.x.x to 2.0.0
 
 Version 2.0.0 of this SDK introduces a number of breaking changes from previous versions. 
-In addition to se new classes/interfaces, some existing classes/interfaces are no longer backward compatible due to method renaming and signature changes.
+In addition to some new classes/interfaces, some existing classes/interfaces are no longer backward compatible due to method renaming and signature changes.
 
 ### Package `com.okta.authn.sdk.resource`
 

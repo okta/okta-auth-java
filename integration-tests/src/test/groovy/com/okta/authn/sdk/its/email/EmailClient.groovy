@@ -15,10 +15,12 @@
  */
 package com.okta.authn.sdk.its.email
 
+import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.okta.authn.sdk.its.util.StopWatch
+import io.restassured.response.Response
 import org.testng.Assert
 
 import static io.restassured.RestAssured.get
@@ -93,12 +95,18 @@ class EmailClient {
 
     private Email createEmailAccount() {
 
+        Response response = get(GUERILLA_MAIL_BASE)
+
+        if (response == null || response.statusCode() != 200) {
+            Assert.fail("Could not communicate with Guerilla Mail API: " + response.getStatusLine())
+        }
+
         def jsonResponse = get(GUERILLA_MAIL_BASE + "?f=get_email_address").asString()
 
         try {
             return mapper.readValue(jsonResponse, Email.class)
-        } catch (JsonMappingException e) {
-            Assert.fail("Couldn't create an email address using GuerillaMail")
+        } catch (JsonProcessingException | JsonMappingException e) {
+            Assert.fail("Error parsing response from Guerilla Mail API [" + GUERILLA_MAIL_BASE + "?f=get_email_address" + "]: " + e)
         }
     }
 }

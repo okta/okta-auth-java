@@ -101,7 +101,8 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response5.getSessionToken(), not(isEmptyString())
     }
 
-    @Test(groups = "email")
+    // disabled due to https://github.com/okta/okta-auth-java/pull/80#discussion_r521709327
+    //@Test(groups = "email")
     void forgotPasswordTest() {
 
         def emailClient = new EmailClient()
@@ -179,7 +180,8 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response3.getSessionToken(), not(isEmptyString())
     }
 
-    @Test(groups = "email")
+    // disabled due to https://github.com/okta/okta-auth-java/pull/80#discussion_r521709327
+    //@Test(groups = "email")
     void unlockAccountTest() {
 
         def emailClient = new EmailClient()

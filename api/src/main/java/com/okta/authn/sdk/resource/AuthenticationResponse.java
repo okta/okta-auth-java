@@ -49,6 +49,8 @@ public interface AuthenticationResponse extends ExtensibleResource {
 
     String getRecoveryType();
 
+    Integer getCorrectAnswer();
+
     Map<String, Object> getEmbedded();
 
     Map<String, Link> getLinks();

@@ -63,10 +63,12 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
 
     private static final MapProperty LINKS_PROPERTY = new MapProperty("_links");
 
+    private static final StringProperty CORRECT_ANSWER_PROPERTY = new StringProperty("correctAnswer");
     // Nested under _embedded
     private static final StringProperty NESTED__USER_PROPERTY = new StringProperty("user");
     private static final StringProperty NESTED__FACTORS_PROPERTY = new StringProperty("factors");
     private static final StringProperty NESTED__FACTOR_PROPERTY = new StringProperty("factor");
+    private static final StringProperty NESTED__CHALLENGE_PROPERTY = new StringProperty("challenge");
 
     public DefaultAuthenticationResponse(InternalDataStore dataStore, Map<String, Object> properties) {
         super(dataStore, properties);
@@ -193,5 +195,23 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
             }
         }
         return result;
+    }
+
+    @Override
+    public Integer getCorrectAnswer() {
+        Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(NESTED__FACTOR_PROPERTY.getName());
+
+        if (rawFactor != null && rawFactor.containsKey(EMBEDDED_PROPERTY.getName())) {
+            Map<String, Object> challengeFactorEmbedded = (Map<String, Object>) rawFactor.get(EMBEDDED_PROPERTY.getName());
+
+            if (challengeFactorEmbedded != null && challengeFactorEmbedded.containsKey(NESTED__CHALLENGE_PROPERTY.getName())) {
+                Map<String, Object> challenge = (Map<String, Object>) challengeFactorEmbedded.get(NESTED__CHALLENGE_PROPERTY.getName());
+
+                if (challenge != null && challenge.containsKey(CORRECT_ANSWER_PROPERTY.getName())) {
+                    return (Integer) challenge.get(CORRECT_ANSWER_PROPERTY.getName());
+                }
+            }
+        }
+        return null;
     }
 }

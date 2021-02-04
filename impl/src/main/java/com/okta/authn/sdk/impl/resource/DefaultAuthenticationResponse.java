@@ -24,6 +24,7 @@ import com.okta.sdk.impl.ds.InternalDataStore;
 import com.okta.sdk.impl.resource.AbstractResource;
 import com.okta.sdk.impl.resource.DateProperty;
 import com.okta.sdk.impl.resource.EnumProperty;
+import com.okta.sdk.impl.resource.IntegerProperty; 
 import com.okta.sdk.impl.resource.MapProperty;
 import com.okta.sdk.impl.resource.Property;
 import com.okta.sdk.impl.resource.StringProperty;
@@ -63,7 +64,8 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
 
     private static final MapProperty LINKS_PROPERTY = new MapProperty("_links");
 
-    private static final StringProperty CORRECT_ANSWER_PROPERTY = new StringProperty("correctAnswer");
+    private static final IntegerProperty CORRECT_ANSWER_PROPERTY = new IntegerProperty("correctAnswer");
+    
     // Nested under _embedded
     private static final StringProperty NESTED__USER_PROPERTY = new StringProperty("user");
     private static final StringProperty NESTED__FACTORS_PROPERTY = new StringProperty("factors");
@@ -90,7 +92,8 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
             FACTOR_TYPE_PROPERTY,
             RECOVERY_TYPE_PROPERTY,
             EMBEDDED_PROPERTY,
-            LINKS_PROPERTY
+            LINKS_PROPERTY,
+            CORRECT_ANSWER_PROPERTY
         );
     }
 
@@ -199,7 +202,7 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
 
     @Override
     public Integer getCorrectAnswer() {
-        Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(NESTED__FACTOR_PROPERTY.getName());
+        Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(NESTED__FACTORS_PROPERTY.getName());
 
         if (rawFactor != null && rawFactor.containsKey(EMBEDDED_PROPERTY.getName())) {
             Map<String, Object> challengeFactorEmbedded = (Map<String, Object>) rawFactor.get(EMBEDDED_PROPERTY.getName());

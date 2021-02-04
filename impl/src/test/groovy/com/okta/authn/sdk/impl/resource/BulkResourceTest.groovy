@@ -15,6 +15,7 @@
  */
 package com.okta.authn.sdk.impl.resource
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.okta.authn.sdk.impl.util.TestUtil
 import com.okta.commons.lang.Assert
 import com.okta.sdk.impl.ds.InternalDataStore
@@ -205,7 +206,8 @@ class BulkResourceTest {
                 resource.setProperty(property, "2001-07-04T12:08:56.235-0700")
             }
             else if (property instanceof MapProperty) {
-                resource.setProperty(property, [one: "two"])
+                String jsonStr = "{\"one\":\"two\",\"factors\":{\"_embedded\":{\"challenge\":{\"correctAnswer\":42}}}}";
+                resource.setProperty(property, new ObjectMapper().readValue(jsonStr, HashMap.class));
             }
             else if (property instanceof ResourceReference) {
                 resource.setProperty(property, [one: "two"])

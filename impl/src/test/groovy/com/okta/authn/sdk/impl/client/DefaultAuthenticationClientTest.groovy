@@ -462,6 +462,7 @@ class DefaultAuthenticationClientTest {
         verifyExceptionThrown(client, 403, InvalidRecoveryAnswerException.ERROR_CODE, InvalidRecoveryAnswerException)
         verifyExceptionThrown(client, 401, InvalidTokenException.ERROR_CODE, InvalidTokenException)
         verifyExceptionThrown(client, 403, InvalidUserException.ERROR_CODE, InvalidUserException)
+        verifyExceptionThrown(client, 403, UserLockedException.ERROR_CODE, UserLockedException)
 
         // other error
         verifyExceptionThrown(client, 444, "other-code", ResourceException)

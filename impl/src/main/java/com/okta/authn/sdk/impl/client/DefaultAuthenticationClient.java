@@ -24,6 +24,7 @@ import com.okta.authn.sdk.InvalidAuthenticationStateException;
 import com.okta.authn.sdk.InvalidRecoveryAnswerException;
 import com.okta.authn.sdk.InvalidTokenException;
 import com.okta.authn.sdk.InvalidUserException;
+import com.okta.authn.sdk.UserLockedException;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.http.Header;
 import com.okta.authn.sdk.http.QueryParameter;
@@ -335,6 +336,9 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
 
             case InvalidUserException.ERROR_CODE:
                 throw new InvalidUserException(resourceException);
+
+            case UserLockedException.ERROR_CODE:
+                throw new UserLockedException(resourceException);
 
             default:
                 throw resourceException;

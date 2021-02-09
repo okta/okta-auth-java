@@ -104,4 +104,13 @@
         -->
         <cve>CVE-2020-9488</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[ file name: guava-28.0.1-jre.jar ]]></notes>
+        <gav regex="true">^com\.google\.guava:.*$</gav>
+        <!--
+        We do not use the offending method com.google.common.io.Files.createTempDir.
+        For more info, see https://github.com/google/guava/issues/4011.
+        -->
+        <cve>CVE-2020-8908</cve>
+    </suppress>
 </suppressions>

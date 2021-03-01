@@ -36,6 +36,6 @@
         This is brought in by dropwizard-core uber jar used in shiro-mustache/examples/pom.xml
         For more info, see https://nvd.nist.gov/vuln/detail/CVE-2020-10693
         -->
-        <cve>CVE-2020-10693888</cve>
+        <cve>CVE-2020-10693</cve>
     </suppress>
 </suppressions>

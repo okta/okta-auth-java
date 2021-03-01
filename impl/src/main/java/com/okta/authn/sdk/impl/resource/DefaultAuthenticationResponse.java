@@ -202,7 +202,7 @@ public class DefaultAuthenticationResponse extends AbstractResource implements A
 
     @Override
     public Integer getCorrectAnswer() {
-        Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(NESTED__FACTORS_PROPERTY.getName());
+        Map<String, Object> rawFactor = (Map<String, Object>) getEmbedded().get(NESTED__FACTOR_PROPERTY.getName());
 
         if (rawFactor != null && rawFactor.containsKey(EMBEDDED_PROPERTY.getName())) {
             Map<String, Object> challengeFactorEmbedded = (Map<String, Object>) rawFactor.get(EMBEDDED_PROPERTY.getName());

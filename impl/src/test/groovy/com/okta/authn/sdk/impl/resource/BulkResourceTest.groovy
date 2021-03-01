@@ -206,7 +206,7 @@ class BulkResourceTest {
                 resource.setProperty(property, "2001-07-04T12:08:56.235-0700")
             }
             else if (property instanceof MapProperty) {
-                String jsonStr = "{\"one\":\"two\",\"factors\":{\"_embedded\":{\"challenge\":{\"correctAnswer\":42}}}}";
+                String jsonStr = "{\"one\":\"two\",\"factor\":{\"_embedded\":{\"challenge\":{\"correctAnswer\":42}}}}";
                 resource.setProperty(property, new ObjectMapper().readValue(jsonStr, HashMap.class));
             }
             else if (property instanceof ResourceReference) {

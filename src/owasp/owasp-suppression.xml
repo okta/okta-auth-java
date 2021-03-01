@@ -28,4 +28,14 @@
         -->
         <cve>CVE-2020-8908</cve>
     </suppress>
+
+    <suppress>
+        <notes><![CDATA[ file name: hibernate-validator-6.1.7.Final.jar ]]></notes>
+        <gav regex="true">^org\.hibernate\.validator:.*$</gav>
+        <!--
+        This is brought in by dropwizard-core uber jar used in shiro-mustache/examples/pom.xml
+        For more info, see https://nvd.nist.gov/vuln/detail/CVE-2020-10693
+        -->
+        <cve>CVE-2020-10693888</cve>
+    </suppress>
 </suppressions>

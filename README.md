@@ -48,7 +48,7 @@ This library uses semantic versioning and follows Okta's [library version policy
 
 | Version | Status                    |
 | ------- | ------------------------- |
-| 1.x   | :clock9: Retiring effective April 28, 2021 |
+| 1.x   | :warning: Retired |
 | 2.x.x | :heavy_check_mark: Stable ([migration guide](https://github.com/okta/okta-auth-java/blob/master/MIGRATING.md)) |
  
 The latest release can always be found on the [releases page][github-releases].

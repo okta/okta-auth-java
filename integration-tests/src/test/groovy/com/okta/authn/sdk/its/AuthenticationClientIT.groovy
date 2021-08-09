@@ -169,7 +169,7 @@ class AuthenticationClientIT extends AuthenticationTestSupport {
         assertThat response1.getSessionToken(), nullValue()
 
         // change the password
-        def newPassword = "Password2".toCharArray()
+        def newPassword = "SuperTopSecret123!".toCharArray()
         def response2 = authClient.changePassword(tempPassword, newPassword, response1.stateToken, ignoringStateHandler)
         assertThat response2.getStatus(), is(AuthenticationStatus.SUCCESS)
         assertThat response2.getSessionToken(), not(isEmptyString())

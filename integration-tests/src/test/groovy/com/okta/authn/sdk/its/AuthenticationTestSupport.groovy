@@ -36,7 +36,7 @@ class AuthenticationTestSupport {
 
     final static String SECURITY_QUESTION = "sec-question"
     final static String SECURITY_ANSWER = "sec-answer"
-    final static char[] USER_PASSWORD = "Password1".toCharArray()
+    final static char[] USER_PASSWORD = "TopSecret123!".toCharArray()
 
     def ignoringStateHandler = new IgnoringStateHandler()
 

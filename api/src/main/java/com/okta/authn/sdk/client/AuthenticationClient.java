@@ -639,6 +639,7 @@ public interface AuthenticationClient {
      * Sends an activation email when the user is unable to scan the QR code provided as part of an Okta Verify transaction.
      * If for any reason the user can't scan the QR code, they can use the link provided in email or SMS to complete the transaction.
      *
+     * @param factorId id of factor returned from enrollment
      * @param stateToken state token for current transaction
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
      * @return An authentication response
@@ -653,6 +654,7 @@ public interface AuthenticationClient {
      * Sends an activation email when the user is unable to scan the QR code provided as part of an Okta Verify transaction.
      * If for any reason the user can't scan the QR code, they can use the link provided in email or SMS to complete the transaction.
      *
+     * @param factorId id of factor returned from enrollment
      * @param stateToken state token for current transaction
      * @param requestContext additional request headers and query parameters used for this request
      * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine

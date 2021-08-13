@@ -636,6 +636,35 @@ public interface AuthenticationClient {
     AuthenticationResponse resendVerifyFactor(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
 
     /**
+     * Sends an activation email when the user is unable to scan the QR code provided as part of an Okta Verify transaction.
+     * If for any reason the user can't scan the QR code, they can use the link provided in email or SMS to complete the transaction.
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param stateToken state token for current transaction
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/email", href = "https://developer.okta.com/docs/reference/api/authn/#send-activation-links")
+    default AuthenticationResponse sendActivationEmail(String factorId, String stateToken, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return sendActivationEmail(factorId, stateToken, null, stateHandler);
+    }
+
+    /**
+     * Sends an activation email when the user is unable to scan the QR code provided as part of an Okta Verify transaction.
+     * If for any reason the user can't scan the QR code, they can use the link provided in email or SMS to complete the transaction.
+     *
+     * @param factorId id of factor returned from enrollment
+     * @param stateToken state token for current transaction
+     * @param requestContext additional request headers and query parameters used for this request
+     * @param stateHandler State handler that handles the resulting status change corresponding to the Okta authentication state machine
+     * @return An authentication response
+     * @throws AuthenticationException any other authentication related error
+     */
+    @ApiReference(path = "/api/v1/authn/factors/{factorId}/lifecycle/activate/email", href = "https://developer.okta.com/docs/reference/api/authn/#send-activation-links")
+    AuthenticationResponse sendActivationEmail(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException;
+
+    /**
      * Returns the state of factor's activation. Some factors (Push, Duo, etc) depend on a user action, this method can
      * be used to poll the state of the a factor's activation and transition to the next state when completed.
      *

@@ -178,6 +178,28 @@ class DefaultAuthenticationClientTest {
     }
 
     @Test
+    void sendActivationEmailTest() {
+        def client = createClient("sendActivationEmailTest")
+        StubRequestExecutor requestExecutor = client.getRequestExecutor()
+        String factorId = "factor321"
+
+        requestExecutor.requestMatchers.add(bodyMatches(
+            jsonObject()
+                .where("stateToken", is(jsonText("stateToken1")))
+        ))
+
+        requestExecutor.requestMatchers.add(
+            urlMatches(
+                endsWith("/api/v1/authn/factors/${factorId}/lifecycle/activate/email")
+            ))
+
+        def stateHandler = mock(AuthenticationStateHandler)
+        AuthenticationResponse response = client.sendActivationEmail(factorId, "stateToken1", stateHandler)
+        verify(stateHandler).handleMfaEnrollActivate(response)
+        assertThat response.factorResult, is("WAITING")
+    }
+
+    @Test
     void activationPollTest() {
         def client = createClient("activationPollTest")
         StubRequestExecutor requestExecutor = client.getRequestExecutor()

@@ -1,0 +1,7 @@
+com.okta.authn.sdk
+com.okta.authn.sdk.client
+com.okta.authn.sdk.doc
+com.okta.authn.sdk.impl.client
+com.okta.authn.sdk.impl.http
+com.okta.authn.sdk.impl.resource
+com.okta.authn.sdk.resource

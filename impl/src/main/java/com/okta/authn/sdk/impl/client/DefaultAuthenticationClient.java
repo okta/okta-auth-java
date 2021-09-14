@@ -223,6 +223,11 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     }
 
     @Override
+    public AuthenticationResponse sendActivationEmail(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
+        return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/email", toRequest(stateToken), stateHandler, requestContext);
+    }
+
+    @Override
     public AuthenticationResponse verifyActivation(String factorId, String stateToken, RequestContext requestContext, AuthenticationStateHandler stateHandler) throws AuthenticationException {
         return doPost("/api/v1/authn/factors/" + factorId + "/lifecycle/activate/poll", toRequest(stateToken), stateHandler, requestContext);
     }

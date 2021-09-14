@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>29.0-jre</version>
+            <version>30.1.1-jre</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>4.1.2</version>
+            <version>4.4.0</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>

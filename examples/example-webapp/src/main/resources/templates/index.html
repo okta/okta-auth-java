@@ -1,0 +1,86 @@
+<!--
+  ~ Copyright (c) 2021-Present, Okta, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <br/>
+
+    <h2>Welcome to the Okta Samples for Java AuthN SDK</h2>
+
+    <p>Congrats on starting this sample application in Java! This sample will demonstrate how to build views that
+        facilitate some common authentication flows: </p>
+
+    <div class="container-fluid" style="background-color: darkblue">
+        <ul class="list-group">
+            <li class="list-group-item">Login with username/password</li>
+            <li class="list-group-item">Password Recovery</li>
+        </ul>
+    </div>
+
+    <br/>
+
+    <h3>Configuration</h3>
+    <p>This application has been configured with the following settings:</p>
+
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="row">Name</th>
+                <th scope="row">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Org URL</th>
+                <td th:text="${@environment.getProperty('okta.client.orgUrl')}"></td>
+            </tr>
+            <tr>
+                <th scope="row">API Token</th>
+                <td th:text="${'****' + #strings.substring(@environment.getProperty('okta.client.token'),35)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center">
+                <a class="btn btn-primary" href="/login" role="button" id="login">Login</a>
+                <a class="btn btn-secondary" href="/forgot-password" role="button" id="forgot-password">Forgot Password</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

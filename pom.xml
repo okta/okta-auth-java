@@ -44,6 +44,7 @@
         <module>android</module>
         <module>examples/shiro-mustache</module>
         <module>examples/doc-examples</module>
+        <module>examples/example-webapp</module>
         <module>integration-tests</module>
         <module>coverage</module>
     </modules>

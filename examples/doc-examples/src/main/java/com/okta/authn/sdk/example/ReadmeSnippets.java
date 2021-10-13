@@ -15,7 +15,6 @@
  */
 package com.okta.authn.sdk.example;
 
-import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClients;
 import com.okta.authn.sdk.http.Header;
@@ -30,7 +29,7 @@ public class ReadmeSnippets {
 
     private final AuthenticationClient client = AuthenticationClients.builder().build();
 
-    private void createClient() throws AuthenticationException {
+    private void createClient() {
         AuthenticationClient client = AuthenticationClients.builder()
             .setOrgUrl("https://{yourOktaDomain}")
             .build();

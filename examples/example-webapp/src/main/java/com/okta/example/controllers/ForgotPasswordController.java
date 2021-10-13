@@ -74,73 +74,70 @@ public class ForgotPasswordController {
     }
 
     @RequestMapping(value = "/verify-recovery-token", method = RequestMethod.POST)
-    public ModelAndView handleVerifyRecoveryTokenPost(final @RequestParam("recoveryToken") String recoveryToken,
-                                                      final HttpSession session) {
+    public ModelAndView handleVerifyRecoveryTokenPost(final @RequestParam("recoveryToken") String recoveryToken) {
 
         final ModelAndView modelAndView = new ModelAndView("answer-sec-qn");
-
-        AuthenticationResponse authenticationResponse;
+        final AuthenticationResponse authenticationResponse;
 
         try {
             authenticationResponse = authenticationClient.verifyRecoveryToken(recoveryToken,ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Verify Recovery Token Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
-            modelAndView.addObject("error",
+            final ModelAndView errorView = new ModelAndView("verify-recovery-token");
+            errorView.addObject("error",
                 e.getStatus() + ":" + e.getCode() + ":" + e.getMessage());
-            return modelAndView;
+            return errorView;
         }
 
-        session.setAttribute("stateToken", authenticationResponse.getStateToken());
-        String secQn = authenticationResponse.getUser().getRecoveryQuestion().get("question");
+        final String stateToken =  authenticationResponse.getStateToken();
+        final String secQn = authenticationResponse.getUser().getRecoveryQuestion().get("question");
 
         logger.info("Verify Recovery Token Status: {}", authenticationResponse.getStatus());
+        modelAndView.addObject("stateToken", stateToken);
         modelAndView.addObject("secQn", secQn);
         return modelAndView;
     }
 
     @RequestMapping(value = "/answer-sec-qn", method = RequestMethod.POST)
     public ModelAndView handleAnswerSecurityQuestionPost(final @RequestParam("secQnAnswer") String secQnAnswer,
-                                                         final HttpSession session) {
+                                                         final @RequestParam("stateToken") String stateToken) {
 
         final ModelAndView modelAndView = new ModelAndView("change-password");
-
-        AuthenticationResponse authenticationResponse;
-
-        String stateToken = (String) session.getAttribute("stateToken");
+        final AuthenticationResponse authenticationResponse;
 
         try {
             authenticationResponse = authenticationClient.answerRecoveryQuestion(secQnAnswer, stateToken, ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Answer Sec Qn Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
-            modelAndView.addObject("error",
+            final ModelAndView errorView = new ModelAndView("change-password");
+            errorView.addObject("error",
                 e.getStatus() + ":" + e.getCode() + ":" + e.getMessage());
-            return modelAndView;
+            return errorView;
         }
 
         logger.info("Answer Recovery Qn Status: {}", authenticationResponse.getStatus());
+        modelAndView.addObject("stateToken", stateToken);
         return modelAndView;
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
     public ModelAndView handleChangePasswordPost(final @RequestParam("newPassword") String newPassword,
-                                                 final HttpSession session) {
+                                                 final @RequestParam("stateToken") String stateToken) {
 
         final ModelAndView modelAndView = new ModelAndView("home");
-
-        AuthenticationResponse authenticationResponse;
-
-        String stateToken = (String) session.getAttribute("stateToken");
+        final AuthenticationResponse authenticationResponse;
 
         try {
             authenticationResponse = authenticationClient.resetPassword(newPassword.toCharArray(), stateToken, ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Reset Password Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
-            modelAndView.addObject("error",
+            final ModelAndView errorView = new ModelAndView("change-password");
+            errorView.addObject("error",
                 e.getStatus() + ":" + e.getCode() + ":" + e.getMessage());
-            return modelAndView;
+            return errorView;
         }
 
         logger.info("Reset Password Status: {}", authenticationResponse.getStatus());

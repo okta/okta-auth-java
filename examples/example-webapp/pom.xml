@@ -9,9 +9,8 @@
         <version>2.0.4-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.okta.authn.example</groupId>
-    <artifactId>authn-sdk-spring-boot-example</artifactId>
-    <name>Okta Java Authn SDK :: Springboot Sample</name>
+    <artifactId>okta-authn-sdk-examples-springboot</artifactId>
+    <name>Okta Java Authn SDK :: Examples :: Springboot</name>
 
     <description>Springboot Sample for AuthN SDK</description>
 

@@ -20,10 +20,12 @@ import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.FactorType;
+import com.okta.example.helpers.AuthHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,25 +52,15 @@ public class LoginController {
                                    final @RequestParam("password") String password) {
 
         final ModelAndView modelAndView = new ModelAndView("home");
-
         AuthenticationResponse authenticationResponse;
 
         try {
             authenticationResponse = authenticationClient.authenticate(
                 username, password.toCharArray(), null, ignoringStateHandler);
 
-            if (authenticationResponse != null &&
-                authenticationResponse.getFactors() != null) {
-                String factorId = authenticationResponse.getFactors().get(0).getId();
-                FactorType factorType = authenticationResponse.getFactors().get(0).getType();
-                String stateToken = authenticationResponse.getStateToken();
-
-                if (factorType.equals(FactorType.EMAIL)) {
-                    authenticationResponse = authenticationClient.verifyFactor(factorId, stateToken, ignoringStateHandler);
-                    final ModelAndView emailAuthView = new ModelAndView("verify-email-authenticator");
-                    emailAuthView.addObject("authenticationResponse", authenticationResponse);
-                    return emailAuthView;
-                }
+            // handle factors, if any
+            if (authenticationResponse != null && !CollectionUtils.isEmpty(authenticationResponse.getFactors())) {
+                return AuthHelper.proceedToVerifyView(authenticationResponse, authenticationClient, ignoringStateHandler);
             }
         } catch (final AuthenticationException e) {
             logger.error("Authentication Error - Status: {}, Code: {}, Message: {}",

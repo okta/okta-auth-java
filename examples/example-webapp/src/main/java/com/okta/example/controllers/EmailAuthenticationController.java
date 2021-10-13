@@ -52,11 +52,10 @@ public class EmailAuthenticationController {
                                    final @RequestParam(value = "stateToken") String stateToken) {
 
         final ModelAndView modelAndView = new ModelAndView("home");
-
-        AuthenticationResponse authenticationResponse;
+        final AuthenticationResponse authenticationResponse;
 
         try {
-            VerifyPassCodeFactorRequest verifyPassCodeFactorRequest =
+            final VerifyPassCodeFactorRequest verifyPassCodeFactorRequest =
                 authenticationClient.instantiate(VerifyPassCodeFactorRequest.class);
             verifyPassCodeFactorRequest.setStateToken(stateToken);
             verifyPassCodeFactorRequest.setPassCode(passcode);
@@ -67,9 +66,10 @@ public class EmailAuthenticationController {
         } catch (final AuthenticationException e) {
             logger.error("Verify Email Factor Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
-            modelAndView.addObject("error",
+            final ModelAndView errorView = new ModelAndView();
+            errorView.addObject("error",
                 e.getStatus() + ":" + e.getCode() + ":" + e.getMessage());
-            return modelAndView;
+            return errorView;
         }
 
         modelAndView.addObject("authenticationResponse", authenticationResponse);

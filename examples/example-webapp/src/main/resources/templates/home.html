@@ -33,15 +33,19 @@
     <span th:text="${error}"></span>
 </div>
 
-<div th:if="${authenticationResponse != null && #strings.equals(authenticationResponse.getStatus(), 'SUCCESS')}" class="alert alert-success">
+<div th:if="${authenticationResponse != null && #strings.equals(authenticationResponse.getStatus(), 'SUCCESS') &&
+              authenticationResponse.getSessionToken() != null}" class="alert alert-success">
+
     <p>Authentication Successful!</p>
     <p>Welcome, <span th:text="${authenticationResponse.getUser().getLogin()}"></span>!</p>
 
     <br/>
 
-    <div th:if="${authenticationResponse.getSessionToken()}">
-        <p><label>Session Token: </label>
-            <span th:text="${authenticationResponse.getSessionToken()}" th:id="sessionToken"></span></p>
+    <p><label>Session Token: </label>
+        <span th:text="${authenticationResponse.getSessionToken()}" th:id="sessionToken"></span></p>
+
+    <p><label>Expires At: </label>
+        <span th:text="${authenticationResponse.getExpiresAt()}" th:id="expiresAt"></span></p>
     </div>
 </div>
 

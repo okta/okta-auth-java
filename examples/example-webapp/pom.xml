@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<!--    <parent>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--        <version>2.3.0.M1</version>-->
-<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-<!--    </parent>-->
 
     <parent>
         <groupId>com.okta.authn.sdk</groupId>
@@ -17,7 +11,7 @@
 
     <groupId>com.okta.authn.example</groupId>
     <artifactId>authn-sdk-spring-boot-example</artifactId>
-    <name>Okta Java Authn SDK :: Springboot Example</name>
+    <name>Okta Java Authn SDK :: Springboot Sample</name>
 
     <description>Springboot Sample for AuthN SDK</description>
 
@@ -29,7 +23,6 @@
     </properties>
 
     <dependencies>
-
         <!-- Okta deps -->
         <dependency>
             <groupId>com.okta.authn.sdk</groupId>
@@ -84,7 +77,6 @@
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -105,20 +97,5 @@
 
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-        </pluginRepository>
-    </pluginRepositories>
 
 </project>

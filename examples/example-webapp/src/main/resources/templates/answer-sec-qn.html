@@ -58,11 +58,12 @@
 <div class="answersecqn-form">
     <form th:action="@{/answer-sec-qn}" method="post">
         <h2 class="text-center">Enter Sec Qn Answer</h2>
-
+        <div th:if="${error}" class="alert alert-danger">
+            <span th:text="${error}"></span>
+        </div>
         <span th:text="${secQn}"></span>
         <div class="form-group">
             <input type="text" class="form-control" name="secQnAnswer" placeholder="Security Question Answer" required="required" autocomplete="off">
-            <input type="hidden" name="stateToken" th:value="${stateToken}" />
         </div>
         <div class="form-group">
             <button id="next-btn" type="submit" class="btn btn-primary btn-block">Next</button>

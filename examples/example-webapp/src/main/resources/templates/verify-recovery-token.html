@@ -57,8 +57,10 @@
 
 <div class="verifyrecoverytoken-form">
     <form th:action="@{/verify-recovery-token}" method="post">
-        <h2 class="text-center">Enter Recovery Token from e-mail</h2>
-
+        <h2 class="text-center">Enter Recovery Token (from e-mail)</h2>
+        <div th:if="${error}" class="alert alert-danger">
+            <span th:text="${error}"></span>
+        </div>
         <div class="form-group">
             <input type="text" class="form-control" name="recoveryToken" placeholder="Recovery Token" required="required">
         </div>

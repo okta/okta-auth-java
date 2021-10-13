@@ -5,7 +5,7 @@
 This Sample web application will demonstrate below common flows:
 1. Login with username/password
 2. Password Recovery 
-3. Sign In with Multifactor Authentication using Email or Phone
+3. Sign In with Multifactor Authentication using Email
 
 ## Prerequisites
 

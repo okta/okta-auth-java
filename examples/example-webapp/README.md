@@ -14,18 +14,18 @@ This Sample web application will demonstrate below common flows:
 
 ## Installation & Running The App
 
-1. set the below env variables:
+1. Set the below env variables:
 
 ```
 export OKTA_CLIENT_ORGURL=https://{yourOktaDomain}
 export OKTA_CLIENT_TOKEN={yourApiToken}
 ```
 
-2. Navigate to folder `examples/example-webapp` and run `mvn spring-boot:run`
+2. Navigate to `examples/example-webapp` and run `mvn spring-boot:run`
 
-Now navigate to http://localhost:8080 in your browser.
+Visit http://localhost:8080 in your browser.
 
-If you see an index page, then things are working!
+If you see an index page, then your app is working!
 
 [jdk-8]: https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
 [apache-maven]: https://maven.apache.org/download.cgi

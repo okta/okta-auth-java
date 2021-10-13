@@ -12,6 +12,11 @@ This Sample web application will demonstrate below common flows:
 - [JDK 8][jdk-8] or later
 - [Apache Maven][apache-maven] 3.6.x or later
 
+You will also need:
+
+An Okta account, called an Organization (sign up for a free developer organization if you need one) and ensure it is NOT 
+Okta Identity Engine enabled (should be a legacy v1 org).
+
 ## Installation & Running The App
 
 1. Set the below env variables:

@@ -20,6 +20,7 @@ import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.FactorType;
+import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController {
+public class EmailAuthenticationController {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private final Logger logger = LoggerFactory.getLogger(EmailAuthenticationController.class);
 
     @Autowired
     private AuthenticationClient authenticationClient;
@@ -40,38 +41,31 @@ public class LoginController {
     @Autowired
     private AuthenticationStateHandler ignoringStateHandler;
 
-    @RequestMapping("/login")
+    @RequestMapping("/verify-email-authenticator")
     public String handleGet() {
-        return "login";
+        return "verify-email-authenticator";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView handlePost(final @RequestParam("username") String username,
-                                   final @RequestParam("password") String password) {
+    @RequestMapping(value = "/verify-email-authenticator", method = RequestMethod.POST)
+    public ModelAndView handlePost(final @RequestParam(value = "passcode") String passcode,
+                                   final @RequestParam(value = "factorId") String factorId,
+                                   final @RequestParam(value = "stateToken") String stateToken) {
 
         final ModelAndView modelAndView = new ModelAndView("home");
 
         AuthenticationResponse authenticationResponse;
 
         try {
-            authenticationResponse = authenticationClient.authenticate(
-                username, password.toCharArray(), null, ignoringStateHandler);
+            VerifyPassCodeFactorRequest verifyPassCodeFactorRequest =
+                authenticationClient.instantiate(VerifyPassCodeFactorRequest.class);
+            verifyPassCodeFactorRequest.setStateToken(stateToken);
+            verifyPassCodeFactorRequest.setPassCode(passcode);
+            verifyPassCodeFactorRequest.setRememberDevice(false);
 
-            if (authenticationResponse != null &&
-                authenticationResponse.getFactors() != null) {
-                String factorId = authenticationResponse.getFactors().get(0).getId();
-                FactorType factorType = authenticationResponse.getFactors().get(0).getType();
-                String stateToken = authenticationResponse.getStateToken();
-
-                if (factorType.equals(FactorType.EMAIL)) {
-                    authenticationResponse = authenticationClient.verifyFactor(factorId, stateToken, ignoringStateHandler);
-                    final ModelAndView emailAuthView = new ModelAndView("verify-email-authenticator");
-                    emailAuthView.addObject("authenticationResponse", authenticationResponse);
-                    return emailAuthView;
-                }
-            }
+            authenticationResponse =
+                authenticationClient.verifyFactor(factorId, verifyPassCodeFactorRequest, ignoringStateHandler);
         } catch (final AuthenticationException e) {
-            logger.error("Authentication Error - Status: {}, Code: {}, Message: {}",
+            logger.error("Verify Email Factor Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
             modelAndView.addObject("error",
                 e.getStatus() + ":" + e.getCode() + ":" + e.getMessage());

@@ -16,6 +16,7 @@
 package com.okta.example.controllers;
 
 import com.okta.authn.sdk.AuthenticationException;
+import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.FactorType;
@@ -38,6 +39,9 @@ public class ForgotPasswordController {
     @Autowired
     private AuthenticationClient authenticationClient;
 
+    @Autowired
+    private AuthenticationStateHandler ignoringStateHandler;
+
     @RequestMapping("/forgot-password")
     public String handleForgotPasswordGet() {
         return "forgot-password";
@@ -56,7 +60,7 @@ public class ForgotPasswordController {
         AuthenticationResponse authenticationResponse;
 
         try {
-            authenticationResponse = authenticationClient.recoverPassword(email, FactorType.EMAIL, null, null);
+            authenticationResponse = authenticationClient.recoverPassword(email, FactorType.EMAIL, null, ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Recover Password Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
@@ -78,7 +82,7 @@ public class ForgotPasswordController {
         AuthenticationResponse authenticationResponse;
 
         try {
-            authenticationResponse = authenticationClient.verifyRecoveryToken(recoveryToken,null);
+            authenticationResponse = authenticationClient.verifyRecoveryToken(recoveryToken,ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Verify Recovery Token Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
@@ -106,7 +110,7 @@ public class ForgotPasswordController {
         String stateToken = (String) session.getAttribute("stateToken");
 
         try {
-            authenticationResponse = authenticationClient.answerRecoveryQuestion(secQnAnswer, stateToken, null);
+            authenticationResponse = authenticationClient.answerRecoveryQuestion(secQnAnswer, stateToken, ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Answer Sec Qn Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());
@@ -130,7 +134,7 @@ public class ForgotPasswordController {
         String stateToken = (String) session.getAttribute("stateToken");
 
         try {
-            authenticationResponse = authenticationClient.resetPassword(newPassword.toCharArray(), stateToken, null);
+            authenticationResponse = authenticationClient.resetPassword(newPassword.toCharArray(), stateToken, ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Reset Password Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());

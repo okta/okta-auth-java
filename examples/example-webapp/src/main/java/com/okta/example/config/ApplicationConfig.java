@@ -15,8 +15,11 @@
  */
 package com.okta.example.config;
 
+import com.okta.authn.sdk.AuthenticationStateHandler;
+import com.okta.authn.sdk.AuthenticationStateHandlerAdapter;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClients;
+import com.okta.authn.sdk.resource.AuthenticationResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,5 +34,18 @@ public class ApplicationConfig {
     @Bean
     public AuthenticationClient authenticationClient() {
         return AuthenticationClients.builder().build();
+    }
+
+    /**
+     * The Authentication state handler bean definition.
+     *
+     * @return the authentication state handler
+     */
+    @Bean
+    public AuthenticationStateHandler authenticationStateHandler() {
+        return new AuthenticationStateHandlerAdapter() {
+            @Override
+            public void handleUnknown(AuthenticationResponse authenticationResponse) {}
+        };
     }
 }

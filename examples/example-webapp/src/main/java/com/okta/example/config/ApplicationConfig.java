@@ -20,11 +20,15 @@ import com.okta.authn.sdk.AuthenticationStateHandlerAdapter;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.client.AuthenticationClients;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ApplicationConfig {
+
+    private final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
     /**
      * The Authentication Client bean definition.
@@ -45,7 +49,9 @@ public class ApplicationConfig {
     public AuthenticationStateHandler authenticationStateHandler() {
         return new AuthenticationStateHandlerAdapter() {
             @Override
-            public void handleUnknown(AuthenticationResponse authenticationResponse) {}
+            public void handleUnknown(AuthenticationResponse authenticationResponse) {
+                logger.error("Unknown Authentication status: {}", authenticationResponse.getStatus());
+            }
         };
     }
 }

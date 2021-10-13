@@ -19,7 +19,6 @@ import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.client.AuthenticationClient;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
-import com.okta.authn.sdk.resource.FactorType;
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

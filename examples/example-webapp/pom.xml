@@ -31,9 +31,9 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <springboot.version>2.5.5</springboot.version>
+        <springboot.version>2.6.1</springboot.version>
         <okta.authn.version>2.0.3</okta.authn.version>
-        <okta.sdk.version>6.0.0</okta.sdk.version>
+        <okta.sdk.version>7.0.0</okta.sdk.version>
     </properties>
 
     <dependencies>

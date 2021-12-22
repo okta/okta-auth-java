@@ -32,8 +32,7 @@
     <properties>
         <java.version>1.8</java.version>
         <springboot.version>2.6.2</springboot.version>
-        <okta.authn.version>2.0.3</okta.authn.version>
-        <okta.sdk.version>7.0.0</okta.sdk.version>
+        <okta.sdk.version>8.0.0</okta.sdk.version>
     </properties>
 
     <dependencies>
@@ -41,18 +40,15 @@
         <dependency>
             <groupId>com.okta.authn.sdk</groupId>
             <artifactId>okta-authn-sdk-api</artifactId>
-            <version>${okta.authn.version}</version>
         </dependency>
         <dependency>
             <groupId>com.okta.authn.sdk</groupId>
             <artifactId>okta-authn-sdk-impl</artifactId>
-            <version>${okta.authn.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.okta.sdk</groupId>
             <artifactId>okta-sdk-httpclient</artifactId>
-            <version>${okta.sdk.version}</version>
             <scope>runtime</scope>
         </dependency>
 

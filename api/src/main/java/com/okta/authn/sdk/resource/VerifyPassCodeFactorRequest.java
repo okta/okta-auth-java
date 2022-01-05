@@ -21,7 +21,19 @@ public interface VerifyPassCodeFactorRequest extends VerifyFactorRequest {
 
     VerifyPassCodeFactorRequest setPassCode(String passCode);
 
-    Boolean  getRememberDevice();
+    /**
+     * @deprecated 'rememberDevice' property is no longer a body param but an url/query param.
+     * See https://developer.okta.com/docs/reference/api/authn/#verify-security-question-factor.
+     * Use {@link com.okta.authn.sdk.http.RequestContext#getQueryParams()} to get query parameters.
+     */
+    @Deprecated
+    Boolean getRememberDevice();
 
+    /**
+     * @deprecated 'rememberDevice' property is no longer a body param but an url/query param.
+     * See https://developer.okta.com/docs/reference/api/authn/#verify-security-question-factor.
+     * Use {@link com.okta.authn.sdk.http.RequestContext#addQuery(String, String)} to set a query parameter key-value.
+     */
+    @Deprecated
     VerifyPassCodeFactorRequest setRememberDevice(Boolean rememberDevice);
 }

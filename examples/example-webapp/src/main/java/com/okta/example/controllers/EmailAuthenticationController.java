@@ -18,6 +18,7 @@ package com.okta.example.controllers;
 import com.okta.authn.sdk.AuthenticationException;
 import com.okta.authn.sdk.AuthenticationStateHandler;
 import com.okta.authn.sdk.client.AuthenticationClient;
+import com.okta.authn.sdk.http.RequestContext;
 import com.okta.authn.sdk.resource.AuthenticationResponse;
 import com.okta.authn.sdk.resource.VerifyPassCodeFactorRequest;
 import org.slf4j.Logger;
@@ -58,10 +59,12 @@ public class EmailAuthenticationController {
                 authenticationClient.instantiate(VerifyPassCodeFactorRequest.class);
             verifyPassCodeFactorRequest.setStateToken(stateToken);
             verifyPassCodeFactorRequest.setPassCode(passcode);
-            verifyPassCodeFactorRequest.setRememberDevice(false);
 
-            authenticationResponse =
-                authenticationClient.verifyFactor(factorId, verifyPassCodeFactorRequest, ignoringStateHandler);
+            RequestContext requestContext = new RequestContext();
+            requestContext.addQuery("rememberDevice", "true"); // false by default
+
+            authenticationResponse = authenticationClient.verifyFactor(
+                factorId, verifyPassCodeFactorRequest, requestContext, ignoringStateHandler);
         } catch (final AuthenticationException e) {
             logger.error("Verify Email Factor Error - Status: {}, Code: {}, Message: {}",
                 e.getStatus(), e.getCode(), e.getMessage());

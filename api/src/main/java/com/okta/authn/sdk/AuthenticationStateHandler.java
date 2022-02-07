@@ -16,6 +16,8 @@
 package com.okta.authn.sdk;
 
 import com.okta.authn.sdk.resource.AuthenticationResponse;
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * Each method of {@code AuthenticationStateHandler} corresponds to a state of Okta's Authentication state machine. Each
@@ -51,29 +53,29 @@ import com.okta.authn.sdk.resource.AuthenticationResponse;
  */
 public interface AuthenticationStateHandler {
 
-    void handleUnauthenticated(AuthenticationResponse unauthenticatedResponse);
+    void handleUnauthenticated(@NotNull AuthenticationResponse unauthenticatedResponse);
 
-    void handlePasswordWarning(AuthenticationResponse passwordWarning);
+    void handlePasswordWarning(@NotNull AuthenticationResponse passwordWarning);
 
-    void handlePasswordExpired(AuthenticationResponse passwordExpired);
+    void handlePasswordExpired(@NotNull AuthenticationResponse passwordExpired);
 
-    void handleRecovery(AuthenticationResponse recovery);
+    void handleRecovery(@NotNull AuthenticationResponse recovery);
 
-    void handleRecoveryChallenge(AuthenticationResponse recoveryChallenge);
+    void handleRecoveryChallenge(@NotNull AuthenticationResponse recoveryChallenge);
 
-    void handlePasswordReset(AuthenticationResponse passwordReset);
+    void handlePasswordReset(@NotNull AuthenticationResponse passwordReset);
 
-    void handleLockedOut(AuthenticationResponse lockedOut);
+    void handleLockedOut(@NotNull AuthenticationResponse lockedOut);
 
-    void handleMfaRequired(AuthenticationResponse mfaRequiredResponse);
+    void handleMfaRequired(@NotNull AuthenticationResponse mfaRequiredResponse);
 
-    void handleMfaEnroll(AuthenticationResponse mfaEnroll);
+    void handleMfaEnroll(@NotNull AuthenticationResponse mfaEnroll);
 
-    void handleMfaEnrollActivate(AuthenticationResponse mfaEnrollActivate);
+    void handleMfaEnrollActivate(@NotNull AuthenticationResponse mfaEnrollActivate);
 
-    void handleMfaChallenge(AuthenticationResponse mfaChallengeResponse);
+    void handleMfaChallenge(@NotNull AuthenticationResponse mfaChallengeResponse);
 
-    void handleSuccess(AuthenticationResponse successResponse);
+    void handleSuccess(@NotNull AuthenticationResponse successResponse);
 
-    void handleUnknown(AuthenticationResponse unknownResponse);
+    void handleUnknown(@NotNull AuthenticationResponse unknownResponse);
 }

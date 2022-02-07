@@ -114,6 +114,11 @@
                 <artifactId>kotlin-stdlib-common</artifactId>
                 <version>1.6.10</version>
             </dependency>
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>23.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

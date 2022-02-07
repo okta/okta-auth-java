@@ -16,8 +16,8 @@
 package com.okta.authn.sdk;
 
 import com.okta.authn.sdk.resource.AuthenticationResponse;
+import org.jetbrains.annotations.NotNull;
 
-import javax.validation.constraints.NotNull;
 
 /**
  * Each method of {@code AuthenticationStateHandler} corresponds to a state of Okta's Authentication state machine. Each

@@ -18,3 +18,8 @@ install:
 
 script:
 - "./src/ci/build.sh"
+
+after_failure:
+# debugging failsafe tests
+- cat integration-tests/target/failsafe-reports/*IT.txt
+- cat integration-tests/target/failsafe-reports/*dump*

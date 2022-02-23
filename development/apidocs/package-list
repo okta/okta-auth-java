@@ -14,3 +14,7 @@ com.okta.authn.sdk.http
 com.okta.authn.sdk.impl.client
 com.okta.authn.sdk.impl.resource
 com.okta.authn.sdk.resource
+com.okta.example
+com.okta.example.config
+com.okta.example.controllers
+com.okta.example.helpers

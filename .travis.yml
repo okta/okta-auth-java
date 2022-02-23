@@ -18,23 +18,3 @@ install:
 
 script:
 - "./src/ci/build.sh"
-
-after_success:
-- bash <(curl -s https://codecov.io/bash) -f coverage/target/site/jacoco-aggregate/jacoco.xml
-
-after_failure:
-# debugging failsafe tests
-- cat integration-tests/target/failsafe-reports/*IT.txt
-- cat integration-tests/target/failsafe-reports/*dump*
-
-deploy:
-- provider: pages
-  skip_cleanup: true
-  github_token: $GH_API_KEY
-  local_dir: target/gh-pages
-  email: developers@okta.com
-  name: Travis CI - Auto Doc Build
-  on:
-    jdk: openjdk8
-    branch: master
-    condition: $TRAVIS_EVENT_TYPE != cron

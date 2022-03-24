@@ -61,7 +61,7 @@ class DefaultAuthenticationClientBuilderTest {
         def builder = new DefaultAuthenticationClientBuilder(noDefaultYamlResourceFactory())
         DefaultAuthenticationClientBuilder clientBuilder = (DefaultAuthenticationClientBuilder) builder
         assertEquals clientBuilder.clientConfiguration.baseUrl, "https://api.okta.com/v42"
-        assertEquals clientBuilder.clientConfiguration.connectionTimeout, 10
+        assertEquals clientBuilder.clientConfiguration.connectionTimeout as String, "10"
         assertEquals clientBuilder.clientConfiguration.authenticationScheme, AuthenticationScheme.NONE
     }
 
@@ -71,7 +71,7 @@ class DefaultAuthenticationClientBuilderTest {
         def builder = AuthenticationClients.builder()
         DefaultAuthenticationClientBuilder clientBuilder = (DefaultAuthenticationClientBuilder) builder
         assertEquals clientBuilder.clientConfiguration.proxyHost, "proxyyaml" // from yaml
-        assertEquals clientBuilder.clientConfiguration.proxyPort, 9009 // from yaml
+        assertEquals clientBuilder.clientConfiguration.proxyPort as String, "9009" // from yaml
         assertEquals clientBuilder.clientConfiguration.proxyUsername, "fooyaml" // from yaml
         assertEquals clientBuilder.clientConfiguration.proxyPassword, "bar" // from properties
     }

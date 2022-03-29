@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_US" lang="en_US">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>ExampleAuthenticationStateHandler xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
@@ -149,7 +149,7 @@
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>         Subject subject = SecurityUtils.getSubject();
 <a class="jxr_linenumber" name="L142" href="#L142">142</a> 
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         <em class="jxr_comment">// TODO: use static key, or inject</em>
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <a name="AuthenticationResponse" href="../../../.<a name="AuthenticationResponse" href="../../../../../com/okta/authn/sdk/resource/AuthenticationResponse.html#AuthenticationResponse">AuthenticationResponse</a>k/resource/AuthenticationResponse.html#AuthenticationResponse">AuthenticationResponse</a> authenticationResponse = (<a name="AuthenticationResponse" href="../../../../../com/okta/authn/sdk/resource/AuthenticationResponse.html#AuthenticationResponse">AuthenticationResponse</a>) subject.getSession().getAttribute(PREVIOUS_AUTHN_RESULT);
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <a name="AuthenticationResponse" href="../../../../../com/okta/authn/sdk/resource/AuthenticationResponse.html#AuthenticationResponse">AuthenticationResponse</a> authenticationResponse = (<a name="AuthenticationResponse" href="../../../../../com/okta/authn/sdk/resource/AuthenticationResponse.html#AuthenticationResponse">AuthenticationResponse</a>) subject.getSession().getAttribute(PREVIOUS_AUTHN_RESULT);
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         System.out.println(<span class="jxr_string">"authenticationResponse: "</span> + authenticationResponse);
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> 
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>         <strong class="jxr_keyword">return</strong> authenticationResponse;

@@ -541,7 +541,7 @@ class DefaultAuthenticationClientTest {
             when(requestExecutor.executeRequest(any(Request))).thenReturn(response)
             client.authenticate("wrong-username", "or-password".toCharArray(), null, stateHandler)
         }
-        verifyZeroInteractions(stateHandler)
+        verifyNoInteractions(stateHandler)
     }
 
     WrappedAuthenticationClient createClient(callingTestMethodName = Thread.currentThread().getStackTrace()[6].methodName) {

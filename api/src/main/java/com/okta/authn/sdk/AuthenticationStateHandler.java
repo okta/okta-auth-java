@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * depending on the current state of the user (password locked, etc) and the current configuration of your Okta
  * organization.
  * <p>
- * <h1>Implementation Notes:</h1>
+ * <h2>Implementation Notes:</h2>
  * Your Okta organization MAY not be configured to enter all of these states. At minimum you should implement:
  * <ul>
  *     <li>{@code handleUnknown}</li>

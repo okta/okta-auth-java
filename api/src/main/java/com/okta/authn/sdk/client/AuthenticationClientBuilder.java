@@ -26,7 +26,7 @@ import com.okta.commons.http.config.Proxy;
  * Proxy and Cache configuration.  Understanding caching is extremely important when creating a AuthenticationClient instance, so
  * please ensure you read the <em>Caching</em> section below.</p>
  *
- * <h1>Usage</h1>
+ * <h2>Usage</h2>
  *
  * <p>The simplest usage is to just call the {@link #build() build()} method, for example:</p>
  *

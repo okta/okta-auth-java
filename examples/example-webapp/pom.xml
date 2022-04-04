@@ -30,7 +30,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <springboot.version>2.6.5</springboot.version>
+        <springboot.version>2.6.6</springboot.version>
         <okta.sdk.version>8.1.0</okta.sdk.version>
     </properties>
 

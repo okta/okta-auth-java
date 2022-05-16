@@ -1,6 +1,9 @@
 version: 2.1
 
 aliases:
+  - &env
+    - environment:
+        JVM_OPTS: -Xmx3200m
   - &go
     - checkout
     - run: java -version
@@ -17,53 +20,20 @@ jobs:
   jdk8:
     docker:
       - image: cimg/openjdk:8.0.322
-    environment:
-      JVM_OPTS: -Xmx3200m
+    environment: *env
     steps: *go
   
   jdk11:
     docker:
       - image: cimg/openjdk:11.0.13
-    environment:
-      JVM_OPTS: -Xmx3200m
-    steps:
-      - checkout
-      - run: 
-          name: Java Version
-          command: java -version
-      - run:
-          name: Build
-          command: ./mvnw clean install -Pci        
-      - run:
-          name: IT Failure Report
-          when: on_fail
-          command: cat integration-tests/target/failsafe-reports/*IT.txt
-      - run:
-          name: IT Failure Dump
-          when: on_fail
-          command: cat integration-tests/target/failsafe-reports/*dump*
+    environment: *env
+    steps: *go
           
   jdk17:
     docker:
       - image: cimg/openjdk:17.0.3
-    environment:
-      JVM_OPTS: -Xmx3200m
-    steps:
-      - checkout
-      - run:
-          name: Java Version
-          command: java -version
-      - run:
-          name: Build
-          command: ./mvnw clean install -Pci 
-      - run:
-          name: IT Failure Report
-          when: on_fail
-          command: cat integration-tests/target/failsafe-reports/*IT.txt
-      - run:
-          name: IT Failure Dump
-          when: on_fail
-          command: cat integration-tests/target/failsafe-reports/*dump*
+    environment: *env
+    steps: *go
 
 workflows:
   build_and_test:

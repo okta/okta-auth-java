@@ -3,14 +3,14 @@ version: 2.1
 aliases:
   - &go
     - checkout
-      - run: java -version
-      - run: ./mvnw clean install -Pci
-      - run:
-          when: on_fail
-          command: cat integration-tests/target/failsafe-reports/*IT.txt
-      - run:
-          when: on_fail
-          command: cat integration-tests/target/failsafe-reports/*dump*
+    - run: java -version
+    - run: ./mvnw clean install -Pci
+    - run:
+        when: on_fail
+        command: cat integration-tests/target/failsafe-reports/*IT.txt
+    - run:
+        when: on_fail
+        command: cat integration-tests/target/failsafe-reports/*dump*
 
 jobs:
   

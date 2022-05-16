@@ -1,9 +1,7 @@
 version: 2.1
 
 aliases:
-  - &env
-    - environment:
-        JVM_OPTS: -Xmx3200m
+
   - &go
     - checkout
     - run: java -version
@@ -20,19 +18,22 @@ jobs:
   jdk8:
     docker:
       - image: cimg/openjdk:8.0.322
-    environment: *env
+    environment:
+        JVM_OPTS: -Xmx3200m
     steps: *go
   
   jdk11:
     docker:
       - image: cimg/openjdk:11.0.13
-    environment: *env
+    environment:
+        JVM_OPTS: -Xmx3200m
     steps: *go
           
   jdk17:
     docker:
       - image: cimg/openjdk:17.0.3
-    environment: *env
+    environment:
+        JVM_OPTS: -Xmx3200m
     steps: *go
 
 workflows:

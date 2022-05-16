@@ -1,7 +1,32 @@
 version: 2.1
 
 jobs:
-  build:
+  
+  jdk8:
+    docker:
+      - image: cimg/openjdk:8.0.322
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - run: java -version
+      - run:
+          name: Build
+          command: ./mvnw clean install -Pci
+  
+  jdk11:
+    docker:
+      - image: cimg/openjdk:11.0.13
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - run: java -version
+      - run:
+          name: Build
+          command: ./mvnw clean install -Pci        
+  
+  jdk17:
     docker:
       - image: cimg/openjdk:17.0.3
     environment:
@@ -16,4 +41,6 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - build
+      - jdk8
+      - jdk11
+      - jdk17

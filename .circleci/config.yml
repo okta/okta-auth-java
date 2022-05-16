@@ -8,6 +8,7 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - run: java --version
       - run:
           name: Build
           command: ./mvnw -e -X clean install -Pci 

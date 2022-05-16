@@ -1,14 +1,8 @@
 version: 2.1
 
-jobs:
-  
-  jdk8:
-    docker:
-      - image: cimg/openjdk:8.0.322
-    environment:
-      JVM_OPTS: -Xmx3200m
-    steps:
-      - checkout
+aliases:
+  - &go
+    - checkout
       - run: 
           name: Java Version
           command: java -version
@@ -23,6 +17,15 @@ jobs:
           name: IT Failure Dump
           when: on_fail
           command: cat integration-tests/target/failsafe-reports/*dump*
+
+jobs:
+  
+  jdk8:
+    docker:
+      - image: cimg/openjdk:8.0.322
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps: *go
   
   jdk11:
     docker:

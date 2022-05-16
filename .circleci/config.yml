@@ -14,14 +14,14 @@ jobs:
           name: Build
           command: ./mvnw clean install -Pci 
           
-    jdk8:
-      docker:
-        - image: cimg/openjdk:8.0.292
+  jdk8:
+    docker:
+      - image: cimg/openjdk:8.0.292
     <<: *shared
     
-    jdk11:
-      docker:
-        - image: cimg/openjdk:11.0.13
+  jdk11:
+    docker:
+      - image: cimg/openjdk:11.0.13
     <<: *shared
 
 workflows:

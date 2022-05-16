@@ -1,34 +1,19 @@
 version: 2.1
-shared: &shared
 
 jobs:
   build:
-
+    docker:
+      - image: cimg/openjdk:17.0.3
     environment:
       JVM_OPTS: -Xmx3200m
-    
     steps:
       - checkout
       - run: java -version
       - run:
           name: Build
           command: ./mvnw clean install -Pci 
-          
-  jdk8:
-    docker:
-      - image: cimg/openjdk:8.0.292
-    <<: *shared
-    
-  jdk11:
-    docker:
-      - image: cimg/openjdk:11.0.13
-    <<: *shared
 
 workflows:
-  work:
-    jobs:
-      - jdk8
-      - jdk11
   build_and_test:
     jobs:
       - build

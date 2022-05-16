@@ -10,9 +10,10 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: ./src/ci/build.sh
+          command: ./mvn clean install -Pci 
 
 workflows:
   build_and_test:
     jobs:
       - build
+      - test

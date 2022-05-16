@@ -3,18 +3,14 @@ version: 2.1
 aliases:
   - &go
     - checkout
-      - run: 
-          name: Java Version
+      - run:
           command: java -version
       - run:
-          name: Build
           command: ./mvnw clean install -Pci
       - run:
-          name: IT Failure Report
           when: on_fail
           command: cat integration-tests/target/failsafe-reports/*IT.txt
       - run:
-          name: IT Failure Dump
           when: on_fail
           command: cat integration-tests/target/failsafe-reports/*dump*
 

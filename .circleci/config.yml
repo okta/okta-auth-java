@@ -11,7 +11,7 @@ jobs:
       - run: java --version
       - run:
           name: Build
-          command: ./mvnw -e -X clean install -Pci 
+          command: ./mvnw clean install -Pci 
 
 workflows:
   build_and_test:

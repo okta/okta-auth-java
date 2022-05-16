@@ -125,14 +125,6 @@
     <build>
         <pluginManagement>
             <plugins>
-               <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-failsafe-plugin</artifactId>
-                  <version>3.0.0-M6</version>
-                  <configuration>
-                     <forkCount>0</forkCount>
-                  </configuration>
-                </plugin>
                 <plugin>
                     <groupId>com.okta</groupId>
                     <artifactId>okta-code-snippet-maven-plugin</artifactId>
@@ -159,6 +151,11 @@
                             <breakBuildBasedOnSemanticVersioning>true</breakBuildBasedOnSemanticVersioning>
                         </parameter>
                     </configuration>
+                </plugin>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-failsafe-plugin</artifactId>
+                  <version>3.0.0-M6</version>
                 </plugin>
             </plugins>
         </pluginManagement>

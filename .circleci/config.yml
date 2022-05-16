@@ -17,9 +17,11 @@ jobs:
           command: ./mvnw clean install -Pci
       - run:
           name: IT Failure Report
+          when: on_fail
           command: cat integration-tests/target/failsafe-reports/*IT.txt
       - run:
           name: IT Failure Dump
+          when: on_fail
           command: cat integration-tests/target/failsafe-reports/*dump*
   
   jdk11:
@@ -37,9 +39,11 @@ jobs:
           command: ./mvnw clean install -Pci        
       - run:
           name: IT Failure Report
+          when: on_fail
           command: cat integration-tests/target/failsafe-reports/*IT.txt
       - run:
           name: IT Failure Dump
+          when: on_fail
           command: cat integration-tests/target/failsafe-reports/*dump*
           
   jdk17:
@@ -57,9 +61,11 @@ jobs:
           command: ./mvnw clean install -Pci 
       - run:
           name: IT Failure Report
+          when: on_fail
           command: cat integration-tests/target/failsafe-reports/*IT.txt
       - run:
           name: IT Failure Dump
+          when: on_fail
           command: cat integration-tests/target/failsafe-reports/*dump*
 
 workflows:

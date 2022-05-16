@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: ./mvnw clean install -Pci 
+          command: ./mvnw -e -X clean install -Pci 
 
 workflows:
   build_and_test:

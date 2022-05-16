@@ -9,10 +9,18 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: java -version
+      - run: 
+          name: Java Version
+          command: java -version
       - run:
           name: Build
           command: ./mvnw clean install -Pci
+      - run:
+          name: IT Failure Report
+          command: cat integration-tests/target/failsafe-reports/*IT.txt
+      - run:
+          name: IT Failure Dump
+          command: cat integration-tests/target/failsafe-reports/*dump*
   
   jdk11:
     docker:
@@ -21,11 +29,19 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: java -version
+      - run: 
+          name: Java Version
+          command: java -version
       - run:
           name: Build
           command: ./mvnw clean install -Pci        
-  
+      - run:
+          name: IT Failure Report
+          command: cat integration-tests/target/failsafe-reports/*IT.txt
+      - run:
+          name: IT Failure Dump
+          command: cat integration-tests/target/failsafe-reports/*dump*
+          
   jdk17:
     docker:
       - image: cimg/openjdk:17.0.3
@@ -33,10 +49,18 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: java -version
+      - run:
+          name: Java Version
+          command: java -version
       - run:
           name: Build
           command: ./mvnw clean install -Pci 
+      - run:
+          name: IT Failure Report
+          command: cat integration-tests/target/failsafe-reports/*IT.txt
+      - run:
+          name: IT Failure Dump
+          command: cat integration-tests/target/failsafe-reports/*dump*
 
 workflows:
   build_and_test:

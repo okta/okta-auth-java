@@ -17,16 +17,14 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
 
-    <suppress>
-        <notes><![CDATA[ file name: jakarta.ws.rs-api-2.1.6.jar ]]></notes>
-        <!--
-        This is brought in by dropwizard-core uber jar used in shiro-mustache/examples/pom.xml
-        For more info, see https://nvd.nist.gov/vuln/detail/CVE-2008-7271
-        For more info, see https://nvd.nist.gov/vuln/detail/CVE-2010-4647
-        -->
-        <cve>CVE-2008-7271</cve>
-        <cve>CVE-2010-4647</cve>
+    <!-- false positive, see https://github.com/jeremylong/DependencyCheck/issues/4628 -->
+    <suppress base="true">
+        <notes><![CDATA[ FP per issue #4628 ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-web@.*$</packageUrl>
+        <cve>CVE-2016-1000027</cve>
     </suppress>
+
 </suppressions>
+

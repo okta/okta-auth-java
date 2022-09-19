@@ -26,5 +26,12 @@
         <cve>CVE-2016-1000027</cve>
     </suppress>
 
+    <!-- False positive, see https://github.com/jeremylong/DependencyCheck/issues/4839 -->
+    <suppress base="true">
+        <notes><![CDATA[ FP per issue #4839 ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
+        <cve>CVE-2022-38752</cve>
+    </suppress>
+
 </suppressions>
 

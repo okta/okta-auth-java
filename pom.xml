@@ -97,7 +97,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>4.8.1</version>
+                <version>4.9.0</version>
             </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
@@ -140,7 +140,7 @@
                 <plugin>
                     <groupId>com.github.siom79.japicmp</groupId>
                     <artifactId>japicmp-maven-plugin</artifactId>
-                    <version>0.16.0</version>
+                    <version>0.17.1</version>
                     <configuration>
                         <oldVersion>
                             <dependency>

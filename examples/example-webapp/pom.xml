@@ -31,6 +31,7 @@
     <properties>
         <java.version>1.8</java.version>
         <springboot.version>2.7.5</springboot.version>
+        <tomcat.embed.version>9.0.71</tomcat.embed.version>
     </properties>
 
     <dependencies>
@@ -48,6 +49,18 @@
             <groupId>com.okta.sdk</groupId>
             <artifactId>okta-sdk-httpclient</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.embed.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>${tomcat.embed.version}</version>
         </dependency>
 
         <!-- Springboot deps -->

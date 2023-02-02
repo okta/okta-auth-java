@@ -33,7 +33,7 @@
     <inceptionYear>2018</inceptionYear>
 
     <properties>
-        <jackson.version>2.14.0-rc3</jackson.version>
+        <jackson.version>2.14.2</jackson.version>
         <okta.sdk.version>8.2.3</okta.sdk.version>
         <okta.authn.previousVersion>2.0.10</okta.authn.previousVersion>
     </properties>

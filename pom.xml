@@ -35,7 +35,7 @@
     <properties>
         <jackson.version>2.14.0-rc3</jackson.version>
         <okta.sdk.version>8.2.3</okta.sdk.version>
-        <okta.authn.previousVersion>2.0.8</okta.authn.previousVersion>
+        <okta.authn.previousVersion>2.0.9</okta.authn.previousVersion>
     </properties>
 
     <modules>
@@ -117,6 +117,16 @@
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-common</artifactId>
+                <version>1.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk7</artifactId>
+                <version>1.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk8</artifactId>
                 <version>1.8.0</version>
             </dependency>
             <dependency>

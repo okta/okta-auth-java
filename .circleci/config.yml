@@ -1,9 +1,13 @@
 version: 2.1
 
+orbs:
+  platform-orb: okta/general-platform-helpers@1.2.2
+
 aliases:
 
   - &build_steps
     - checkout
+    - platform-orb/load-dependencies
     - run: java -version
     - run: ./mvnw clean install -Pci
     - run:
@@ -14,31 +18,51 @@ aliases:
         command: cat integration-tests/target/failsafe-reports/*dump*
 
 jobs:
-  
+
+  cache-secrets:
+    machine: true
+    resource_class: okta/generic-linux-x86
+    environment:
+      VAULT_ADDR: https://vault.aue1e.saasure.net
+    steps:
+      - checkout
+      - run:
+          name: "Vault login"
+          command: |
+            vault login -method=userpass username=$vault_username password=$vault_password > /dev/null 2>&1
+      - platform-orb/save-dependencies
+
   jdk8:
     docker:
-      - image: cimg/openjdk:8.0.322
+      - image: cimg/openjdk:8.0.362
     environment:
         JVM_OPTS: -Xmx3200m
     steps: *build_steps
   
   jdk11:
     docker:
-      - image: cimg/openjdk:11.0.13
+      - image: cimg/openjdk:11.0.18
     environment:
         JVM_OPTS: -Xmx3200m
     steps: *build_steps
           
   jdk17:
     docker:
-      - image: cimg/openjdk:17.0.4
+      - image: cimg/openjdk:17.0.6
     environment:
         JVM_OPTS: -Xmx3200m
     steps: *build_steps
 
 workflows:
-  build_and_test:
+  "Circle CI Tests":
     jobs:
-      - jdk8
-      - jdk11
-      - jdk17
+      - cache-secrets
+      - jdk8:
+          requires:
+            - cache-secrets
+      - jdk11:
+          requires:
+            - cache-secrets
+      - jdk17:
+          requires:
+            - cache-secrets

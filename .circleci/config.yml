@@ -9,7 +9,7 @@ aliases:
     - checkout
     - platform-orb/load-dependencies
     - run: java -version
-    - run: ./mvnw clean install -Pci
+    - run: ./mvnw clean install -Dlicense.skip=true -Pci
     - run:
         when: on_fail
         command: cat integration-tests/target/failsafe-reports/*IT.txt

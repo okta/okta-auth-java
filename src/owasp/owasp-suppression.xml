@@ -26,11 +26,10 @@
         <cve>CVE-2016-1000027</cve>
     </suppress>
 
-    <!-- See https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in -->
+    <!-- False positive, see https://github.com/jeremylong/DependencyCheck/issues/5779 -->
     <suppress>
-        <notes><![CDATA[Ignored since it is deemed "won't fix" by the library authors.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml.*$</packageUrl>
-        <cve>CVE-2022-1471</cve>
+        <notes><![CDATA[ file name: jackson-databind-2.15.2.jar]]></notes>
+        <cve>CVE-2023-35116</cve>
     </suppress>
 
 </suppressions>

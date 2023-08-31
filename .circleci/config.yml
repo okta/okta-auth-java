@@ -60,3 +60,12 @@ workflows:
       - jdk17:
           requires:
             - cache-secrets
+  # See OKTA-624750
+  semgrep:
+    jobs:
+      - platform-orb/job-semgrep-prepare:
+          name: semgrep-prepare
+      - platform-orb/job-semgrep-scan:
+          name: "Scan with Semgrep"
+          requires:
+            - semgrep-prepare

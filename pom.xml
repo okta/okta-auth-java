@@ -134,6 +134,11 @@
                 <artifactId>annotations</artifactId>
                 <version>24.0.1</version>
             </dependency>
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio-jvm</artifactId>
+                <version>3.4.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

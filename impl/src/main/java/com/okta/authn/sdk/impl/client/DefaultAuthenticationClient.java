@@ -54,6 +54,7 @@ import com.okta.authn.sdk.resource.FactorType;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -319,6 +320,10 @@ public class DefaultAuthenticationClient extends BaseClient implements Authentic
     private void translateException(ResourceException resourceException) throws AuthenticationException {
 
         String errorCode = resourceException.getCode();
+
+        if (Objects.isNull(errorCode)) {
+            throw resourceException;
+        }
 
         switch (errorCode) {
             case AuthenticationFailureException.ERROR_CODE:

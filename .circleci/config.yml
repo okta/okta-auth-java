@@ -1,13 +1,13 @@
 version: 2.1
 
 orbs:
-  platform-orb: okta/general-platform-helpers@1.8
+  general-platform-helpers: okta/general-platform-helpers@1.8
 
 aliases:
 
   - &build_steps
     - checkout
-    - platform-orb/step-load-dependencies
+    - general-platform-helpers/step-load-dependencies
     - run: java -version
     - run: ./mvnw clean install -Dlicense.skip=true -Pci
     - run:
@@ -61,7 +61,7 @@ jobs:
 workflows:
   "Circle CI Tests":
     jobs:
-      - platform-orb/job-secrets-obtain:
+      - general-platform-helpers/job-secrets-obtain:
           name: cache-secrets
           secret-key: "OKTA_CLIENT_ORGURL;OKTA_CLIENT_TOKEN;OKTA_AUTHN_ITS_MFAENROLLGROUPID"
       - jdk8:
@@ -77,9 +77,9 @@ workflows:
   semgrep:
     jobs:
       - jdk17
-      - platform-orb/job-semgrep-prepare:
+      - general-platform-helpers/job-semgrep-prepare:
           name: semgrep-prepare
-      - platform-orb/job-semgrep-scan:
+      - general-platform-helpers/job-semgrep-scan:
           name: "Scan with Semgrep"
           requires:
             - semgrep-prepare

@@ -86,7 +86,7 @@ workflows:
       - general-platform-helpers/job-snyk-prepare:
           name: prepare-snyk
           requires:
-            - jdk17
+            - jdk11
       - snyk-scan:
           name: execute-snyk
           requires:

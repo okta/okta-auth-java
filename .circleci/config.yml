@@ -50,7 +50,7 @@ jobs:
       - image: cimg/openjdk:11.0.18-node
     steps:
       - checkout
-      - run: ./mvnw -ntp clean install -Pci -Dmaven.test.skip.exec=true
+      - run: ./mvnw clean install -Dlicense.skip=true -Pci
       - general-platform-helpers/step-load-dependencies
       - general-platform-helpers/step-run-snyk-monitor:
           scan-all-projects: false
@@ -76,7 +76,7 @@ workflows:
   # See OKTA-624750
   semgrep:
     jobs:
-      - jdk11
+      - jdk17
       - general-platform-helpers/job-semgrep-prepare:
           name: semgrep-prepare
       - general-platform-helpers/job-semgrep-scan:
@@ -86,7 +86,7 @@ workflows:
       - general-platform-helpers/job-snyk-prepare:
           name: prepare-snyk
           requires:
-            - jdk11
+            - jdk17
       - snyk-scan:
           name: execute-snyk
           requires:

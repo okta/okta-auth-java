@@ -47,7 +47,7 @@ jobs:
 
   snyk-scan:
     docker:
-      - image: cimg/openjdk:17.0.6-node
+      - image: cimg/openjdk:11.0.18-node
     steps:
       - checkout
       - run: ./mvnw -ntp clean install -Pci -Dmaven.test.skip.exec=true

@@ -1,13 +1,13 @@
 version: 2.1
 
 orbs:
-  platform-orb: okta/general-platform-helpers@1.8
+  general-platform-helpers: okta/general-platform-helpers@1.8
 
 aliases:
 
   - &build_steps
     - checkout
-    - platform-orb/step-load-dependencies
+    - general-platform-helpers/step-load-dependencies
     - run: java -version
     - run: ./mvnw clean install -Dlicense.skip=true -Pci
     - run:
@@ -45,10 +45,23 @@ jobs:
     parallelism: 3
     steps: *build_steps
 
+  snyk-scan:
+    docker:
+      - image: cimg/openjdk:17.0.6-node
+    steps:
+      - checkout
+      - run: ./mvnw clean install -DskipITs
+      - general-platform-helpers/step-load-dependencies
+      - general-platform-helpers/step-run-snyk-monitor:
+          scan-all-projects: false
+          skip-unresolved: false
+          run-on-non-main: true
+          additional-arguments: "--maven-aggregate-project"
+
 workflows:
   "Circle CI Tests":
     jobs:
-      - platform-orb/job-secrets-obtain:
+      - general-platform-helpers/job-secrets-obtain:
           name: cache-secrets
           secret-key: "OKTA_CLIENT_ORGURL;OKTA_CLIENT_TOKEN;OKTA_AUTHN_ITS_MFAENROLLGROUPID"
       - jdk8:
@@ -63,9 +76,18 @@ workflows:
   # See OKTA-624750
   semgrep:
     jobs:
-      - platform-orb/job-semgrep-prepare:
+      - jdk17
+      - general-platform-helpers/job-semgrep-prepare:
           name: semgrep-prepare
-      - platform-orb/job-semgrep-scan:
+      - general-platform-helpers/job-semgrep-scan:
           name: "Scan with Semgrep"
           requires:
             - semgrep-prepare
+      - general-platform-helpers/job-snyk-prepare:
+          name: prepare-snyk
+          requires:
+            - jdk17
+      - snyk-scan:
+          name: execute-snyk
+          requires:
+            - prepare-snyk

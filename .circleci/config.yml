@@ -76,7 +76,7 @@ workflows:
   # See OKTA-624750
   semgrep:
     jobs:
-      - jdk17
+      - jdk11
       - general-platform-helpers/job-semgrep-prepare:
           name: semgrep-prepare
       - general-platform-helpers/job-semgrep-scan:

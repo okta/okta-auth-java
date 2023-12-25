@@ -30,7 +30,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <springboot.version>2.7.12</springboot.version>
+        <springboot.version>3.2.1</springboot.version>
         <tomcat.embed.version>10.1.16</tomcat.embed.version>
     </properties>
 

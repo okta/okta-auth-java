@@ -30,7 +30,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <springboot.version>2.7.12</springboot.version>
+        <springboot.version>2.7.18</springboot.version>
         <tomcat.embed.version>10.1.19</tomcat.embed.version>
     </properties>
 
@@ -85,6 +85,12 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.33</version>
         </dependency>
 
         <!-- Logging -->

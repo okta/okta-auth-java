@@ -18,18 +18,10 @@ aliases:
         command: cat integration-tests/target/failsafe-reports/*dump*
 
 jobs:
-  jdk8:
-    docker:
-      - image: cimg/openjdk:8.0.362-node
-    environment:
-      JVM_OPTS: -Xmx3200m
-    resource_class: large
-    parallelism: 3
-    steps: *build_steps
 
   jdk11:
     docker:
-      - image: cimg/openjdk:11.0.18-node
+      - image: cimg/openjdk:11.0.22-node
     environment:
       JVM_OPTS: -Xmx3200m
     resource_class: large
@@ -38,7 +30,16 @@ jobs:
 
   jdk17:
     docker:
-      - image: cimg/openjdk:17.0.6-node
+      - image: cimg/openjdk:17.0.11-node
+    environment:
+      JVM_OPTS: -Xmx3200m
+    resource_class: large
+    parallelism: 3
+    steps: *build_steps
+
+  jdk21:
+    docker:
+      - image: cimg/openjdk:21.0.2-node
     environment:
       JVM_OPTS: -Xmx3200m
     resource_class: large
@@ -47,7 +48,7 @@ jobs:
 
   snyk-scan:
     docker:
-      - image: cimg/openjdk:17.0.6-node
+      - image: cimg/openjdk:21.0.2-node
     steps:
       - checkout
       - run: ./mvnw clean install -Pci -Dlicense.skip=true -Dmaven.test.skip.exec=true
@@ -64,13 +65,13 @@ workflows:
       - general-platform-helpers/job-secrets-obtain:
           name: cache-secrets
           secret-key: "OKTA_CLIENT_ORGURL;OKTA_CLIENT_TOKEN;OKTA_AUTHN_ITS_MFAENROLLGROUPID"
-      - jdk8:
-          requires:
-            - cache-secrets
       - jdk11:
           requires:
             - cache-secrets
       - jdk17:
+          requires:
+            - cache-secrets
+      - jdk21:
           requires:
             - cache-secrets
       - general-platform-helpers/job-semgrep-prepare:
@@ -82,7 +83,7 @@ workflows:
       - general-platform-helpers/job-snyk-prepare:
           name: prepare-snyk
           requires:
-            - jdk17
+            - jdk21
       - snyk-scan:
           name: execute-snyk
           requires:

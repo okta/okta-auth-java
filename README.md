@@ -17,6 +17,10 @@
  
 The Okta Authentication SDK is a convenience wrapper around [Okta's Authentication API](https://developer.okta.com/docs/api/resources/authn.html).
 
+### Prerequisites
+
+* Java 11 or later
+
 ## Is This Library Right for Me?
 
 This SDK is a convenient HTTP client wrapper for [Okta's Authentication API](https://developer.okta.com/docs/api/resources/authn/). These APIs are powerful and useful if you need to achieve one of these cases:

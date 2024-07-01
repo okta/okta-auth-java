@@ -49,10 +49,11 @@ You can learn more on the [Okta + Java][lang-landing] page in our documentation.
 
 This library uses semantic versioning and follows Okta's [library version policy](https://developer.okta.com/code/library-versions/).
 
-| Version | Status                    |
-| ------- | ------------------------- |
-| 1.x   | :warning: Retired |
-| 2.x.x | :heavy_check_mark: Stable ([migration guide](https://github.com/okta/okta-auth-java/blob/master/MIGRATING.md)) |
+| Version | Status                                                                                                         |
+|---------|----------------------------------------------------------------------------------------------------------------|
+| 1.x     | :warning: Retired                                                                                              |
+| 2.x.x   | :heavy_check_mark: Stable (retiring soon)                                                                      |
+| 3.x.x   | :heavy_check_mark: Stable ([migration guide](https://github.com/okta/okta-auth-java/blob/master/MIGRATING.md)) |
  
 The latest release can always be found on the [releases page][github-releases].
  

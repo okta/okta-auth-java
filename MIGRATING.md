@@ -10,7 +10,7 @@ In addition to some new classes/interfaces, some existing classes/interfaces are
 ## Migrating from 2.x.x to 3.0.0
 
 Version 3.0.0 of this SDK requires Java 17 as the minimum version.
-This version has examples that run on Spring Boot 3.x and this would require a Java 17 minimum version (see [here](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#review-system-requirements)).
+This version has examples that run on Spring Boot 3.x and this would require a Java 17 minimum version and Java 8 is no longer supported (see [here](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#review-system-requirements)).
 
 ### Package `com.okta.authn.sdk.resource`
 

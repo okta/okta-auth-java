@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Support](https://img.shields.io/badge/support-Developer%20Forum-blue.svg)][devforum]
 [![API Reference](https://img.shields.io/badge/docs-reference-lightgrey.svg)][javadocs]
-[![Build Status](https://travis-ci.com/okta/okta-auth-java.svg?branch=master)](https://app.travis-ci.com/github/okta/okta-auth-java)
 
 # Okta Java Authentication SDK
 
@@ -19,7 +18,7 @@ The Okta Authentication SDK is a convenience wrapper around [Okta's Authenticati
 
 ### Prerequisites
 
-* Java 11 or later
+* Java 17 or later
 
 ## Is This Library Right for Me?
 

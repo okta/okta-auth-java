@@ -9,7 +9,7 @@ This Sample web application will demonstrate below common flows:
 
 ## Prerequisites
 
-- [JDK 8][jdk-8] or later
+- [JDK 17][jdk-17] or later
 - [Apache Maven][apache-maven] 3.6.x or later
 
 You will also need:
@@ -32,5 +32,5 @@ Visit http://localhost:8080 in your browser.
 
 If you see an index page, then your app is working!
 
-[jdk-8]: https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
+[jdk-17]: https://www.oracle.com/java/technologies/downloads/?er=221886#java17
 [apache-maven]: https://maven.apache.org/download.cgi

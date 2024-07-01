@@ -7,6 +7,11 @@ This SDK uses semantic versioning and follows Okta's [library version policy](ht
 Version 2.0.0 of this SDK introduces a number of breaking changes from previous versions. 
 In addition to some new classes/interfaces, some existing classes/interfaces are no longer backward compatible due to method renaming and signature changes.
 
+## Migrating from 2.x.x to 3.0.0
+
+Version 3.0.0 of this SDK requires Java 17 as the minimum version.
+This version has examples that run on Spring Boot 3.x and this would require a Java 17 minimum version and Java 8 is no longer supported (see [here](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#review-system-requirements)).
+
 ### Package `com.okta.authn.sdk.resource`
 
 - Replaced `com.okta.sdk.resource.user.factor.FactorProfile` interface with `com.okta.authn.sdk.resource.FactorProfile` interface.

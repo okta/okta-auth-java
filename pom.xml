@@ -155,11 +155,11 @@
     <build>
         <pluginManagement>
             <plugins>
-<plugin>
-              <groupId>org.owasp</groupId>
-              <artifactId>dependency-check-maven</artifactId>
-              <version>10.0.1</version>
-</plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>10.0.1</version>
+                </plugin>
                 <plugin>
                     <groupId>com.okta</groupId>
                     <artifactId>okta-code-snippet-maven-plugin</artifactId>

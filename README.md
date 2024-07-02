@@ -18,7 +18,9 @@ The Okta Authentication SDK is a convenience wrapper around [Okta's Authenticati
 
 ### Prerequisites
 
-* Java 17 or later
+* Java 17 or later (versions 3.0.0 and above)
+
+If you are on older Java versions, please use 2.x versions.
 
 ## Is This Library Right for Me?
 

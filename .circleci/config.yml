@@ -59,11 +59,9 @@ workflows:
           name: "Scan with Semgrep"
           context:
             - static-analysis
-      - general-platform-helpers/job-snyk-prepare:
-          name: prepare-snyk
-          requires:
-            - jdk21
       - snyk-scan:
           name: execute-snyk
           requires:
+            - jdk21
+          context:
             - prepare-snyk

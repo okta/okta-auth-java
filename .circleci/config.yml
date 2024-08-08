@@ -55,12 +55,10 @@ workflows:
     jobs:
       - jdk17
       - jdk21
-      - general-platform-helpers/job-semgrep-prepare:
-          name: semgrep-prepare
       - general-platform-helpers/job-semgrep-scan:
           name: "Scan with Semgrep"
-          requires:
-            - semgrep-prepare
+          context:
+            - static-analysis
       - general-platform-helpers/job-snyk-prepare:
           name: prepare-snyk
           requires:

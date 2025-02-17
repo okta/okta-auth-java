@@ -31,7 +31,7 @@
     <properties>
         <java.version>17</java.version>
         <springboot.version>3.4.2</springboot.version>
-        <tomcat.embed.version>11.0.2</tomcat.embed.version>
+        <tomcat.embed.version>11.0.3</tomcat.embed.version>
     </properties>
 
     <dependencies>

@@ -30,7 +30,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <springboot.version>3.4.2</springboot.version>
+        <springboot.version>3.4.5</springboot.version>
         <tomcat.embed.version>11.0.6</tomcat.embed.version>
     </properties>
 
@@ -119,7 +119,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.3</version>
             </plugin>
 
         </plugins>

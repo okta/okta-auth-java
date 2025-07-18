@@ -149,6 +149,11 @@
                 <artifactId>okio-jvm</artifactId>
                 <version>3.11.0</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>11.0.9</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

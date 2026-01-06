@@ -52,6 +52,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Override jersey-client version to fix CVE-2025-12383 (Race Condition vulnerability) -->
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>2.46</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
